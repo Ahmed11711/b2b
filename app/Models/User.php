@@ -17,9 +17,9 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 class User extends Authenticatable implements JWTSubject
 {
 
-    public array $searchable = [''];
-    public array $filterable = ['role'];
-    public array $allowedFields = ['id', 'name', 'email', 'phone', 'role', 'email_verified_at', 'created_at', 'updated_at'];
+    public array $searchable = ['remember_token'];
+    public array $filterable = ['is_active', 'role', 'social_type', 'social_id'];
+    public array $allowedFields = ['id', 'name', 'email', 'phone', 'country_code', 'is_active', 'email_verified_at', 'role', 'social_type', 'social_id', 'last_login_at', 'created_at', 'updated_at'];
 
 
 
@@ -52,4 +52,10 @@ class User extends Authenticatable implements JWTSubject
             'role'    => $this->role ?? null,
         ];
     }
+
+    public function social()
+    {
+        return $this->belongsTo(Social::class, 'social_id');
+    }
+
 }

@@ -1,10 +1,13 @@
 <?php
 
+use App\Http\Controllers\Admin\Category\CategoryController;
 use App\Http\Controllers\Auth\CreateAcountController;
 use App\Http\Controllers\Auth\LoginAccountController;
+use App\Http\Controllers\Auth\OtpController;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Middleware\CheckJwtToken;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -20,6 +23,22 @@ Route::group(['prefix' => 'auth'], function () {
         Route::post('refresh', [LoginAccountController::class, 'refresh']);
         Route::post('logout', [ProfileController::class, 'logout']);
     });
+    Route::post('send-otp', [OtpController::class, 'send'])
+        ->defaults('context', 'register');
+
+    Route::post('verify-otp', [OtpController::class, 'verify'])
+        ->defaults('context', 'register');
+
+    // Password Reset Flow
+    Route::post('/forget-password/send-otp', [OtpController::class, 'send'])
+        ->defaults('context', 'forget_password');
+
+    Route::post('/forget-password/verify-otp', [OtpController::class, 'verify'])
+        ->defaults('context', 'forget_password');
 });
 
+
+Route::prefix('v1/app')->group(function () {
+    Route::get('category', [CategoryController::class, 'index']);
+});
 require __DIR__ . '/admin.php';

@@ -1,0 +1,26 @@
+<?php
+
+namespace App\Http\Resources\Admin\Service;
+
+use Illuminate\Http\Resources\Json\JsonResource;
+
+/**
+ * @mixin \App\Models\Service
+ */
+class ServiceResource extends JsonResource
+{
+    public function toArray($request): array
+    {
+        $attributes = $this->resource->getAttributes();
+        $data = ['id' => $this->id];
+        $fields = ['user_id', 'city_id', 'title', 'desc', 'image', 'price', 'created_at', 'updated_at'];
+
+        foreach ($fields as $field) {
+            if (array_key_exists($field, $attributes)) {
+                $data[$field] = $this->{$field};
+            }
+        }
+
+        return $data;
+    }
+}

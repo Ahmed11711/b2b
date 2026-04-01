@@ -15,12 +15,20 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->nullable()->unique();
+            $table->string('password')->nullable();
+
             $table->string('phone')->nullable()->unique();
+            $table->string('user_name')->nullable();
+            $table->string('whtsapp')->nullable();
             $table->string('country_code')->default('SA');
             $table->boolean('is_active')->default(true);
+            $table->timestamp('email_verified_at')->nullable();
+            $table->text('remember_token')->nullable();
+            $table->enum('role', ['user', 'super_admin'])->nullable();
             $table->enum('social_type', ['google', 'apple', 'facebook'])->nullable();
             $table->string('social_id')->nullable()->unique();
-            $table->string('password')->nullable();
+            $table->string('city_id')->nullable()->unique();
+            $table->text('info')->nullable();
             $table->timestamp('last_login_at')->nullable();
             $table->timestamps();
         });

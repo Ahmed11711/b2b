@@ -18,9 +18,14 @@ This documentation is auto-generated for the **users** table.
 | `name` | *varchar* | Field from database |
 | `email` | *varchar* | Field from database |
 | `phone` | *varchar* | Field from database |
-| `role` | *enum* | Field from database |
+| `country_code` | *varchar* | Field from database |
+| `is_active` | *tinyint* | Field from database |
 | `email_verified_at` | *timestamp* | Field from database |
+| `remember_token` | *text* | Field from database |
+| `role` | *enum* | Field from database |
+| `social_type` | *enum* | Field from database |
+| `social_id` | *varchar* | Field from database |
 | `password` | *varchar* | Field from database |
-| `remember_token` | *varchar* | Field from database |
+| `last_login_at` | *timestamp* | Field from database |
 | `created_at` | *timestamp* | Field from database |
 | `updated_at` | *timestamp* | Field from database |

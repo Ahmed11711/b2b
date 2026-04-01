@@ -82,6 +82,7 @@ class BaseRequest extends FormRequest
         };
     }
 
+
     /**
      * جلب الحقول الاختيارية (Nullable)
      */
@@ -104,12 +105,18 @@ class BaseRequest extends FormRequest
      */
     protected function failedValidation(Validator $validator)
     {
+        $errors = $validator->errors()->toArray();
+        $fullSchema = $this->getSchema();
+
+        // فلترة الـ Schema: عرض فقط الحقول التي تحتوي على أخطاء (يعني لسه مدخلهاش صح)
+        $filteredSchema = array_intersect_key($fullSchema, $errors);
+
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => 'Validation errors detected.',
             'errors'  => $validator->errors(),
             'meta'    => [
-                'schema'          => $this->getSchema(),
+                'schema'          => $filteredSchema, // هنا السر: هيرجع بس اللي ناقص
                 'optional_fields' => $this->getOptionalFields(),
             ]
         ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY));

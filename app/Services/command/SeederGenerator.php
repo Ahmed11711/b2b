@@ -81,6 +81,12 @@ class SeederGenerator
         if (in_array($columnType, ['integer', 'tinyint', 'smallint', 'boolean', 'bigint'])) {
             return rand(0, 1);
         }
+        if (in_array($columnType, ['integer', 'bigint', 'unsignedInteger'])) {
+            return rand(1, 10); // بدلاً من 0 و 1 عشان الـ IDs
+        }
+        if (in_array($columnType, ['boolean', 'tinyint'])) {
+            return rand(0, 1); // الـ boolean الحقيقي
+        }
 
         if (Str::endsWith($column, '_ar')) {
             $word = self::$arabicWords[array_rand(self::$arabicWords)];
@@ -245,35 +251,43 @@ class SeederGenerator
         return $payload;
     }
 
-    private static function buildPostmanItem($name, $method, $url, $body = null, $queryParams = [])
+    private static function buildPostmanItem($name, $method, $url, $body = null, $queryParams = [], $table = null)
     {
-        $expectedStatus = ($method === 'POST') ? 201 : 200;
-        $tests = [
-            "pm.test('Response status is {$expectedStatus}', () => { pm.response.to.have.status({$expectedStatus}); });",
-            "pm.test('Response is valid JSON', () => { pm.response.to.be.json; });",
-        ];
+        $mode = 'raw';
+        $finalBody = null;
+
+        if ($body) {
+            if ($method === 'POST') {
+                $mode = 'formdata';
+                $finalBody = [];
+                foreach ($body as $key => $value) {
+                    // لو الحقل صورة أو ملف
+                    $isFile = preg_match('/(image|img|file|logo|avatar|photo)/i', $key);
+                    $finalBody[] = [
+                        'key' => $key,
+                        'value' => $isFile ? "" : $value, // في الفورم داتا بنسيب الفاليو فاضية لو ملف عشان اليوزر يرفعه
+                        'type' => $isFile ? 'file' : 'text'
+                    ];
+                }
+            } elseif ($method === 'PUT' || $method === 'PATCH') {
+                $mode = 'urlencoded';
+                $finalBody = [];
+                foreach ($body as $key => $value) {
+                    $finalBody[] = ['key' => $key, 'value' => $value, 'type' => 'text'];
+                }
+            } else {
+                $finalBody = json_encode($body, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            }
+        }
 
         return [
             'name' => $name,
-            'event' => [
-                [
-                    'listen' => 'test',
-                    'script' => ['type' => 'text/javascript', 'exec' => $tests]
-                ]
-            ],
             'request' => [
                 'method' => $method,
-                'header' => [['key' => 'Accept', 'value' => 'application/json', 'type' => 'text']],
-                'url' => [
-                    'raw' => $url,
-                    'host' => ['{{base_url}}'],
-                    'path' => array_values(array_filter(explode('/', str_replace('{{base_url}}', '', $url)))),
-                    'query' => $queryParams
-                ],
-                'body' => $body ? [
-                    'mode' => 'raw',
-                    'raw' => json_encode($body, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE),
-                    'options' => ['raw' => ['language' => 'json']]
+                'url' => ['raw' => $url, 'host' => ['{{base_url}}'], 'path' => array_values(array_filter(explode('/', str_replace('{{base_url}}', '', $url)))), 'query' => $queryParams],
+                'body' => $finalBody ? [
+                    'mode' => $mode,
+                    $mode => ($mode === 'raw') ? $finalBody : $finalBody
                 ] : null,
             ]
         ];
@@ -300,12 +314,29 @@ class SeederGenerator
     {
         $seederPath = database_path('seeders/DatabaseSeeder.php');
         if (!File::exists($seederPath)) return;
+
         $content = File::get($seederPath);
         $seederName = "{$model}Seeder::class";
+
+        // 1. التأكد إن الموديل مش مضاف قبل كدة عشان م نكررش السطور
         if (Str::contains($content, $seederName)) return;
-        $pattern = '/(public function run\(\): void\s*\{)/';
-        if (preg_match($pattern, $content)) {
-            $content = preg_replace($pattern, "$1\n        \$this->call({$seederName});", $content);
+
+        // 2. البحث عن فنكشن الـ run ومحتواها
+        // الـ Pattern ده بيدور على فنكشن run وبيمسك كل اللي جواها لحد القوس المقفول
+        $pattern = '/(public function run\(\): void\s*\{)(.*?)(\s*\})/s';
+
+        if (preg_match($pattern, $content, $matches)) {
+            $prefix = $matches[1]; // بداية الفنكشن {
+            $existingContent = rtrim($matches[2]); // المحتوى الحالي (مع تنظيف المسافات في الآخر)
+            $suffix = $matches[3]; // القوس المقفول }
+
+            // 3. بناء المحتوى الجديد: القديم + السطر الجديد في سطر لوحده
+            $newCall = "\n        \$this->call({$seederName});";
+            $updatedContent = $prefix . $existingContent . $newCall . "\n    " . $suffix;
+
+            // 4. استبدال المحتوى القديم بالجديد في الملف
+            $content = preg_replace($pattern, $updatedContent, $content);
+
             File::put($seederPath, $content);
         }
     }

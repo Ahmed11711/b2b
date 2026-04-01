@@ -9,10 +9,15 @@ class UserFactory extends Factory {
             'name' => $this->faker->word,
             'email' => $this->faker->unique()->safeEmail,
             'phone' => $this->faker->word,
-            'role' => $this->faker->word,
+            'country_code' => $this->faker->word,
+            'is_active' => $this->faker->word,
             'email_verified_at' => $this->faker->unique()->safeEmail,
-            'password' => bcrypt('password'),
             'remember_token' => $this->faker->word,
+            'role' => $this->faker->word,
+            'social_type' => $this->faker->word,
+            'social_id' => 1,
+            'password' => bcrypt('password'),
+            'last_login_at' => $this->faker->word,
         ];
     }
 }

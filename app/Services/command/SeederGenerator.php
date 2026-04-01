@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
 
 class SeederGenerator
 {
@@ -69,10 +70,8 @@ class SeederGenerator
     {
         $columnType = Schema::getColumnType($table, $column);
 
-        // 1. الربط العميق والذكي (Smart Factory Relationships)
         if (Str::endsWith($column, '_id')) {
             $relatedTable = Str::plural(Str::replaceLast('_id', '', $column));
-            // التحقق لو الجدول فيه عمود active عشان نربط ببيانات صحيحة فقط
             $condition = Schema::hasColumn($relatedTable, 'active') ? "->where('active', 1)" : "";
             return "DB::table('{$relatedTable}'){$condition}->inRandomOrder()->value('id') ?? 1";
         }
@@ -118,7 +117,8 @@ class SeederGenerator
     private static function generateMarkdownDoc($model, $table)
     {
         $columns = Schema::getColumnListing($table);
-        $baseUrl = "api/" . Str::kebab(Str::plural($model));
+        $actualPath = self::guessActualRoutePath($model) ?? Str::kebab(Str::plural($model));
+        $baseUrl = ltrim($actualPath, '/');
 
         $md = "# 📘 API Guide: {$model}\n\n";
         $md .= "This documentation is auto-generated for the **{$table}** table.\n\n";
@@ -146,30 +146,67 @@ class SeederGenerator
 
     private static function generatePostmanCollection($model, $table)
     {
-        $columns = Schema::getColumnListing($table);
-        $baseUrl = "{{base_url}}/api/" . Str::kebab(Str::plural($model));
+        // جلب الـ URI الحقيقي من لارافيل مباشرة
+        $actualPath = self::guessActualRoutePath($model);
+
+        if (!$actualPath) {
+            // لو ملقاش روت، يضيف اسم الموديل مباشرة كـ fallback
+            $baseUrl = "{{base_url}}/" . Str::kebab(Str::plural($model));
+        } else {
+            // استخدام المسار الحقيقي (v1/users مثلاً) بدون إجبار /api
+            $baseUrl = "{{base_url}}/" . ltrim($actualPath, '/');
+        }
+
+        $modelClass = "App\\Models\\{$model}";
+        $allColumns = Schema::getColumnListing($table); // كل أعمدة الجدول لاستخدامها في fields
+        $searchable = [];
+        $filterable = [];
+        $sortable = ['id', 'created_at'];
+
+        if (class_exists($modelClass)) {
+            $modelInstance = new $modelClass;
+            $searchable = property_exists($modelInstance, 'searchable') ? array_filter($modelInstance->searchable) : [];
+            $filterable = property_exists($modelInstance, 'filterable') ? array_filter($modelInstance->filterable) : [];
+            $sortable = property_exists($modelInstance, 'allowedFields') ? $modelInstance->allowedFields : $sortable;
+        }
 
         $realData = DB::table($table)->first();
         $sampleId = $realData->id ?? 1;
 
-        $payload = [];
-        foreach ($columns as $column) {
-            if (in_array($column, ['id', 'created_at', 'updated_at', 'deleted_at'])) continue;
-            $payload[$column] = $realData->$column ?? (Str::endsWith($column, '_ar') ? "نص تجريبي" : "Sample value");
+        $advancedParams = [];
+        if (!empty($searchable)) {
+            $advancedParams[] = ['key' => 'search', 'value' => '', 'description' => 'Search in: ' . implode(', ', $searchable)];
         }
+        foreach ($filterable as $filter) {
+            $advancedParams[] = ['key' => $filter, 'value' => $realData->{$filter} ?? '', 'description' => "Filter by {$filter}"];
+        }
+
+        // إضافة باراميتر fields مع وصف كامل لكل الأعمدة المتاحة في الداتابيز
+        $advancedParams[] = [
+            'key' => 'fields',
+            'value' => implode(',', array_slice($allColumns, 0, 3)), // مثال لأول 3 أعمدة
+            'description' => 'Select specific fields (comma separated). Available: ' . implode(', ', $allColumns)
+        ];
+
+        $advancedParams[] = ['key' => 'sort_by', 'value' => 'id', 'description' => 'Sort by: ' . implode(', ', $sortable)];
+        $advancedParams[] = ['key' => 'sort_order', 'value' => 'desc', 'description' => 'asc | desc'];
+        $advancedParams[] = ['key' => 'per_page', 'value' => '10', 'description' => 'Pagination limit'];
+
+        $items = [
+            self::buildPostmanItem("1. [List] Get All {$model}", "GET", $baseUrl),
+            self::buildPostmanItem("2. [Pipeline] Search & Filter {$model}", "GET", $baseUrl, null, $advancedParams),
+            self::buildPostmanItem("3. [Show] View One {$model}", "GET", "{$baseUrl}/{$sampleId}"),
+            self::buildPostmanItem("4. [Store] Create New {$model}", "POST", $baseUrl, self::getPayload($model, $table, $realData)),
+            self::buildPostmanItem("5. [Update] Edit {$model}", "PUT", "{$baseUrl}/{$sampleId}", self::getPayload($model, $table, $realData)),
+            self::buildPostmanItem("6. [Delete] Remove {$model}", "DELETE", "{$baseUrl}/{$sampleId}"),
+        ];
 
         $collection = [
             'info' => [
-                'name' => "{$model} Module Collection",
+                'name' => "{$model} API Module",
                 'schema' => 'https://schema.getpostman.com/json/collection/v2.1.0/collection.json',
             ],
-            'item' => [
-                self::buildPostmanItem("List {$model}", "GET", $baseUrl),
-                self::buildPostmanItem("Show {$model}", "GET", "{$baseUrl}/{$sampleId}"),
-                self::buildPostmanItem("Store {$model}", "POST", $baseUrl, $payload),
-                self::buildPostmanItem("Update {$model}", "PUT", "{$baseUrl}/{$sampleId}", $payload),
-                self::buildPostmanItem("Delete {$model}", "DELETE", "{$baseUrl}/{$sampleId}"),
-            ],
+            'item' => $items,
             'auth' => [
                 'type' => 'bearer',
                 'bearer' => [['key' => 'token', 'value' => '{{auth_token}}', 'type' => 'string']]
@@ -181,9 +218,35 @@ class SeederGenerator
         File::put($path . Str::snake($model) . "_collection.json", json_encode($collection, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
     }
 
-    private static function buildPostmanItem($name, $method, $url, $body = null)
+    private static function guessActualRoutePath($model)
     {
-        // إضافة الـ Automated API Testing (Javascript)
+        $allRoutes = Route::getRoutes();
+        foreach ($allRoutes as $route) {
+            $action = $route->getActionName();
+            $uri = $route->uri();
+
+            // مطابقة الكنترولر بغض النظر عن الـ Namespace
+            if (Str::contains($action, "{$model}Controller@index")) {
+                // تنظيف الـ URI من البراميترز
+                return preg_replace('/\{.*\}/', '', $uri);
+            }
+        }
+        return null;
+    }
+
+    private static function getPayload($model, $table, $realData)
+    {
+        $columns = Schema::getColumnListing($table);
+        $payload = [];
+        foreach ($columns as $column) {
+            if (in_array($column, ['id', 'created_at', 'updated_at', 'deleted_at', 'email_verified_at'])) continue;
+            $payload[$column] = $realData->$column ?? (Str::endsWith($column, '_ar') ? "نص تجريبي" : "Sample");
+        }
+        return $payload;
+    }
+
+    private static function buildPostmanItem($name, $method, $url, $body = null, $queryParams = [])
+    {
         $expectedStatus = ($method === 'POST') ? 201 : 200;
         $tests = [
             "pm.test('Response status is {$expectedStatus}', () => { pm.response.to.have.status({$expectedStatus}); });",
@@ -201,7 +264,12 @@ class SeederGenerator
             'request' => [
                 'method' => $method,
                 'header' => [['key' => 'Accept', 'value' => 'application/json', 'type' => 'text']],
-                'url' => ['raw' => $url, 'host' => ['{{base_url}}'], 'path' => explode('/', str_replace('{{base_url}}/', '', $url))],
+                'url' => [
+                    'raw' => $url,
+                    'host' => ['{{base_url}}'],
+                    'path' => array_values(array_filter(explode('/', str_replace('{{base_url}}', '', $url)))),
+                    'query' => $queryParams
+                ],
                 'body' => $body ? [
                     'mode' => 'raw',
                     'raw' => json_encode($body, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE),

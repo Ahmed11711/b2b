@@ -5,11 +5,11 @@ This documentation is auto-generated for the **users** table.
 ### 🚀 Endpoints
 | Action | Method | Endpoint | Auth |
 | :--- | :--- | :--- | :--- |
-| List All | `GET` | `/api/users` | Bearer |
-| View One | `GET` | `/api/users/{id}` | Bearer |
-| Create | `POST` | `/api/users` | Bearer |
-| Update | `PUT` | `/api/users/{id}` | Bearer |
-| Delete | `DELETE` | `/api/users/{id}` | Bearer |
+| List All | `GET` | `/users` | Bearer |
+| View One | `GET` | `/users/{id}` | Bearer |
+| Create | `POST` | `/users` | Bearer |
+| Update | `PUT` | `/users/{id}` | Bearer |
+| Delete | `DELETE` | `/users/{id}` | Bearer |
 
 ### 📋 Database Schema
 | Column | Type | Description |

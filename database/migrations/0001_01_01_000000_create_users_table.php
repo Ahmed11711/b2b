@@ -18,7 +18,9 @@ return new class extends Migration
             $table->string('phone')->nullable()->unique();
             $table->string('country_code')->default('SA');
             $table->boolean('is_active')->default(true);
-            $table->integer('switches_count')->default(0);
+            $table->enum('social_type', ['google', 'apple', 'facebook'])->nullable();
+            $table->string('social_id')->nullable()->unique();
+            $table->string('password')->nullable();
             $table->timestamp('last_login_at')->nullable();
             $table->timestamps();
         });

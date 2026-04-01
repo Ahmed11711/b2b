@@ -17,6 +17,11 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 class User extends Authenticatable implements JWTSubject
 {
 
+    public array $searchable = [''];
+    public array $filterable = ['role'];
+    public array $allowedFields = ['id', 'name', 'email', 'phone', 'role', 'email_verified_at', 'created_at', 'updated_at'];
+
+
 
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
@@ -41,6 +46,10 @@ class User extends Authenticatable implements JWTSubject
 
     public function getJWTCustomClaims()
     {
-        return [];
+        return [
+            'user_id' => $this->id,
+            'email'   => $this->email ?? null,
+            'role'    => $this->role ?? null,
+        ];
     }
 }

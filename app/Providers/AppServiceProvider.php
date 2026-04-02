@@ -8,6 +8,10 @@ use App\Repositories\Service\ServiceRepository;
 use App\Repositories\UserInfo\UserInfoRepositoryInterface;
 use App\Repositories\UserInfo\UserInfoRepository;
 
+
+
+
+
 use App\Repositories\Ads\AdsRepositoryInterface;
 use App\Repositories\Ads\AdsRepository;
 
@@ -60,6 +64,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
         
         $this->app->bind(AdsRepositoryInterface::class, AdsRepository::class);
+        
         $this->app->bind(UserInfoRepositoryInterface::class, UserInfoRepository::class);
         $this->app->bind(ServiceRepositoryInterface::class, ServiceRepository::class);
 }

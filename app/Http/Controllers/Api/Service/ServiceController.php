@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Service;
+namespace App\Http\Controllers\Api\Service;
 
-use App\Repositories\Service\ServiceRepositoryInterface;
 use App\Http\Controllers\BaseController\BaseController;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Service\ServiceStoreRequest;
 use App\Http\Requests\Admin\Service\ServiceUpdateRequest;
 use App\Http\Resources\Admin\Service\ServiceResource;
+use App\Repositories\Service\ServiceRepositoryInterface;
+use Illuminate\Http\Request;
 
 class ServiceController extends BaseController
 {
@@ -26,19 +28,18 @@ class ServiceController extends BaseController
         $this->hasGallery = true;
         $this->withRelationships = ['gallery'];
     }
-
-    protected function beforeStore(array $data, \Illuminate\Http\Request $request): array
+    protected function getIndexRelationships(): array
     {
-        if (isset($data['gallery'])) {
-            unset($data['gallery']);
-        }
-        return $data;
+        return ['category'];
     }
-    protected function beforeUpdate(array $data, $existingRecord, \Illuminate\Http\Request $request): array
+
+    protected function getShowRelationships(): array
     {
-        if (isset($data['gallery'])) {
-            unset($data['gallery']);
-        }
-        return $data;
+        return ['gallery', 'user', 'city', 'category'];
+    }
+
+    protected function applyScoping($query)
+    {
+        return $query->where('user_id', 10)->orderBy('created_at', 'desc');
     }
 }

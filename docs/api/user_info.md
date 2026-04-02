@@ -15,6 +15,7 @@ This documentation is auto-generated for the **user_infos** table.
 | Column | Type | Description |
 | :--- | :--- | :--- |
 | `id` | *bigint* | Field from database |
+| `user_id` | *bigint* | Field from database |
 | `country_id` | *bigint* | Field from database |
 | `city_id` | *bigint* | Field from database |
 | `info` | *text* | Field from database |

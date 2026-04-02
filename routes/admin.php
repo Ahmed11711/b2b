@@ -3,6 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Service\ServiceController;
 use App\Http\Controllers\Admin\UserInfo\UserInfoController;
+
+
+
+
 use App\Http\Controllers\Admin\Ads\AdsController;
 
 
@@ -38,6 +42,10 @@ Route::prefix('v1')->group(function () {
     
     
     Route::apiResource('ads', AdsController::class)->names('ads');
+    
+    
+    
+    
     Route::apiResource('user_infos', UserInfoController::class)->names('user_info');
     Route::apiResource('services', ServiceController::class)->names('service');
 });

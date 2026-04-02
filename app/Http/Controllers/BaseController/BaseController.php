@@ -48,7 +48,7 @@ abstract class BaseController extends Controller
   public function index(Request $request): JsonResponse
   {
     try {
-      $query = $this->repository->query()->with($this->withRelationships);
+      $query = $this->repository->query()->with($this->getIndexRelationships());
       $query = $this->applyScoping($query);
 
       $data = app(Pipeline::class)
@@ -84,7 +84,7 @@ abstract class BaseController extends Controller
    */
   public function show(int $id): JsonResponse
   {
-    $record = $this->repository->query()->with($this->withRelationships)->find($id);
+    $record = $this->repository->query()->with($this->getShowRelationships())->find($id);
     if (!$record) {
       return $this->errorResponse("Record not found", 404);
     }
@@ -195,8 +195,17 @@ abstract class BaseController extends Controller
     return $this->successResponse(null, "Record deleted successfully");
   }
 
+  protected function getIndexRelationships(): array
+  {
+    return $this->withRelationships;
+  }
+
+  protected function getShowRelationships(): array
+  {
+    return $this->withRelationships;
+  }
+
   /**
-   * معالجة رفع الملفات الأساسية (One-to-One)
    */
   protected function handleFileUploads(Request $request, array $validated, $existingRecord = null): array
   {

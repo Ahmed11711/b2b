@@ -8,8 +8,8 @@ class UserInfo extends Model
 {
 
     public array $searchable = ['info'];
-    public array $filterable = ['country_id', 'city_id'];
-    public array $allowedFields = ['id', 'country_id', 'city_id', 'info', 'created_at', 'updated_at'];
+    public array $filterable = ['user_id', 'country_id', 'city_id'];
+    public array $allowedFields = ['id', 'user_id', 'country_id', 'city_id', 'info', 'created_at', 'updated_at'];
 
     //
 
@@ -22,6 +22,12 @@ class UserInfo extends Model
     public function city()
     {
         return $this->belongsTo(City::class, 'city_id');
+    }
+
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 
 }

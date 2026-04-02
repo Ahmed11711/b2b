@@ -16,6 +16,7 @@ This documentation is auto-generated for the **services** table.
 | :--- | :--- | :--- |
 | `id` | *bigint* | Field from database |
 | `user_id` | *bigint* | Field from database |
+| `category_id` | *bigint* | Field from database |
 | `city_id` | *bigint* | Field from database |
 | `title` | *varchar* | Field from database |
 | `desc` | *varchar* | Field from database |

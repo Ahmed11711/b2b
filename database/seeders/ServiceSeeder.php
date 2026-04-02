@@ -13,6 +13,7 @@ class ServiceSeeder extends Seeder
         DB::table('services')->insert([
             [
                 'user_id' => DB::table('users')->inRandomOrder()->value('id') ?? 1,
+                'category_id' => DB::table('categories')->inRandomOrder()->value('id') ?? 1,
                 'city_id' => DB::table('cities')->inRandomOrder()->value('id') ?? 1,
                 'title' => Str::title('title') . '_' . Str::random(5),
                 'desc' => Str::title('desc') . '_' . Str::random(5),
@@ -23,6 +24,7 @@ class ServiceSeeder extends Seeder
             ],
             [
                 'user_id' => DB::table('users')->inRandomOrder()->value('id') ?? 1,
+                'category_id' => DB::table('categories')->inRandomOrder()->value('id') ?? 1,
                 'city_id' => DB::table('cities')->inRandomOrder()->value('id') ?? 1,
                 'title' => Str::title('title') . '_' . Str::random(5),
                 'desc' => Str::title('desc') . '_' . Str::random(5),
@@ -33,6 +35,7 @@ class ServiceSeeder extends Seeder
             ],
             [
                 'user_id' => DB::table('users')->inRandomOrder()->value('id') ?? 1,
+                'category_id' => DB::table('categories')->inRandomOrder()->value('id') ?? 1,
                 'city_id' => DB::table('cities')->inRandomOrder()->value('id') ?? 1,
                 'title' => Str::title('title') . '_' . Str::random(5),
                 'desc' => Str::title('desc') . '_' . Str::random(5),
@@ -43,6 +46,7 @@ class ServiceSeeder extends Seeder
             ],
             [
                 'user_id' => DB::table('users')->inRandomOrder()->value('id') ?? 1,
+                'category_id' => DB::table('categories')->inRandomOrder()->value('id') ?? 1,
                 'city_id' => DB::table('cities')->inRandomOrder()->value('id') ?? 1,
                 'title' => Str::title('title') . '_' . Str::random(5),
                 'desc' => Str::title('desc') . '_' . Str::random(5),
@@ -53,6 +57,7 @@ class ServiceSeeder extends Seeder
             ],
             [
                 'user_id' => DB::table('users')->inRandomOrder()->value('id') ?? 1,
+                'category_id' => DB::table('categories')->inRandomOrder()->value('id') ?? 1,
                 'city_id' => DB::table('cities')->inRandomOrder()->value('id') ?? 1,
                 'title' => Str::title('title') . '_' . Str::random(5),
                 'desc' => Str::title('desc') . '_' . Str::random(5),
@@ -63,6 +68,7 @@ class ServiceSeeder extends Seeder
             ],
             [
                 'user_id' => DB::table('users')->inRandomOrder()->value('id') ?? 1,
+                'category_id' => DB::table('categories')->inRandomOrder()->value('id') ?? 1,
                 'city_id' => DB::table('cities')->inRandomOrder()->value('id') ?? 1,
                 'title' => Str::title('title') . '_' . Str::random(5),
                 'desc' => Str::title('desc') . '_' . Str::random(5),
@@ -73,6 +79,7 @@ class ServiceSeeder extends Seeder
             ],
             [
                 'user_id' => DB::table('users')->inRandomOrder()->value('id') ?? 1,
+                'category_id' => DB::table('categories')->inRandomOrder()->value('id') ?? 1,
                 'city_id' => DB::table('cities')->inRandomOrder()->value('id') ?? 1,
                 'title' => Str::title('title') . '_' . Str::random(5),
                 'desc' => Str::title('desc') . '_' . Str::random(5),
@@ -83,6 +90,7 @@ class ServiceSeeder extends Seeder
             ],
             [
                 'user_id' => DB::table('users')->inRandomOrder()->value('id') ?? 1,
+                'category_id' => DB::table('categories')->inRandomOrder()->value('id') ?? 1,
                 'city_id' => DB::table('cities')->inRandomOrder()->value('id') ?? 1,
                 'title' => Str::title('title') . '_' . Str::random(5),
                 'desc' => Str::title('desc') . '_' . Str::random(5),
@@ -93,6 +101,7 @@ class ServiceSeeder extends Seeder
             ],
             [
                 'user_id' => DB::table('users')->inRandomOrder()->value('id') ?? 1,
+                'category_id' => DB::table('categories')->inRandomOrder()->value('id') ?? 1,
                 'city_id' => DB::table('cities')->inRandomOrder()->value('id') ?? 1,
                 'title' => Str::title('title') . '_' . Str::random(5),
                 'desc' => Str::title('desc') . '_' . Str::random(5),
@@ -103,6 +112,7 @@ class ServiceSeeder extends Seeder
             ],
             [
                 'user_id' => DB::table('users')->inRandomOrder()->value('id') ?? 1,
+                'category_id' => DB::table('categories')->inRandomOrder()->value('id') ?? 1,
                 'city_id' => DB::table('cities')->inRandomOrder()->value('id') ?? 1,
                 'title' => Str::title('title') . '_' . Str::random(5),
                 'desc' => Str::title('desc') . '_' . Str::random(5),

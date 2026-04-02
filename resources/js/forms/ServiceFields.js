@@ -3,6 +3,7 @@
  */
 export const ServiceFields = [
   { key: "user_id", label: "User Id", type: "text" },
+  { key: "category_id", label: "Category Id", type: "text" },
   { key: "city_id", label: "City Id", type: "text" },
   { key: "title", label: "Title", type: "text" },
   { key: "desc", label: "Desc", type: "text" },

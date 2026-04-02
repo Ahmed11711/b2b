@@ -13,7 +13,7 @@ class UserInfoResource extends JsonResource
     {
         $attributes = $this->resource->getAttributes();
         $data = ['id' => $this->id];
-        $fields = ['country_id', 'city_id', 'info', 'created_at', 'updated_at'];
+        $fields = ['user_id', 'country_id', 'city_id', 'info', 'created_at', 'updated_at'];
 
         foreach ($fields as $field) {
             if (array_key_exists($field, $attributes)) {

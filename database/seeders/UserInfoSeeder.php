@@ -12,6 +12,7 @@ class UserInfoSeeder extends Seeder
     {
         DB::table('user_infos')->insert([
             [
+                'user_id' => DB::table('users')->inRandomOrder()->value('id') ?? 1,
                 'country_id' => DB::table('countries')->inRandomOrder()->value('id') ?? 1,
                 'city_id' => DB::table('cities')->inRandomOrder()->value('id') ?? 1,
                 'info' => 'Sample_' . Str::random(5),
@@ -19,6 +20,7 @@ class UserInfoSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
+                'user_id' => DB::table('users')->inRandomOrder()->value('id') ?? 1,
                 'country_id' => DB::table('countries')->inRandomOrder()->value('id') ?? 1,
                 'city_id' => DB::table('cities')->inRandomOrder()->value('id') ?? 1,
                 'info' => 'Sample_' . Str::random(5),
@@ -26,6 +28,7 @@ class UserInfoSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
+                'user_id' => DB::table('users')->inRandomOrder()->value('id') ?? 1,
                 'country_id' => DB::table('countries')->inRandomOrder()->value('id') ?? 1,
                 'city_id' => DB::table('cities')->inRandomOrder()->value('id') ?? 1,
                 'info' => 'Sample_' . Str::random(5),
@@ -33,6 +36,7 @@ class UserInfoSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
+                'user_id' => DB::table('users')->inRandomOrder()->value('id') ?? 1,
                 'country_id' => DB::table('countries')->inRandomOrder()->value('id') ?? 1,
                 'city_id' => DB::table('cities')->inRandomOrder()->value('id') ?? 1,
                 'info' => 'Sample_' . Str::random(5),
@@ -40,6 +44,7 @@ class UserInfoSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
+                'user_id' => DB::table('users')->inRandomOrder()->value('id') ?? 1,
                 'country_id' => DB::table('countries')->inRandomOrder()->value('id') ?? 1,
                 'city_id' => DB::table('cities')->inRandomOrder()->value('id') ?? 1,
                 'info' => 'Sample_' . Str::random(5),
@@ -47,6 +52,7 @@ class UserInfoSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
+                'user_id' => DB::table('users')->inRandomOrder()->value('id') ?? 1,
                 'country_id' => DB::table('countries')->inRandomOrder()->value('id') ?? 1,
                 'city_id' => DB::table('cities')->inRandomOrder()->value('id') ?? 1,
                 'info' => 'Sample_' . Str::random(5),
@@ -54,6 +60,7 @@ class UserInfoSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
+                'user_id' => DB::table('users')->inRandomOrder()->value('id') ?? 1,
                 'country_id' => DB::table('countries')->inRandomOrder()->value('id') ?? 1,
                 'city_id' => DB::table('cities')->inRandomOrder()->value('id') ?? 1,
                 'info' => 'Sample_' . Str::random(5),
@@ -61,6 +68,7 @@ class UserInfoSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
+                'user_id' => DB::table('users')->inRandomOrder()->value('id') ?? 1,
                 'country_id' => DB::table('countries')->inRandomOrder()->value('id') ?? 1,
                 'city_id' => DB::table('cities')->inRandomOrder()->value('id') ?? 1,
                 'info' => 'Sample_' . Str::random(5),
@@ -68,6 +76,7 @@ class UserInfoSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
+                'user_id' => DB::table('users')->inRandomOrder()->value('id') ?? 1,
                 'country_id' => DB::table('countries')->inRandomOrder()->value('id') ?? 1,
                 'city_id' => DB::table('cities')->inRandomOrder()->value('id') ?? 1,
                 'info' => 'Sample_' . Str::random(5),
@@ -75,6 +84,7 @@ class UserInfoSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
+                'user_id' => DB::table('users')->inRandomOrder()->value('id') ?? 1,
                 'country_id' => DB::table('countries')->inRandomOrder()->value('id') ?? 1,
                 'city_id' => DB::table('cities')->inRandomOrder()->value('id') ?? 1,
                 'info' => 'Sample_' . Str::random(5),

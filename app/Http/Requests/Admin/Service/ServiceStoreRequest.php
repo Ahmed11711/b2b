@@ -15,12 +15,13 @@ class ServiceStoreRequest extends BaseRequest
     {
         return [
             'user_id' => 'nullable|exists:users,id|display_field:name',
+            'category_id' => 'nullable|exists:categories,id|display_field:name',
             'city_id' => 'nullable|exists:cities,id|display_field:name',
             'title' => 'required|string|max:255',
             'desc' => 'required|string|max:255',
             'image' => 'required|file|image|max:2048',
             'price' => 'required|string|max:255',
-            'gallery'   => 'nullable|array',
+            'gallery'   => 'sometimes|nullable|array',
             'gallery.*' => 'image|mimes:jpeg,png,jpg,webp|max:2048',
         ];
     }
@@ -29,6 +30,7 @@ class ServiceStoreRequest extends BaseRequest
     {
         return [
             'user_id.exists' => 'The selected user id is invalid.',
+            'category_id.exists' => 'The selected category id is invalid.',
             'city_id.exists' => 'The selected city id is invalid.',
             'title.required' => 'The title field is required.',
             'title.max' => 'The title may not be greater than 255 characters.',
@@ -39,9 +41,8 @@ class ServiceStoreRequest extends BaseRequest
             'image.max' => 'The image may not be greater than 2048 KB.',
             'price.required' => 'The price field is required.',
             'price.max' => 'The price may not be greater than 255 characters.',
-            'gallery.array' => 'The gallery must be a list of images.',
             'gallery.*.image' => 'Each file in the gallery must be an image.',
-            'gallery.*.max' => 'Each image in the gallery may not be greater than 2048 KB.',
+            'gallery.*.max'   => 'Each image in the gallery may not be greater than 2048 KB.',
         ];
     }
 }

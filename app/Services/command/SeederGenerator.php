@@ -245,8 +245,15 @@ class SeederGenerator
         $columns = Schema::getColumnListing($table);
         $payload = [];
         foreach ($columns as $column) {
-            if (in_array($column, ['id', 'created_at', 'updated_at', 'deleted_at', 'email_verified_at'])) continue;
-            $payload[$column] = $realData->$column ?? (Str::endsWith($column, '_ar') ? "نص تجريبي" : "Sample");
+            if (in_array($column, ['id', 'created_at', 'updated_at', 'deleted_at'])) continue;
+
+            $value = $realData->$column ?? null;
+
+            if (Str::endsWith($column, '_id')) {
+                $payload[$column] = $value ? (int)$value : 1;
+            } else {
+                $payload[$column] = $value ?? (Str::endsWith($column, '_ar') ? "تجريبي" : "Sample");
+            }
         }
         return $payload;
     }

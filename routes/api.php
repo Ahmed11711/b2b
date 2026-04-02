@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\Category\CategoryController;
+use App\Http\Controllers\Api\Service\ServiceController;
 use App\Http\Controllers\Auth\CreateAcountController;
 use App\Http\Controllers\Auth\LoginAccountController;
 use App\Http\Controllers\Auth\OtpController;
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::group(['prefix' => 'auth'], function () {
+Route::group(['prefix' => 'v1/auth'], function () {
 
     // Public Routes
     Route::post('register', [CreateAcountController::class, 'register']);
@@ -38,7 +39,15 @@ Route::group(['prefix' => 'auth'], function () {
 });
 
 
-Route::prefix('v1/app')->group(function () {
+Route::prefix('v1/user')->group(function () {
     Route::get('category', [CategoryController::class, 'index']);
+    Route::resource('services', ServiceController::class)
+        ->except(['store', 'update', 'destroy']);
+});
+
+
+// provider
+Route::middleware(CheckJwtToken::class)->prefix('v1/provider')->group(function () {
+    Route::resource('my-service', ServiceController::class);
 });
 require __DIR__ . '/admin.php';

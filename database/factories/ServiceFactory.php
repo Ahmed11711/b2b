@@ -7,6 +7,7 @@ class ServiceFactory extends Factory {
     public function definition(): array {
         return [
             'user_id' => 1,
+            'category_id' => 1,
             'city_id' => 1,
             'title' => $this->faker->word,
             'desc' => $this->faker->word,

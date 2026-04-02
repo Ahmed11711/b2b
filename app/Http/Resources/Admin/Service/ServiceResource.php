@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources\Admin\Service;
 
+use App\Http\Resources\Admin\Category\CategoryResource;
+use App\Http\Resources\Admin\User\UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
@@ -13,13 +15,19 @@ class ServiceResource extends JsonResource
     {
         $attributes = $this->resource->getAttributes();
         $data = ['id' => $this->id];
-        $fields = ['user_id', 'city_id', 'title', 'desc', 'image', 'price', 'created_at', 'updated_at'];
+        $fields = ['user_id', 'category_id', 'city_id', 'title', 'desc', 'image', 'price', 'created_at', 'updated_at'];
 
         foreach ($fields as $field) {
             if (array_key_exists($field, $attributes)) {
                 $data[$field] = $this->{$field};
             }
         }
+
+        $data['user'] = new UserResource($this->whenLoaded('user'));
+
+        $data['category'] = new CategoryResource($this->whenLoaded('category'));
+
+
 
         return $data;
     }

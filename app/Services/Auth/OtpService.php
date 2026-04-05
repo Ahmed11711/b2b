@@ -2,9 +2,12 @@
 
 namespace App\Services\Auth;
 
+use \App\Models\User;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Carbon;
+use function Symfony\Component\Clock\now;
 
 class OtpService
 {
@@ -17,10 +20,11 @@ class OtpService
     /**
      * Dispatch OTP based on specific context.
      */
+
+
     public function sendOtp(string $identifier, string $context): array
     {
         $identifier = strtolower(trim($identifier));
-
         $cacheKey = "otp_{$context}_{$identifier}";
         $throttleKey = "otp_throttle_{$context}_{$identifier}";
 
@@ -31,18 +35,19 @@ class OtpService
         }
 
         $otp = (string) random_int(100000, 999999);
-
         $expiry = ($context === self::CONTEXT_REGISTER) ? 60 : 5;
 
-        Cache::put($cacheKey, $otp, now()->addMinutes($expiry));
-        Cache::put($throttleKey, true, now()->addSeconds(self::THROTTLE_SECONDS));
+        // استخدام Carbon::now() يحل مشكلة التعريفات في المحرر
+        Cache::put($cacheKey, $otp, Carbon::now()->addMinutes($expiry));
+        Cache::put($throttleKey, true, Carbon::now()->addSeconds(self::THROTTLE_SECONDS));
 
         $this->dispatchMessage($identifier, $otp, $context);
 
         return [
             'success' => true,
             'message' => "Verification code for {$context} sent successfully.",
-            'expires_at' => $expiry
+            'expires_at' => $expiry,
+            'otp' => $otp,
         ];
     }
 
@@ -61,8 +66,14 @@ class OtpService
                 'otp' => ['Invalid or expired verification code.'],
             ]);
         }
+        $user = User::where('email', $identifier)
+            ->orWhere('phone', $identifier)
+            ->first();
 
-        // مسح الكود فوراً بعد النجاح
+        if ($user && $context === self::CONTEXT_REGISTER) {
+            $user->email_verified_at = now();
+            $user->save();
+        }
         Cache::forget($cacheKey);
         Cache::forget("otp_throttle_{$context}_{$identifier}");
 

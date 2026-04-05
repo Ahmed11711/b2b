@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use \App\Http\Resources\Auth\LoginResource;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginAccountBySocialRequest;
 use App\Http\Requests\Auth\LoginAcountBySocialRequest;
@@ -32,21 +33,19 @@ class LoginAccountController extends Controller
         return $this->respondWithToken($result['token'], $result['user']);
     }
 
-
-    protected function respondWithToken(string $token, $user): JsonResponse
+    protected function respondWithToken($token, $user): JsonResponse
     {
         return response()->json([
             'status' => true,
-            'user'   => $user,
+            'user' => new LoginResource($user),
             'authorisation' => [
-                'token'      => $token,
-                'type'       => 'bearer',
-                'expires_in' => config('jwt.ttl') * 60
+                'token' => $token,
+                'type' => 'bearer',
             ]
         ]);
     }
 
-    public function refresh(): JsonResponse
+    public function refresh()
     {
         $result = $this->authService->refresh();
         return $this->respondWithToken($result['token'], $result['user']);

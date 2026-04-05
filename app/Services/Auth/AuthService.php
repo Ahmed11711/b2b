@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
+use Tymon\JWTAuth\JWTGuard;
 
 class AuthService
 {
@@ -32,7 +33,7 @@ class AuthService
         // $user = JWTAuth::setToken($token)->toUser();
 
         if ($user) {
-            // $user->update(['last_login_at' => now()]);
+            $user->update(['last_login_at' => now()]);
         }
 
         return [
@@ -78,19 +79,19 @@ class AuthService
      * Refresh the current expired token
      * @return array
      */
-    public function refresh(): array
+    public function refresh()
     {
-        /** @var \Tymon\JWTAuth\JWTGuard $auth */
-        $auth = auth('api');
+        /** @var \Tymon\JWTAuth\JWTGuard $guard */
+        $guard = auth('api'); // Force the 'api' guard
 
-        $newToken = $auth->refresh();
+        $newToken = $guard->refresh();
+        $user = $guard->setToken($newToken)->user();
 
         return [
-            'user'  => $auth->user(),
+            'user'  => $user,
             'token' => $newToken
         ];
     }
-
 
     /**
      * Handle new user registration

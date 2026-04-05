@@ -15,7 +15,7 @@ class CreateAcountController extends Controller
     public function register(CreateAcountRequest $request): JsonResponse
     {
         $data = $request->validated();
-
+        $data['role'] = 'user';
         $result = $this->authService->handleRegister($data);
 
         return $this->respondWithToken($result['token'], $result['user']);

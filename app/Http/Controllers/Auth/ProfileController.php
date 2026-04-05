@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Auth\LoginResource;
 use App\Services\Auth\AuthService;
 use App\Traits\ApiResponseTrait;
 use Illuminate\Http\JsonResponse;
@@ -16,7 +17,7 @@ class ProfileController extends Controller
     public function me(): JsonResponse
     {
         $user = $this->authService->getAuthenticatedUser();
-        return $this->successResponse($user);
+        return $this->successResponse(new LoginResource($user));
     }
 
 

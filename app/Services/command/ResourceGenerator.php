@@ -2,7 +2,9 @@
 
 namespace App\Services\command;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 
@@ -156,30 +158,151 @@ class {$model}Resource extends JsonResource
 
     /**
      * توليد ملف الـ JS للفرونت إند بناءً على قواعد البيانات
-     */
-    private static function generateFieldsStub($model, $table, $columns)
+     */ private static function generateFieldsStub($model, $table, $columns)
     {
+        $modelClass = "App\\Models\\{$model}";
+
+        // التأكد من وجود الموديل لتجنب الأخطاء
+        if (!class_exists($modelClass)) {
+            return "[]";
+        }
+
+        $modelInstance = new $modelClass;
+
+        // جلب الإعدادات من الموديل (إن وجدت)
+        $searchable = property_exists($modelInstance, 'searchable') ? $modelInstance->searchable : [];
+        $filterable = property_exists($modelInstance, 'filterable') ? $modelInstance->filterable : [];
+        $allowedFields = property_exists($modelInstance, 'allowedFields') ? $modelInstance->allowedFields : $columns;
+
         $fieldsArray = [];
+
         foreach ($columns as $col) {
-            if (in_array($col, ['id', 'created_at', 'updated_at', 'deleted_at', 'password'])) continue;
+            // 1. تخطي الحقول الحساسة
+            if (!in_array($col, $allowedFields) || in_array($col, ['password', 'deleted_at', 'remember_token'])) continue;
 
             $type = Schema::getColumnType($table, $col);
-            $inputType = match (true) {
-                preg_match('/(image|img|file|photo|logo)/i', $col) => 'file',
-                $type === 'boolean' || $type === 'tinyint' => 'checkbox',
-                $type === 'text' || $type === 'longtext' => 'textarea',
-                default => 'text'
-            };
+            $inputType = 'text';
+            $cellType = 'text';
+            $options = "null";
+            $displayField = "null";
+            $extraFields = ""; // لتخزين الـ endpoint والـ relation_fields
 
+            // --- 2. المنطق الذكي لتحديد الأنواع والعلاقات ---
+
+            // أ- معالجة الصور والمفات
+            if (preg_match('/(image|img|file|photo|logo|attachment)/i', $col)) {
+                $inputType = 'file';
+                $cellType = 'image';
+            }
+            // ب- معالجة القيم المنطقية (Boolean)
+            elseif ($type === 'boolean' || $type === 'tinyint') {
+                $inputType = 'checkbox';
+                $cellType = 'badge';
+                $options = "[{ label: 'Active', value: 1, color: 'success' }, { label: 'Inactive', value: 0, color: 'danger' }]";
+            }
+            // ج- معالجة العلاقات (Foreign Keys) - الأولوية لعلاقات الموديل
+            elseif (Str::endsWith($col, '_id')) {
+                $inputType = 'select';
+                $cellType = 'relation';
+
+                // استخراج اسم العلاقة (مثلاً user_id -> user)
+                $relationName = Str::camel(Str::replaceLast('_id', '', $col));
+                $endpoint = Str::plural(Str::snake($relationName)); // تخمين افتراضي (Fall-back)
+
+                // محاولة الوصول للموديل المرتبط عبر العلاقة
+                if (method_exists($modelInstance, $relationName)) {
+                    try {
+                        $relation = $modelInstance->$relationName();
+                        // نأخذ اسم الجدول من الموديل المرتبط (هذا هو الـ Endpoint الحقيقي)
+                        $endpoint = $relation->getRelated()->getTable();
+                        $displayField = "\"{$relationName}.name\"";
+                    } catch (\Exception $e) {
+                        Log::warning("Could not resolve relation {$relationName} for model {$model}");
+                    }
+                } else {
+                    $displayField = "\"{$relationName}.name\"";
+                }
+
+                $options = "{ label: 'name', value: 'id' }";
+                $extraFields = "\n    endpoint: '{$endpoint}',\n    relation_fields: 'id,name',";
+            }
+            // د- معالجة القوائم المنسدلة (Enums)
+            elseif ($type === 'enum') {
+                $inputType = 'select';
+                $cellType = 'badge';
+                $enumOptions = DB::selectOne("SHOW COLUMNS FROM {$table} WHERE Field = ?", [$col])->Type;
+                preg_match('/^enum\((.*)\)$/', $enumOptions, $matches);
+                $values = explode(',', $matches[1]);
+
+                $formattedOptions = array_map(function ($v) {
+                    $cleanVal = trim($v, "'");
+                    $label = Str::title($cleanVal);
+                    return "{ label: \"{$label}\", value: '{$cleanVal}' }";
+                }, $values);
+
+                $options = "[" . implode(', ', $formattedOptions) . "]";
+            }
+            // هـ- التواريخ والأرقام
+            elseif (in_array($type, ['date', 'datetime', 'timestamp'])) {
+                $inputType = 'date';
+                $cellType = 'date';
+            } elseif (in_array($type, ['decimal', 'float', 'double', 'integer', 'bigint'])) {
+                $inputType = 'text'; // أو 'number' حسب تفضيل الفرونت
+                $cellType = 'text';
+            }
+
+            // --- 3. الإعدادات العامة (Table & Form Visibility) ---
+
+            $columnInfo = DB::selectOne("SELECT IS_NULLABLE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = ? AND COLUMN_NAME = ? AND TABLE_SCHEMA = DATABASE()", [$table, $col]);
+            $required = ($columnInfo && $columnInfo->IS_NULLABLE === 'NO') ? 1 : 0;
             $label = Str::title(str_replace('_', ' ', $col));
-            $fieldsArray[] = "  { key: \"{$col}\", label: \"{$label}\", type: \"{$inputType}\" }";
+
+            // منطق الفرونت إند في العرض (Table Show)
+            $isLongText = in_array($type, ['text', 'longtext']);
+            $isRelation = Str::endsWith($col, '_id');
+            $isDate = in_array($type, ['date', 'datetime', 'timestamp']);
+
+            // افتراضياً: لا تظهر الـ IDs ولا العلاقات ولا النصوص الطويلة ولا أغلب التواريخ في الجدول
+            $tableShow = 'false';
+
+            // حقول استثنائية تظهر دائماً في الجدول حسب طلب الفرونت إند
+            $alwaysShowInTable = ['status', 'price', 'image', 'active', 'title_ar', 'created_at'];
+            if (in_array($col, $alwaysShowInTable) || (!$isLongText && !$isRelation && !$isDate && $col !== 'id')) {
+                $tableShow = 'true';
+            }
+
+            $isSortable = (!$isLongText) ? 'true' : 'false';
+            $formShow = (in_array($col, ['created_at', 'updated_at'])) ? 'false' : 'true';
+
+            // بناء الكود النهائي للحقل
+            $fieldsArray[] = "  { 
+    key: \"{$col}\", 
+    label: \"{$label}\", 
+    type: \"{$inputType}\", 
+    cell_type: \"{$cellType}\",
+    display_field: {$displayField},
+    required: {$required}, 
+    placeholder: \"Enter {$label}\",
+    searchable: " . (in_array($col, $searchable) ? 'true' : 'false') . ",
+    filterable: " . (in_array($col, $filterable) ? 'true' : 'false') . ",
+    sortable: {$isSortable},
+    table_show: {$tableShow},
+    form_show: {$formShow},{$extraFields}
+    options: {$options}
+  }";
         }
 
         $fieldsString = implode(",\n", $fieldsArray);
+        $timestamp = date('Y-m-d H:i:s');
 
-        return "/**
+        return <<<JS
+/**
  * Auto-generated fields for {$model}
+ * Generated at: {$timestamp}
  */
-export const {$model}Fields = [\n{$fieldsString}\n];";
+export const {$model}Fields = [
+{$fieldsString}
+];
+JS;
     }
 }

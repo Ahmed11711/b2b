@@ -13,7 +13,7 @@ class AdsResource extends JsonResource
     {
         $attributes = $this->resource->getAttributes();
         $data = ['id' => $this->id];
-        $fields = ['title', 'title_ar', 'image', 'created_at', 'updated_at'];
+        $fields = ['user_id', 'category_id', 'status', 'title', 'title_ar', 'description', 'image', 'attachment_file', 'price', 'active', 'is_featured', 'published_at', 'expire_date', 'created_at', 'updated_at'];
 
         foreach ($fields as $field) {
             if (array_key_exists($field, $attributes)) {

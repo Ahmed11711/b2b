@@ -17,7 +17,7 @@ class AdsController extends BaseController
         $this->initService(
             repository: $repository,
             collectionName: 'Ads',
-            fileFields: ['image']
+            fileFields: ['image', 'attachment_file']
         );
 
         $this->storeRequestClass = AdsStoreRequest::class;

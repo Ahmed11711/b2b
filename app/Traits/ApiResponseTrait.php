@@ -117,7 +117,6 @@ trait ApiResponseTrait
             ],
         ], $code);
 
-        Log::alert("sss", [$ss]);
 
         return $ss;
 

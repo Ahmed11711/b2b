@@ -35,4 +35,8 @@ class Service extends Model
     {
         return $this->belongsTo(Category::class, 'category_id');
     }
+    public function contacts()
+    {
+        return $this->belongsToMany(ServiceContact::class, 'service_id');
+    }
 }

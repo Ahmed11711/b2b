@@ -3,6 +3,8 @@
 namespace App\Http\Requests\Admin\Service;
 
 use App\Http\Requests\BaseRequest\BaseRequest;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class ServiceStoreRequest extends BaseRequest
 {
@@ -21,7 +23,13 @@ class ServiceStoreRequest extends BaseRequest
             'desc' => 'required|string|max:255',
             'image' => 'required|file|image|max:2048',
             'price' => 'required|string|max:255',
-
+            'contact_ids' => 'required|array',
+            'contact_ids.*' => [
+                Rule::exists('user_contacts', 'id')
+                    ->where(function ($query) {
+                        $query->where('user_id', auth('api')->id());
+                    }),
+            ],
         ];
     }
 

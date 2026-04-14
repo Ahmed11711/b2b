@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\User\UserController;
 use App\Http\Controllers\Admin\Ads\AdsController;
 
 
@@ -13,7 +14,7 @@ use App\Http\Controllers\Admin\UserInfo\UserInfoController;
 
 
 
-use App\Http\Controllers\Admin\User\UserController;
+
 use App\Http\Controllers\Admin\City\CityController;
 use App\Http\Controllers\Admin\Country\CountryController;
 
@@ -42,7 +43,7 @@ Route::prefix('admin/v1/')->group(function () {
 
     Route::apiResource('countries', CountryController::class)->names('country');
     Route::apiResource('cities', CityController::class)->names('city');
-    Route::apiResource('users', UserController::class)->names('user');
+    
 
 
 
@@ -55,4 +56,5 @@ Route::prefix('admin/v1/')->group(function () {
 });
 
 Route::prefix('v1')->group(function () {    Route::apiResource('ads', AdsController::class)->names('ads');
+    Route::apiResource('users', UserController::class)->names('user');
 });

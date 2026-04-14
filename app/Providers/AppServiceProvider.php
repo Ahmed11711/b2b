@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Repositories\User\UserRepositoryInterface;
+use App\Repositories\User\UserRepository;
+
 use App\Repositories\Ads\AdsRepositoryInterface;
 use App\Repositories\Ads\AdsRepository;
 
@@ -20,8 +23,6 @@ use App\Repositories\UserInfo\UserInfoRepository;
 
 
 
-use App\Repositories\User\UserRepositoryInterface;
-use App\Repositories\User\UserRepository;
 
 use App\Repositories\City\CityRepositoryInterface;
 use App\Repositories\City\CityRepository;
@@ -64,13 +65,14 @@ class AppServiceProvider extends ServiceProvider
         
         $this->app->bind(CountryRepositoryInterface::class, CountryRepository::class);
         $this->app->bind(CityRepositoryInterface::class, CityRepository::class);
-        $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
+        
         
         
         
         $this->app->bind(UserInfoRepositoryInterface::class, UserInfoRepository::class);
         $this->app->bind(ServiceRepositoryInterface::class, ServiceRepository::class);
         $this->app->bind(AdsRepositoryInterface::class, AdsRepository::class);
+        $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
 }
 
     /**

@@ -31,6 +31,7 @@ abstract class BaseController extends Controller
   protected array $withRelationships = [];
 
   protected bool $hasGallery = false;
+  protected bool $isUserBound = false;
 
   public function __construct() {}
 
@@ -50,6 +51,8 @@ abstract class BaseController extends Controller
     try {
       $query = $this->repository->query()->with($this->getIndexRelationships());
       $query = $this->applyScoping($query);
+
+      Log::alert("TT", [$query]);
 
       $data = app(Pipeline::class)
         ->send($query)
@@ -74,8 +77,18 @@ abstract class BaseController extends Controller
     }
   }
 
+  // في BaseController
   protected function applyScoping($query)
   {
+    if ($this->isUserBound) {
+      if (
+        request()->isMethod('post') || request()->isMethod('put') ||
+        request()->isMethod('patch') || request()->isMethod('delete')
+      ) {
+        return $query->where('user_id', auth('api')->id());
+      }
+    }
+
     return $query;
   }
 
@@ -107,7 +120,6 @@ abstract class BaseController extends Controller
 
       $record = $this->repository->create($validated);
 
-      // التحقق من تفعيل الجاليري واستدعاء الدالة المنفصلة
       if ($this->hasGallery) {
         $this->uploadGalleryFiles($request, $record);
       }
@@ -116,7 +128,6 @@ abstract class BaseController extends Controller
 
       DB::commit();
 
-      // إعادة تحميل العلاقات للتأكد من ظهور الجاليري في الرد
       $record->load($this->withRelationships);
 
       return $this->successResponse(new $this->resourceClass($record), 'Record created successfully', 201);
@@ -148,7 +159,6 @@ abstract class BaseController extends Controller
 
       $record->update($validated);
 
-      // التحقق من تفعيل الجاليري في التحديث
       if ($this->hasGallery) {
         $this->uploadGalleryFiles($request, $record);
       }

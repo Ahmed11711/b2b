@@ -8,7 +8,10 @@ class UserFactory extends Factory {
         return [
             'name' => $this->faker->word,
             'email' => $this->faker->unique()->safeEmail,
+            'password' => bcrypt('password'),
             'phone' => $this->faker->word,
+            'user_name' => $this->faker->word,
+            'whtsapp' => $this->faker->word,
             'country_code' => $this->faker->word,
             'is_active' => $this->faker->word,
             'email_verified_at' => $this->faker->unique()->safeEmail,
@@ -16,7 +19,8 @@ class UserFactory extends Factory {
             'role' => $this->faker->word,
             'social_type' => $this->faker->word,
             'social_id' => 1,
-            'password' => bcrypt('password'),
+            'city_id' => 1,
+            'info' => $this->faker->word,
             'last_login_at' => $this->faker->word,
         ];
     }

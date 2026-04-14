@@ -3,14 +3,18 @@
 use App\Http\Controllers\Admin\Category\CategoryController;
 use App\Http\Controllers\Admin\City\CityController;
 use App\Http\Controllers\Api\MyCategory\MyCategoryController;
+use App\Http\Controllers\Api\Profile\ProfileAccountController;
 use App\Http\Controllers\Api\Service\ServiceApiController;
 use App\Http\Controllers\Api\Service\ServiceController;
+use App\Http\Controllers\Api\UserContact\UserContactController;
 use App\Http\Controllers\Auth\CreateAcountController;
 use App\Http\Controllers\Auth\LoginAccountController;
 use App\Http\Controllers\Auth\OtpController;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Middleware\CheckJwtToken;
 use Illuminate\Support\Facades\Route;
+
+
 
 
 
@@ -57,6 +61,10 @@ Route::middleware(CheckJwtToken::class)->prefix('v1/provider')->group(function (
     Route::get('my-category', [MyCategoryController::class, 'index']);
     Route::post('my-category', [MyCategoryController::class, 'store']);
     Route::resource('my-service', ServiceApiController::class);
+    Route::put('my-socialMedia', [UserContactController::class, 'upsert']);
+    Route::get('my-socialMedia', [UserContactController::class, 'index']);
     Route::get('city', [CityController::class, 'index']);
+    Route::put('my-profile', [ProfileAccountController::class, 'update']);
+    Route::get('my-profile', [ProfileAccountController::class, 'show']);
 });
 require __DIR__ . '/admin.php';

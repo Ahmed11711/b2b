@@ -18,9 +18,9 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 class User extends Authenticatable implements JWTSubject
 {
 
-    public array $searchable = ['remember_token'];
-    public array $filterable = ['is_active', 'role', 'social_type', 'social_id'];
-    public array $allowedFields = ['id', 'name', 'email', 'phone', 'country_code', 'is_active', 'email_verified_at', 'role', 'social_type', 'social_id', 'last_login_at', 'created_at', 'updated_at'];
+    public array $searchable = ['remember_token', 'info'];
+    public array $filterable = ['is_active', 'role', 'social_type', 'social_id', 'city_id'];
+    public array $allowedFields = ['id', 'name', 'email', 'phone', 'user_name', 'whtsapp', 'country_code', 'is_active', 'email_verified_at', 'role', 'social_type', 'social_id', 'city_id', 'info', 'last_login_at', 'created_at', 'updated_at'];
 
 
 
@@ -58,4 +58,16 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->belongsToMany(Category::class, 'category_user');
     }
+
+    public function social()
+    {
+        return $this->belongsTo(Social::class, 'social_id');
+    }
+
+
+    public function city()
+    {
+        return $this->belongsTo(City::class, 'city_id');
+    }
+
 }

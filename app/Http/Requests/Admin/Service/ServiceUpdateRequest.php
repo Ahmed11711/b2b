@@ -21,6 +21,8 @@ class ServiceUpdateRequest extends BaseRequest
             'desc' => 'sometimes|required|string|max:255',
             'image' => 'sometimes|required|file|image|max:2048',
             'price' => 'sometimes|required|string|max:255',
+            'contact_ids' => 'sometimes|array',
+            'contact_ids.*' => 'exists:user_contacts,id',
 
 
         ];

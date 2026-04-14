@@ -21,8 +21,7 @@ class ServiceStoreRequest extends BaseRequest
             'desc' => 'required|string|max:255',
             'image' => 'required|file|image|max:2048',
             'price' => 'required|string|max:255',
-            'gallery'   => 'sometimes|nullable|array',
-            'gallery.*' => 'image|mimes:jpeg,png,jpg,webp|max:2048',
+
         ];
     }
 
@@ -41,8 +40,7 @@ class ServiceStoreRequest extends BaseRequest
             'image.max' => 'The image may not be greater than 2048 KB.',
             'price.required' => 'The price field is required.',
             'price.max' => 'The price may not be greater than 255 characters.',
-            'gallery.*.image' => 'Each file in the gallery must be an image.',
-            'gallery.*.max'   => 'Each image in the gallery may not be greater than 2048 KB.',
+
         ];
     }
 }

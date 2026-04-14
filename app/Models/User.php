@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use \App\Models\Category;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
@@ -53,9 +54,8 @@ class User extends Authenticatable implements JWTSubject
         ];
     }
 
-    public function social()
+    public function categories()
     {
-        return $this->belongsTo(Social::class, 'social_id');
+        return $this->belongsToMany(Category::class, 'category_user');
     }
-
 }

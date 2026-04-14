@@ -10,5 +10,6 @@ use App\Repositories\BaseRepository\BaseRepositoryInterface;
  */
 interface CategoryRepositoryInterface extends BaseRepositoryInterface
 {
-    //
+    public function getAllCategoriesForUser($userId);
+    public function syncUserCategories(int $userId, array $categoryIds);
 }

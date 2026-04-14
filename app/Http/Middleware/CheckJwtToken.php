@@ -27,8 +27,7 @@ class CheckJwtToken
                 $newToken = JWTAuth::refresh(JWTAuth::getToken());
 
                 $user = JWTAuth::setToken($newToken)->toUser();
-                $payload = JWTAuth::decode($newToken);
-
+                $payload = JWTAuth::setToken($newToken)->getPayload();
                 $request->headers->set('Authorization', 'Bearer ' . $newToken);
             } catch (JWTException $refreshEx) {
                 return $this->errorResponse("Token expired and cannot be refreshed", 401);
@@ -46,7 +45,8 @@ class CheckJwtToken
         $request->merge([
             'auth_user_id' => $payload->get('user_id'),
             'auth_email'   => $payload->get('email'),
-            'auth_user'    => $user
+            'auth_user'    => $user,
+            'user_id'      => $payload->get('user_id'),
         ]);
 
         $response = $next($request);

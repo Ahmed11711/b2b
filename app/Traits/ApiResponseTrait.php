@@ -61,17 +61,17 @@ trait ApiResponseTrait
         };
     }
 
-    protected function detectErrorStatus(string $message): int
+    protected function detectErrorStatus(string $message): array
     {
         $msg = strtolower($message);
 
         return match (true) {
-            str_contains($msg, 'not found') => 404,
-            str_contains($msg, 'unauthorized') => 401,
-            str_contains($msg, 'forbidden') => 403,
-            str_contains($msg, 'validation') => 422,
-            str_contains($msg, 'server error') => 500,
-            default => 400,
+            str_contains($msg, 'not found')    => ['code' => 404, 'reason' => 'Resource Not Found'],
+            str_contains($msg, 'unauthorized') => ['code' => 401, 'reason' => 'Unauthorized Access'],
+            str_contains($msg, 'forbidden')    => ['code' => 403, 'reason' => 'Access Forbidden'],
+            str_contains($msg, 'validation')   => ['code' => 422, 'reason' => 'Validation Failed'],
+            str_contains($msg, 'server error') => ['code' => 500, 'reason' => 'Internal Server Error'],
+            default                            => ['code' => 400, 'reason' => 'Bad Request'],
         };
     }
 

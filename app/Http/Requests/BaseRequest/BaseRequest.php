@@ -53,7 +53,6 @@ class BaseRequest extends FormRequest
                 $schema[$field]['display_column'] = $displayField;
             }
 
-            // ... باقي الكود الخاص بالـ Max و الـ Image و الـ In
             foreach ($ruleArray as $singleRule) {
                 if (Str::startsWith($singleRule, 'max:')) {
                     $schema[$field]['max'] = (int) Str::after($singleRule, 'max:');

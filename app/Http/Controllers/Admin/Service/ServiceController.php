@@ -24,21 +24,5 @@ class ServiceController extends BaseController
         $this->updateRequestClass = ServiceUpdateRequest::class;
         $this->resourceClass = ServiceResource::class;
         $this->hasGallery = true;
-        $this->withRelationships = ['gallery'];
-    }
-
-    protected function beforeStore(array $data, \Illuminate\Http\Request $request): array
-    {
-        if (isset($data['gallery'])) {
-            unset($data['gallery']);
-        }
-        return $data;
-    }
-    protected function beforeUpdate(array $data, $existingRecord, \Illuminate\Http\Request $request): array
-    {
-        if (isset($data['gallery'])) {
-            unset($data['gallery']);
-        }
-        return $data;
     }
 }

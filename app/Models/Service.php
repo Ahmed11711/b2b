@@ -37,6 +37,6 @@ class Service extends Model
     }
     public function contacts()
     {
-        return $this->belongsToMany(ServiceContact::class, 'service_id');
+        return $this->hasMany(ServiceContact::class, 'service_id', 'id');
     }
 }

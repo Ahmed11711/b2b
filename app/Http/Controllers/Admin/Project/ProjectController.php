@@ -1,36 +1,34 @@
 <?php
 
-namespace App\Http\Controllers\Api\Service;
+namespace App\Http\Controllers\Admin\Project;
 
-use \App\Models\ServiceContact;
 use App\Http\Controllers\BaseController\BaseController;
-use App\Http\Requests\Admin\Service\ServiceStoreRequest;
-use App\Http\Requests\Admin\Service\ServiceUpdateRequest;
-use App\Http\Resources\Admin\Service\ServiceResource;
-use App\Repositories\Service\ServiceRepositoryInterface;
+use App\Http\Requests\Admin\Project\ProjectStoreRequest;
+use App\Http\Requests\Admin\Project\ProjectUpdateRequest;
+use App\Http\Resources\Admin\Project\ProjectResource;
+use App\Models\ServiceContact;
+use App\Repositories\Project\ProjectRepositoryInterface;
 use Illuminate\Http\Request;
 
-class ServiceApiController extends BaseController
+class ProjectController extends BaseController
 {
-    public function __construct(ServiceRepositoryInterface $repository)
+    public function __construct(ProjectRepositoryInterface $repository)
     {
         parent::__construct();
 
         $this->initService(
             repository: $repository,
-            collectionName: 'Service',
-            fileFields: ['image'],
+            collectionName: 'Project',
+            fileFields: ['image']
         );
 
-        $this->storeRequestClass  = ServiceStoreRequest::class;
-        $this->updateRequestClass = ServiceUpdateRequest::class;
-        $this->resourceClass      = ServiceResource::class;
+        $this->storeRequestClass = ProjectStoreRequest::class;
+        $this->updateRequestClass = ProjectUpdateRequest::class;
+        $this->resourceClass = ProjectResource::class;
         $this->isUserBound        = true;
         $this->withRelationships = ['contacts'];
     }
 
-    /**
-     */
     protected function beforeStore(array $data, Request $request): array
     {
         $data['user_id'] = $request->get('user_id');
@@ -39,25 +37,16 @@ class ServiceApiController extends BaseController
             ->except(['contact_ids'])
             ->toArray();
     }
-
-    /**
-     */
     protected function afterStore($record, Request $request): void
     {
         $this->syncContacts($record, $request);
     }
-
-    /**
-     */
     protected function afterUpdate($updatedRecord, $oldRecord, Request $request): void
     {
         $updatedRecord->contacts()->delete();
         $this->syncContacts($updatedRecord, $request);
     }
 
-    /**
-     * Sync Contacts (Reusable)
-     */
     private function syncContacts($record, Request $request): void
     {
         if ($request->has('contact_ids') && is_array($request->contact_ids)) {
@@ -65,7 +54,7 @@ class ServiceApiController extends BaseController
                 ServiceContact::create([
                     'service_id'      => $record->id,
                     'user_contact_id' => $id,
-                    'type'            => 'service',
+                    'type'            => 'project',
                 ]);
             }
         }

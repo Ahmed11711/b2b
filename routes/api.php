@@ -1,7 +1,11 @@
 <?php
 
+use App\Http\Controllers\Admin\Branch\BranchController;
 use App\Http\Controllers\Admin\Category\CategoryController;
 use App\Http\Controllers\Admin\City\CityController;
+use App\Http\Controllers\Admin\MyCertificate\MyCertificateController;
+use App\Http\Controllers\Admin\Project\ProjectController;
+use App\Http\Controllers\Admin\verification\verificationController;
 use App\Http\Controllers\Api\MyCategory\MyCategoryController;
 use App\Http\Controllers\Api\Profile\ProfileAccountController;
 use App\Http\Controllers\Api\Service\ServiceApiController;
@@ -13,6 +17,10 @@ use App\Http\Controllers\Auth\OtpController;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Middleware\CheckJwtToken;
 use Illuminate\Support\Facades\Route;
+
+
+
+
 
 
 
@@ -66,5 +74,10 @@ Route::middleware(CheckJwtToken::class)->prefix('v1/provider')->group(function (
     Route::get('city', [CityController::class, 'index']);
     Route::put('my-profile', [ProfileAccountController::class, 'update']);
     Route::get('my-profile', [ProfileAccountController::class, 'show']);
+    Route::apiResource('my-projects', ProjectController::class)->names('project');
+    Route::apiResource('my_certificates', MyCertificateController::class)->names('my_certificate');
+    Route::apiResource('my-branches', BranchController::class)->names('branch');
+    Route::apiResource('verifications', verificationController::class)->names('verification');
 });
+
 require __DIR__ . '/admin.php';

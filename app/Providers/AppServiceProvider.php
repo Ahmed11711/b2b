@@ -2,6 +2,19 @@
 
 namespace App\Providers;
 
+use App\Repositories\verification\verificationRepositoryInterface;
+use App\Repositories\verification\verificationRepository;
+
+use App\Repositories\Branch\BranchRepositoryInterface;
+use App\Repositories\Branch\BranchRepository;
+
+use App\Repositories\MyCertificate\MyCertificateRepositoryInterface;
+use App\Repositories\MyCertificate\MyCertificateRepository;
+
+use App\Repositories\Project\ProjectRepositoryInterface;
+use App\Repositories\Project\ProjectRepository;
+
+
 use App\Repositories\User\UserRepositoryInterface;
 use App\Repositories\User\UserRepository;
 
@@ -73,6 +86,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ServiceRepositoryInterface::class, ServiceRepository::class);
         $this->app->bind(AdsRepositoryInterface::class, AdsRepository::class);
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
+        $this->app->bind(ProjectRepositoryInterface::class, ProjectRepository::class);
+        $this->app->bind(MyCertificateRepositoryInterface::class, MyCertificateRepository::class);
+        $this->app->bind(BranchRepositoryInterface::class, BranchRepository::class);
+        $this->app->bind(verificationRepositoryInterface::class, verificationRepository::class);
 }
 
     /**

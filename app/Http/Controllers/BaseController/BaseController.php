@@ -52,7 +52,6 @@ abstract class BaseController extends Controller
       $query = $this->repository->query()->with($this->getIndexRelationships());
       $query = $this->applyScoping($query);
 
-      Log::alert("TT", [$query]);
 
       $data = app(Pipeline::class)
         ->send($query)

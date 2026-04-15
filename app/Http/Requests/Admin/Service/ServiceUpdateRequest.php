@@ -14,7 +14,6 @@ class ServiceUpdateRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'sometimes|nullable|exists:users,id|display_field:name',
             'category_id' => 'sometimes|nullable|exists:categories,id|display_field:name',
             'city_id' => 'sometimes|nullable|exists:cities,id|display_field:name',
             'title' => 'sometimes|required|string|max:255',
@@ -31,7 +30,6 @@ class ServiceUpdateRequest extends BaseRequest
     public function messages(): array
     {
         return [
-            'user_id.exists' => 'The selected user id is invalid.',
             'category_id.exists' => 'The selected category id is invalid.',
             'city_id.exists' => 'The selected city id is invalid.',
             'title.required' => 'The title field is required.',

@@ -10,4 +10,8 @@ class ServiceContact extends Model
     {
         return $this->belongsTo(Service::class);
     }
+    public function userContact()
+    {
+        return $this->belongsTo(UserContact::class, 'user_contact_id');
+    }
 }

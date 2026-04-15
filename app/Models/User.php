@@ -59,9 +59,21 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsToMany(Category::class, 'category_user');
     }
 
-    public function social()
+    public function services()
     {
-        return $this->belongsTo(Social::class, 'social_id');
+        return $this->hasMany(Service::class);
+    }
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
+    public function certificates()
+    {
+        return $this->hasMany(MyCertificate::class);
+    }
+    public function branches()
+    {
+        return $this->hasMany(Branch::class);
     }
 
 
@@ -69,5 +81,8 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->belongsTo(City::class, 'city_id');
     }
-
+    public function reviews()
+    {
+        return $this->hasMany(ServiceReviews::class, 'provider_id');
+    }
 }

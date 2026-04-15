@@ -4,6 +4,7 @@ namespace App\Http\Resources\Admin\Service;
 
 use App\Http\Resources\Admin\Category\CategoryResource;
 use App\Http\Resources\Admin\User\UserResource;
+use App\Http\Resources\Api\ReviewsResource;
 use App\Http\Resources\Api\ServiceContact\ServiceContactResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -28,6 +29,7 @@ class ServiceResource extends JsonResource
 
         $data['category'] = new CategoryResource($this->whenLoaded('category'));
         $data['contacts'] = ServiceContactResource::collection($this->whenLoaded('contacts'));
+        $data['reviews'] = ReviewsResource::collection($this->whenLoaded('reviews'));
 
 
         return $data;

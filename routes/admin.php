@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\Posts\PostsController;
 use App\Http\Controllers\Admin\verification\verificationController;
 use App\Http\Controllers\Admin\Branch\BranchController;
 use App\Http\Controllers\Admin\User\UserController;

@@ -33,6 +33,8 @@ class DatabaseSeeder extends Seeder
         $this->call(MyCertificateSeeder::class);
         $this->call(BranchSeeder::class);
         $this->call(verificationSeeder::class);
+        $this->call(PostsSeeder::class);
+    
     
     
     

@@ -76,7 +76,6 @@ abstract class BaseController extends Controller
     }
   }
 
-  // في BaseController
   protected function applyScoping($query)
   {
     if ($this->isUserBound) {

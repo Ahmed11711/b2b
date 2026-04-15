@@ -70,4 +70,11 @@ class ServiceApiController extends BaseController
             }
         }
     }
+
+    protected function getShowRelationships(): array
+    {
+        return array_merge($this->withRelationships, [
+            'reviews'
+        ]);
+    }
 }

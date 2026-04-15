@@ -39,4 +39,8 @@ class Service extends Model
     {
         return $this->hasMany(ServiceContact::class, 'service_id', 'id');
     }
+    public function reviews()
+    {
+        return $this->hasMany(ServiceReviews::class, 'service_id');
+    }
 }

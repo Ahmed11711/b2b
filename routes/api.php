@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\Branch\BranchController;
 use App\Http\Controllers\Admin\Category\CategoryController;
 use App\Http\Controllers\Admin\City\CityController;
 use App\Http\Controllers\Admin\MyCertificate\MyCertificateController;
+use App\Http\Controllers\Admin\Posts\PostsController;
 use App\Http\Controllers\Admin\Project\ProjectController;
 use App\Http\Controllers\Admin\verification\verificationController;
 use App\Http\Controllers\Api\MyCategory\MyCategoryController;
@@ -15,8 +16,15 @@ use App\Http\Controllers\Auth\CreateAcountController;
 use App\Http\Controllers\Auth\LoginAccountController;
 use App\Http\Controllers\Auth\OtpController;
 use App\Http\Controllers\Auth\ProfileController;
+use App\Http\Controllers\User\AllProviders\AllProvidersController;
+use App\Http\Controllers\User\Reviews\ReviewsController;
 use App\Http\Middleware\CheckJwtToken;
+use App\Http\Middleware\TrackProviderVisits;
 use Illuminate\Support\Facades\Route;
+
+
+
+
 
 
 
@@ -56,11 +64,16 @@ Route::group(['prefix' => 'v1/auth'], function () {
 
 
 
-Route::prefix('v1/user')->group(function () {
+Route::middleware(CheckJwtToken::class)->prefix('v1/user')->group(function () {
 
     Route::get('category', [CategoryController::class, 'index']);
-    Route::resource('services', ServiceApiController::class)
-        ->except(['store', 'update', 'destroy']);
+    Route::get('all-provider', [AllProvidersController::class, 'allProvider']);
+    Route::get('top-provider', [AllProvidersController::class, 'topProviders']);
+    Route::get('one-provider/{id}', [AllProvidersController::class, 'oneProvider'])->middleware(TrackProviderVisits::class);
+    Route::get('get-service/{id}', [ServiceApiController::class, 'show']);
+    Route::get('get-project/{id}', [ProjectController::class, 'show']);
+    Route::post('review-service', [ReviewsController::class, 'store']);
+    Route::apiResource('posts', PostsController::class)->names('posts');
 });
 
 

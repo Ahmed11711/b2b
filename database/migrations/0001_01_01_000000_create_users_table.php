@@ -19,6 +19,7 @@ return new class extends Migration
 
             $table->string('phone')->nullable()->unique();
             $table->string('user_name')->nullable();
+            $table->string('image')->nullable();
             $table->string('whtsapp')->nullable();
             $table->string('country_code')->default('SA');
             $table->boolean('is_active')->default(true);

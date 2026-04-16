@@ -1,0 +1,106 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+
+class BagItemsSeeder extends Seeder
+{
+    public function run(): void
+    {
+        DB::table('bag_items')->insert([
+            [
+                'title' => Str::title('title') . '_' . Str::random(5),
+                'image' => collect(['https://images.unsplash.com/photo-1498050108023-c5249f4df085','https://images.unsplash.com/photo-1461747823400-487cf1852d7e','https://images.unsplash.com/photo-1504639725590-34d0984388bd'])->random(),
+                'rating' => 'Sample_' . Str::random(5),
+                'desc' => Str::title('desc') . '_' . Str::random(5),
+                'Whose' => 'Sample_' . Str::random(5),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'title' => Str::title('title') . '_' . Str::random(5),
+                'image' => collect(['https://images.unsplash.com/photo-1498050108023-c5249f4df085','https://images.unsplash.com/photo-1461747823400-487cf1852d7e','https://images.unsplash.com/photo-1504639725590-34d0984388bd'])->random(),
+                'rating' => 'Sample_' . Str::random(5),
+                'desc' => Str::title('desc') . '_' . Str::random(5),
+                'Whose' => 'Sample_' . Str::random(5),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'title' => Str::title('title') . '_' . Str::random(5),
+                'image' => collect(['https://images.unsplash.com/photo-1498050108023-c5249f4df085','https://images.unsplash.com/photo-1461747823400-487cf1852d7e','https://images.unsplash.com/photo-1504639725590-34d0984388bd'])->random(),
+                'rating' => 'Sample_' . Str::random(5),
+                'desc' => Str::title('desc') . '_' . Str::random(5),
+                'Whose' => 'Sample_' . Str::random(5),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'title' => Str::title('title') . '_' . Str::random(5),
+                'image' => collect(['https://images.unsplash.com/photo-1498050108023-c5249f4df085','https://images.unsplash.com/photo-1461747823400-487cf1852d7e','https://images.unsplash.com/photo-1504639725590-34d0984388bd'])->random(),
+                'rating' => 'Sample_' . Str::random(5),
+                'desc' => Str::title('desc') . '_' . Str::random(5),
+                'Whose' => 'Sample_' . Str::random(5),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'title' => Str::title('title') . '_' . Str::random(5),
+                'image' => collect(['https://images.unsplash.com/photo-1498050108023-c5249f4df085','https://images.unsplash.com/photo-1461747823400-487cf1852d7e','https://images.unsplash.com/photo-1504639725590-34d0984388bd'])->random(),
+                'rating' => 'Sample_' . Str::random(5),
+                'desc' => Str::title('desc') . '_' . Str::random(5),
+                'Whose' => 'Sample_' . Str::random(5),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'title' => Str::title('title') . '_' . Str::random(5),
+                'image' => collect(['https://images.unsplash.com/photo-1498050108023-c5249f4df085','https://images.unsplash.com/photo-1461747823400-487cf1852d7e','https://images.unsplash.com/photo-1504639725590-34d0984388bd'])->random(),
+                'rating' => 'Sample_' . Str::random(5),
+                'desc' => Str::title('desc') . '_' . Str::random(5),
+                'Whose' => 'Sample_' . Str::random(5),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'title' => Str::title('title') . '_' . Str::random(5),
+                'image' => collect(['https://images.unsplash.com/photo-1498050108023-c5249f4df085','https://images.unsplash.com/photo-1461747823400-487cf1852d7e','https://images.unsplash.com/photo-1504639725590-34d0984388bd'])->random(),
+                'rating' => 'Sample_' . Str::random(5),
+                'desc' => Str::title('desc') . '_' . Str::random(5),
+                'Whose' => 'Sample_' . Str::random(5),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'title' => Str::title('title') . '_' . Str::random(5),
+                'image' => collect(['https://images.unsplash.com/photo-1498050108023-c5249f4df085','https://images.unsplash.com/photo-1461747823400-487cf1852d7e','https://images.unsplash.com/photo-1504639725590-34d0984388bd'])->random(),
+                'rating' => 'Sample_' . Str::random(5),
+                'desc' => Str::title('desc') . '_' . Str::random(5),
+                'Whose' => 'Sample_' . Str::random(5),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'title' => Str::title('title') . '_' . Str::random(5),
+                'image' => collect(['https://images.unsplash.com/photo-1498050108023-c5249f4df085','https://images.unsplash.com/photo-1461747823400-487cf1852d7e','https://images.unsplash.com/photo-1504639725590-34d0984388bd'])->random(),
+                'rating' => 'Sample_' . Str::random(5),
+                'desc' => Str::title('desc') . '_' . Str::random(5),
+                'Whose' => 'Sample_' . Str::random(5),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'title' => Str::title('title') . '_' . Str::random(5),
+                'image' => collect(['https://images.unsplash.com/photo-1498050108023-c5249f4df085','https://images.unsplash.com/photo-1461747823400-487cf1852d7e','https://images.unsplash.com/photo-1504639725590-34d0984388bd'])->random(),
+                'rating' => 'Sample_' . Str::random(5),
+                'desc' => Str::title('desc') . '_' . Str::random(5),
+                'Whose' => 'Sample_' . Str::random(5),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ]);
+    }
+}

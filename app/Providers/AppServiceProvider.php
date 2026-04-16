@@ -2,6 +2,22 @@
 
 namespace App\Providers;
 
+use App\Repositories\BagItems\BagItemsRepositoryInterface;
+use App\Repositories\BagItems\BagItemsRepository;
+
+use App\Repositories\BagsCategory\BagsCategoryRepositoryInterface;
+use App\Repositories\BagsCategory\BagsCategoryRepository;
+
+use App\Repositories\Bag\BagRepositoryInterface;
+use App\Repositories\Bag\BagRepository;
+
+use App\Repositories\Package\PackageRepositoryInterface;
+use App\Repositories\Package\PackageRepository;
+
+use App\Repositories\Feature\FeatureRepositoryInterface;
+use App\Repositories\Feature\FeatureRepository;
+
+
 use App\Repositories\Posts\PostsRepositoryInterface;
 use App\Repositories\Posts\PostsRepository;
 
@@ -94,6 +110,12 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(BranchRepositoryInterface::class, BranchRepository::class);
         $this->app->bind(verificationRepositoryInterface::class, verificationRepository::class);
         $this->app->bind(PostsRepositoryInterface::class, PostsRepository::class);
+        
+        $this->app->bind(FeatureRepositoryInterface::class, FeatureRepository::class);
+        $this->app->bind(PackageRepositoryInterface::class, PackageRepository::class);
+        $this->app->bind(BagRepositoryInterface::class, BagRepository::class);
+        $this->app->bind(BagsCategoryRepositoryInterface::class, BagsCategoryRepository::class);
+        $this->app->bind(BagItemsRepositoryInterface::class, BagItemsRepository::class);
 }
 
     /**

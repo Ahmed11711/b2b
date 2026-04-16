@@ -228,10 +228,10 @@ abstract class BaseController extends Controller
 
           if ($existingRecord && !empty($existingRecord->$field)) {
             Storage::disk($this->uploadDisk)
-              ->delete(str_replace('/storage/app/public/', '', $existingRecord->$field));
+              ->delete(str_replace('/storage/', '', $existingRecord->$field));
           }
 
-          $validated[$field] = "/storage/app/public/" . $path;
+          $validated[$field] = "/storage/" . $path;
         } catch (\Throwable $e) {
           Log::error("File upload failed for field [{$field}] in {$this->collectionName}: " . $e->getMessage());
         }

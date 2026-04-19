@@ -12,4 +12,8 @@ class Bag extends Model
     public array $allowedFields = ['id', 'title', 'image', 'icon', 'free', 'created_at', 'updated_at'];
 
     //
+    public function bagCategory()
+    {
+        return $this->hasMany(BagsCategory::class, 'bag_id');
+    }
 }

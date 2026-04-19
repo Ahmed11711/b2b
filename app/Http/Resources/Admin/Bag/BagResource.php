@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Admin\Bag;
 
+use App\Http\Resources\Admin\BagsCategory\BagsCategoryResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
@@ -28,6 +29,7 @@ class BagResource extends JsonResource
             ? url(str_replace('/storage/app/public', '/storage', $this->icon))
             : null;
 
+        $data['bagCategory'] = BagsCategoryResource::collection($this->whenLoaded('bagCategory'));
         return $data;
     }
 }

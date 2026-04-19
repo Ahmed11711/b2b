@@ -14,7 +14,7 @@ class PostsUpdateRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'sometimes|required|exists:users,id|display_field:name',
+            'category_id' => 'required|exists:categories,id',
             'title' => 'sometimes|required|string|max:255',
             'description' => 'sometimes|required|string',
             'price_from' => 'sometimes|required|numeric',

@@ -17,5 +17,4 @@ class BagsCategory extends Model
     {
         return $this->belongsTo(Bag::class, 'bag_id');
     }
-
 }

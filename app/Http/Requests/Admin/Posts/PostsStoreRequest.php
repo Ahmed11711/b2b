@@ -15,6 +15,7 @@ class PostsStoreRequest extends BaseRequest
     {
         return [
             'title' => 'required|string|max:255',
+            'category_id' => 'required|exists:categories,id',
             'description' => 'required|string',
             'price_from' => 'required|numeric',
             'price_to' => 'required|numeric',

@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Repositories\BagItems\BagItemsRepositoryInterface;
 use App\Repositories\BagItems\BagItemsRepository;
 
+
 use App\Repositories\BagsCategory\BagsCategoryRepositoryInterface;
 use App\Repositories\BagsCategory\BagsCategoryRepository;
 

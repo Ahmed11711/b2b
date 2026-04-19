@@ -21,7 +21,9 @@ class BagsCategoryResource extends JsonResource
             }
         }
         $data['bag_name'] = $this->whenLoaded('bag');
-
+        $data['image'] = $this->image
+            ? url(str_replace('/storage/app/public', '/storage', $this->image))
+            : null;
         return $data;
     }
 }

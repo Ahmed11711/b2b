@@ -10,117 +10,27 @@ class verificationSeeder extends Seeder
 {
     public function run(): void
     {
-        DB::table('verifications')->insert([
-            [
-                'user_id' => DB::table('users')->inRandomOrder()->value('id') ?? 1,
-                'id_card_front' => 'Sample_' . Str::random(5),
-                'id_card_back' => 'Sample_' . Str::random(5),
-                'commercial_register' => 'Sample_' . Str::random(5),
-                'tax_card' => 'Sample_' . Str::random(5),
-                'status' => collect(['pending','approved','rejected'])->random(),
-                'notes' => 'Sample_' . Str::random(5),
+        // 1. جلب جميع معرفات المستخدمين
+        $userIds = DB::table('users')->pluck('id');
+
+        $data = [];
+
+        // 2. إنشاء سجل توثيق واحد لكل مستخدم
+        foreach ($userIds as $id) {
+            $data[] = [
+                'user_id' => $id,
+                'id_card_front' => 'ID_Front_' . Str::random(5),
+                'id_card_back' => 'ID_Back_' . Str::random(5),
+                'commercial_register' => 'Comm_' . Str::random(5),
+                'tax_card' => 'Tax_' . Str::random(5),
+                'status' => collect(['pending', 'approved', 'rejected'])->random(),
+                'notes' => 'Note_' . Str::random(5),
                 'created_at' => now(),
                 'updated_at' => now(),
-            ],
-            [
-                'user_id' => DB::table('users')->inRandomOrder()->value('id') ?? 1,
-                'id_card_front' => 'Sample_' . Str::random(5),
-                'id_card_back' => 'Sample_' . Str::random(5),
-                'commercial_register' => 'Sample_' . Str::random(5),
-                'tax_card' => 'Sample_' . Str::random(5),
-                'status' => collect(['pending','approved','rejected'])->random(),
-                'notes' => 'Sample_' . Str::random(5),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'user_id' => DB::table('users')->inRandomOrder()->value('id') ?? 1,
-                'id_card_front' => 'Sample_' . Str::random(5),
-                'id_card_back' => 'Sample_' . Str::random(5),
-                'commercial_register' => 'Sample_' . Str::random(5),
-                'tax_card' => 'Sample_' . Str::random(5),
-                'status' => collect(['pending','approved','rejected'])->random(),
-                'notes' => 'Sample_' . Str::random(5),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'user_id' => DB::table('users')->inRandomOrder()->value('id') ?? 1,
-                'id_card_front' => 'Sample_' . Str::random(5),
-                'id_card_back' => 'Sample_' . Str::random(5),
-                'commercial_register' => 'Sample_' . Str::random(5),
-                'tax_card' => 'Sample_' . Str::random(5),
-                'status' => collect(['pending','approved','rejected'])->random(),
-                'notes' => 'Sample_' . Str::random(5),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'user_id' => DB::table('users')->inRandomOrder()->value('id') ?? 1,
-                'id_card_front' => 'Sample_' . Str::random(5),
-                'id_card_back' => 'Sample_' . Str::random(5),
-                'commercial_register' => 'Sample_' . Str::random(5),
-                'tax_card' => 'Sample_' . Str::random(5),
-                'status' => collect(['pending','approved','rejected'])->random(),
-                'notes' => 'Sample_' . Str::random(5),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'user_id' => DB::table('users')->inRandomOrder()->value('id') ?? 1,
-                'id_card_front' => 'Sample_' . Str::random(5),
-                'id_card_back' => 'Sample_' . Str::random(5),
-                'commercial_register' => 'Sample_' . Str::random(5),
-                'tax_card' => 'Sample_' . Str::random(5),
-                'status' => collect(['pending','approved','rejected'])->random(),
-                'notes' => 'Sample_' . Str::random(5),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'user_id' => DB::table('users')->inRandomOrder()->value('id') ?? 1,
-                'id_card_front' => 'Sample_' . Str::random(5),
-                'id_card_back' => 'Sample_' . Str::random(5),
-                'commercial_register' => 'Sample_' . Str::random(5),
-                'tax_card' => 'Sample_' . Str::random(5),
-                'status' => collect(['pending','approved','rejected'])->random(),
-                'notes' => 'Sample_' . Str::random(5),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'user_id' => DB::table('users')->inRandomOrder()->value('id') ?? 1,
-                'id_card_front' => 'Sample_' . Str::random(5),
-                'id_card_back' => 'Sample_' . Str::random(5),
-                'commercial_register' => 'Sample_' . Str::random(5),
-                'tax_card' => 'Sample_' . Str::random(5),
-                'status' => collect(['pending','approved','rejected'])->random(),
-                'notes' => 'Sample_' . Str::random(5),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'user_id' => DB::table('users')->inRandomOrder()->value('id') ?? 1,
-                'id_card_front' => 'Sample_' . Str::random(5),
-                'id_card_back' => 'Sample_' . Str::random(5),
-                'commercial_register' => 'Sample_' . Str::random(5),
-                'tax_card' => 'Sample_' . Str::random(5),
-                'status' => collect(['pending','approved','rejected'])->random(),
-                'notes' => 'Sample_' . Str::random(5),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'user_id' => DB::table('users')->inRandomOrder()->value('id') ?? 1,
-                'id_card_front' => 'Sample_' . Str::random(5),
-                'id_card_back' => 'Sample_' . Str::random(5),
-                'commercial_register' => 'Sample_' . Str::random(5),
-                'tax_card' => 'Sample_' . Str::random(5),
-                'status' => collect(['pending','approved','rejected'])->random(),
-                'notes' => 'Sample_' . Str::random(5),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
+            ];
+        }
+
+        // 3. إدخال البيانات دفعة واحدة
+        DB::table('verifications')->insert($data);
     }
 }

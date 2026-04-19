@@ -13,7 +13,7 @@ class BagItemsResource extends JsonResource
     {
         $attributes = $this->resource->getAttributes();
         $data = ['id' => $this->id];
-        $fields = ['title', 'image', 'rating', 'desc', 'Whose', 'created_at', 'updated_at'];
+        $fields = ['title', 'price', 'image', 'currency', 'rating', 'desc', 'Whose', 'what_will_you_get', 'created_at', 'updated_at'];
 
         foreach ($fields as $field) {
             if (array_key_exists($field, $attributes)) {

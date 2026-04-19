@@ -24,4 +24,10 @@ class BagController extends BaseController
         $this->updateRequestClass = BagUpdateRequest::class;
         $this->resourceClass = BagResource::class;
     }
+    protected function getShowRelationships(): array
+    {
+        return array_merge($this->withRelationships, [
+            'bagCategory'
+        ]);
+    }
 }

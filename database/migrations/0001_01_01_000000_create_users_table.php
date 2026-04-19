@@ -28,7 +28,7 @@ return new class extends Migration
             $table->enum('role', ['user', 'super_admin'])->nullable();
             $table->enum('social_type', ['google', 'apple', 'facebook'])->nullable();
             $table->string('social_id')->nullable()->unique();
-            $table->string('city_id')->nullable()->unique();
+            $table->string('city_id')->nullable();
             $table->text('info')->nullable();
             $table->timestamp('last_login_at')->nullable();
             $table->timestamps();

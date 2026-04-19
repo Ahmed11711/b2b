@@ -18,32 +18,28 @@ class DatabaseSeeder extends Seeder
 
 
 
-        // $this->call(CountrySeeder::class);
-        // $this->call(CitySeeder::class);
+        $this->call(CountrySeeder::class);
+        $this->call(CitySeeder::class);
 
 
-        // $this->call(CategorySeeder::class);
+        $this->call(CategorySeeder::class);
 
 
-        // $this->call(UserInfoSeeder::class);
-        // $this->call(ServiceSeeder::class);
+        $this->call(UserSeeder::class);
+
+        $this->call(ServiceSeeder::class);
         // $this->call(AdsSeeder::class);
         // $this->call(UserSeeder::class);
-        // $this->call(ProjectSeeder::class);
-        // $this->call(MyCertificateSeeder::class);
-        // $this->call(BranchSeeder::class);
-        // $this->call(verificationSeeder::class);
-        // $this->call(PostsSeeder::class);
+        $this->call(ProjectSeeder::class);
+        $this->call(MyCertificateSeeder::class);
+        $this->call(BranchSeeder::class);
+        $this->call(verificationSeeder::class);
+        $this->call(PostsSeeder::class);
 
-        // $this->call(FeatureSeeder::class);
-        // $this->call(PackageSeeder::class);
+        $this->call(FeatureSeeder::class);
+        $this->call(PackageSeeder::class);
         $this->call(BagSeeder::class);
         $this->call(BagsCategorySeeder::class);
         $this->call(BagItemsSeeder::class);
-    
-    
-    
-
-
     }
 }

@@ -1,6 +1,6 @@
 /**
  * Auto-generated fields for BagItems
- * Generated at: 2026-04-16 14:06:28
+ * Generated at: 2026-04-19 10:58:37
  */
 export const BagItemsFields = [
   { 
@@ -71,7 +71,7 @@ export const BagItemsFields = [
     display_field: null,
     required: 1, 
     placeholder: "Enter Desc",
-    searchable: false,
+    searchable: true,
     filterable: false,
     sortable: false,
     table_show: false,
@@ -86,7 +86,7 @@ export const BagItemsFields = [
     display_field: null,
     required: 0, 
     placeholder: "Enter Whose",
-    searchable: false,
+    searchable: true,
     filterable: false,
     sortable: false,
     table_show: false,

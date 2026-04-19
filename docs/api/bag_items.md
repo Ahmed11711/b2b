@@ -16,9 +16,12 @@ This documentation is auto-generated for the **bag_items** table.
 | :--- | :--- | :--- |
 | `id` | *bigint* | Field from database |
 | `title` | *varchar* | Field from database |
+| `price` | *decimal* | Field from database |
 | `image` | *varchar* | Field from database |
+| `currency` | *enum* | Field from database |
 | `rating` | *varchar* | Field from database |
 | `desc` | *text* | Field from database |
 | `Whose` | *text* | Field from database |
+| `what_will_you_get` | *text* | Field from database |
 | `created_at` | *timestamp* | Field from database |
 | `updated_at` | *timestamp* | Field from database |

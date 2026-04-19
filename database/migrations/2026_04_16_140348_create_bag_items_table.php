@@ -14,10 +14,14 @@ return new class extends Migration
         Schema::create('bag_items', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->decimal('price', 10, 2);
             $table->string('image');
+            $table->enum('currency', ['ريال', 'دولار', 'جنيه مصري'])
+                ->default('ريال');
             $table->string('rating')->nullable();
             $table->text('desc');
             $table->text('Whose')->nullable();
+            $table->text('what_will_you_get')->nullable();
             $table->timestamps();
         });
     }

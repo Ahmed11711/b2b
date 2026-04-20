@@ -64,7 +64,7 @@ class BagItemsController extends BaseController
                     'type'  => $type,
                 ]);
             } catch (\Throwable $e) {
-                Log::error("Gallery upload failed for BagItems: " . $e->getMessage());
+                Log::error("Gallery upload failed for BagIte   ms: " . $e->getMessage());
             }
         }
     }

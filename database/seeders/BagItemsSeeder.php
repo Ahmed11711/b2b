@@ -14,7 +14,7 @@ class BagItemsSeeder extends Seeder
             [
                 'bags_categories_id' => DB::table('bags_categories')->inRandomOrder()->value('id') ?? 1,
                 'title' => Str::title('title') . '_' . Str::random(5),
-                'price' => 'Sample_' . Str::random(5),
+                'price' => 55,
                 'image' => collect(['https://images.unsplash.com/photo-1498050108023-c5249f4df085','https://images.unsplash.com/photo-1461747823400-487cf1852d7e','https://images.unsplash.com/photo-1504639725590-34d0984388bd'])->random(),
                 'currency' => collect(['ريال','دولار','جنيه مصري'])->random(),
                 'rating' => 'Sample_' . Str::random(5),
@@ -27,7 +27,7 @@ class BagItemsSeeder extends Seeder
             [
                 'bags_categories_id' => DB::table('bags_categories')->inRandomOrder()->value('id') ?? 1,
                 'title' => Str::title('title') . '_' . Str::random(5),
-                'price' => 'Sample_' . Str::random(5),
+                'price' => 5,
                 'image' => collect(['https://images.unsplash.com/photo-1498050108023-c5249f4df085','https://images.unsplash.com/photo-1461747823400-487cf1852d7e','https://images.unsplash.com/photo-1504639725590-34d0984388bd'])->random(),
                 'currency' => collect(['ريال','دولار','جنيه مصري'])->random(),
                 'rating' => 'Sample_' . Str::random(5),
@@ -40,7 +40,7 @@ class BagItemsSeeder extends Seeder
             [
                 'bags_categories_id' => DB::table('bags_categories')->inRandomOrder()->value('id') ?? 1,
                 'title' => Str::title('title') . '_' . Str::random(5),
-                'price' => 'Sample_' . Str::random(5),
+                'price' =>3,
                 'image' => collect(['https://images.unsplash.com/photo-1498050108023-c5249f4df085','https://images.unsplash.com/photo-1461747823400-487cf1852d7e','https://images.unsplash.com/photo-1504639725590-34d0984388bd'])->random(),
                 'currency' => collect(['ريال','دولار','جنيه مصري'])->random(),
                 'rating' => 'Sample_' . Str::random(5),
@@ -53,7 +53,7 @@ class BagItemsSeeder extends Seeder
             [
                 'bags_categories_id' => DB::table('bags_categories')->inRandomOrder()->value('id') ?? 1,
                 'title' => Str::title('title') . '_' . Str::random(5),
-                'price' => 'Sample_' . Str::random(5),
+                'price' => '33,
                 'image' => collect(['https://images.unsplash.com/photo-1498050108023-c5249f4df085','https://images.unsplash.com/photo-1461747823400-487cf1852d7e','https://images.unsplash.com/photo-1504639725590-34d0984388bd'])->random(),
                 'currency' => collect(['ريال','دولار','جنيه مصري'])->random(),
                 'rating' => 'Sample_' . Str::random(5),
@@ -66,7 +66,7 @@ class BagItemsSeeder extends Seeder
             [
                 'bags_categories_id' => DB::table('bags_categories')->inRandomOrder()->value('id') ?? 1,
                 'title' => Str::title('title') . '_' . Str::random(5),
-                'price' => 'Sample_' . Str::random(5),
+                'price' => 33,
                 'image' => collect(['https://images.unsplash.com/photo-1498050108023-c5249f4df085','https://images.unsplash.com/photo-1461747823400-487cf1852d7e','https://images.unsplash.com/photo-1504639725590-34d0984388bd'])->random(),
                 'currency' => collect(['ريال','دولار','جنيه مصري'])->random(),
                 'rating' => 'Sample_' . Str::random(5),
@@ -79,7 +79,7 @@ class BagItemsSeeder extends Seeder
             [
                 'bags_categories_id' => DB::table('bags_categories')->inRandomOrder()->value('id') ?? 1,
                 'title' => Str::title('title') . '_' . Str::random(5),
-                'price' => 'Sample_' . Str::random(5),
+                'price' => 33,
                 'image' => collect(['https://images.unsplash.com/photo-1498050108023-c5249f4df085','https://images.unsplash.com/photo-1461747823400-487cf1852d7e','https://images.unsplash.com/photo-1504639725590-34d0984388bd'])->random(),
                 'currency' => collect(['ريال','دولار','جنيه مصري'])->random(),
                 'rating' => 'Sample_' . Str::random(5),
@@ -92,7 +92,7 @@ class BagItemsSeeder extends Seeder
             [
                 'bags_categories_id' => DB::table('bags_categories')->inRandomOrder()->value('id') ?? 1,
                 'title' => Str::title('title') . '_' . Str::random(5),
-                'price' => 'Sample_' . Str::random(5),
+                'price' => 33,
                 'image' => collect(['https://images.unsplash.com/photo-1498050108023-c5249f4df085','https://images.unsplash.com/photo-1461747823400-487cf1852d7e','https://images.unsplash.com/photo-1504639725590-34d0984388bd'])->random(),
                 'currency' => collect(['ريال','دولار','جنيه مصري'])->random(),
                 'rating' => 'Sample_' . Str::random(5),
@@ -105,7 +105,7 @@ class BagItemsSeeder extends Seeder
             [
                 'bags_categories_id' => DB::table('bags_categories')->inRandomOrder()->value('id') ?? 1,
                 'title' => Str::title('title') . '_' . Str::random(5),
-                'price' => 'Sample_' . Str::random(5),
+                'price' => 33,
                 'image' => collect(['https://images.unsplash.com/photo-1498050108023-c5249f4df085','https://images.unsplash.com/photo-1461747823400-487cf1852d7e','https://images.unsplash.com/photo-1504639725590-34d0984388bd'])->random(),
                 'currency' => collect(['ريال','دولار','جنيه مصري'])->random(),
                 'rating' => 'Sample_' . Str::random(5),
@@ -118,7 +118,7 @@ class BagItemsSeeder extends Seeder
             [
                 'bags_categories_id' => DB::table('bags_categories')->inRandomOrder()->value('id') ?? 1,
                 'title' => Str::title('title') . '_' . Str::random(5),
-                'price' => 'Sample_' . Str::random(5),
+                'price' => 33,
                 'image' => collect(['https://images.unsplash.com/photo-1498050108023-c5249f4df085','https://images.unsplash.com/photo-1461747823400-487cf1852d7e','https://images.unsplash.com/photo-1504639725590-34d0984388bd'])->random(),
                 'currency' => collect(['ريال','دولار','جنيه مصري'])->random(),
                 'rating' => 'Sample_' . Str::random(5),
@@ -131,7 +131,7 @@ class BagItemsSeeder extends Seeder
             [
                 'bags_categories_id' => DB::table('bags_categories')->inRandomOrder()->value('id') ?? 1,
                 'title' => Str::title('title') . '_' . Str::random(5),
-                'price' => 'Sample_' . Str::random(5),
+                'price' => 33,
                 'image' => collect(['https://images.unsplash.com/photo-1498050108023-c5249f4df085','https://images.unsplash.com/photo-1461747823400-487cf1852d7e','https://images.unsplash.com/photo-1504639725590-34d0984388bd'])->random(),
                 'currency' => collect(['ريال','دولار','جنيه مصري'])->random(),
                 'rating' => 'Sample_' . Str::random(5),

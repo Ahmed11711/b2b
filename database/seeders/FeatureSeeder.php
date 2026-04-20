@@ -10,77 +10,31 @@ class FeatureSeeder extends Seeder
 {
     public function run(): void
     {
+
+
         DB::table('features')->insert([
             [
-                'key' => 'Sample_' . Str::random(5),
-                'lable' => 'Sample_' . Str::random(5),
-                'type' => collect(['boolean','number','text'])->random(),
+                'key' => "user",
+                'lable' => "you have permission for sub account",
+                'type' => "number",
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'key' => 'Sample_' . Str::random(5),
-                'lable' => 'Sample_' . Str::random(5),
-                'type' => collect(['boolean','number','text'])->random(),
+                'key' => "service",
+                'lable' => "you have permission for service",
+                'type' => "number",
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'key' => 'Sample_' . Str::random(5),
-                'lable' => 'Sample_' . Str::random(5),
-                'type' => collect(['boolean','number','text'])->random(),
+                'key' => "applay",
+                'lable' => "you have permission for applay",
+                'type' => "number",
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-            [
-                'key' => 'Sample_' . Str::random(5),
-                'lable' => 'Sample_' . Str::random(5),
-                'type' => collect(['boolean','number','text'])->random(),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'key' => 'Sample_' . Str::random(5),
-                'lable' => 'Sample_' . Str::random(5),
-                'type' => collect(['boolean','number','text'])->random(),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'key' => 'Sample_' . Str::random(5),
-                'lable' => 'Sample_' . Str::random(5),
-                'type' => collect(['boolean','number','text'])->random(),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'key' => 'Sample_' . Str::random(5),
-                'lable' => 'Sample_' . Str::random(5),
-                'type' => collect(['boolean','number','text'])->random(),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'key' => 'Sample_' . Str::random(5),
-                'lable' => 'Sample_' . Str::random(5),
-                'type' => collect(['boolean','number','text'])->random(),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'key' => 'Sample_' . Str::random(5),
-                'lable' => 'Sample_' . Str::random(5),
-                'type' => collect(['boolean','number','text'])->random(),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'key' => 'Sample_' . Str::random(5),
-                'lable' => 'Sample_' . Str::random(5),
-                'type' => collect(['boolean','number','text'])->random(),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
+
         ]);
     }
 }

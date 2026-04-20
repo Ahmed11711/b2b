@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Admin\Package;
 
+use App\Http\Resources\Admin\PackageFeature\PackageFeaturerResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
@@ -21,6 +22,7 @@ class PackageResource extends JsonResource
             }
         }
 
+        $data['features'] = PackageFeaturerResource::collection($this->whenLoaded('package_features'));
         return $data;
     }
 }

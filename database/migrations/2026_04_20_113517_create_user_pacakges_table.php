@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('bag_items_images', function (Blueprint $table) {
+        Schema::create('user_pacakges', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('bag_items_id')
-                ->constrained('bag_items')
-                ->onDelete('cascade');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('package_id');
 
-            $table->string('image');
-            $table->enum('type', ['image', 'video', 'word', 'pdf', 'excel', 'other', 'zip', 'download'])->default('image');
-
+            $table->date('starts_at');
+            $table->date('ends_at')->nullable();
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('bag_items_images');
+        Schema::dropIfExists('user_pacakges');
     }
 };

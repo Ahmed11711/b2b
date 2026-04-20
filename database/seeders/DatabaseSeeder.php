@@ -38,8 +38,13 @@ class DatabaseSeeder extends Seeder
 
         $this->call(FeatureSeeder::class);
         $this->call(PackageSeeder::class);
+        $this->call(PackageFeatureSeeder::class);
         $this->call(BagSeeder::class);
         $this->call(BagsCategorySeeder::class);
         $this->call(BagItemsSeeder::class);
+    
+        
+    
+        
     }
 }

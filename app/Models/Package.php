@@ -11,5 +11,8 @@ class Package extends Model
     public array $filterable = ['active'];
     public array $allowedFields = ['id', 'name', 'description', 'price', 'active', 'duration_months', 'created_at', 'updated_at'];
 
-    //
+    public function package_features()
+    {
+        return $this->hasMany(PackageFeature::class);
+    }
 }

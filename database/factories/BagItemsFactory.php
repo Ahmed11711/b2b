@@ -6,6 +6,7 @@ class BagItemsFactory extends Factory {
     protected $model = BagItems::class;
     public function definition(): array {
         return [
+            'bags_categories_id' => 1,
             'title' => $this->faker->word,
             'price' => $this->faker->word,
             'image' => $this->faker->word,

@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('bag_items', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('bags_categories_id')
+                ->nullable()
+                ->constrained('bags_categories')
+                ->nullOnDelete();
             $table->string('title');
             $table->decimal('price', 10, 2);
             $table->string('image');

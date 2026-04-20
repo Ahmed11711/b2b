@@ -8,10 +8,12 @@ use App\Http\Controllers\Admin\Posts\PostsController;
 use App\Http\Controllers\Admin\Project\ProjectController;
 use App\Http\Controllers\Admin\verification\verificationController;
 use App\Http\Controllers\Api\ApplyPosts\AllpostsToApplayController;
+use App\Http\Controllers\Api\Backage\BackageFeatureController;
 use App\Http\Controllers\Api\MyCategory\MyCategoryController;
 use App\Http\Controllers\Api\Profile\ProfileAccountController;
 use App\Http\Controllers\Api\Service\ServiceApiController;
 use App\Http\Controllers\Api\Service\ServiceController;
+use App\Http\Controllers\Api\Subscribe\SubscribeController;
 use App\Http\Controllers\Api\UserContact\UserContactController;
 use App\Http\Controllers\Auth\CreateAcountController;
 use App\Http\Controllers\Auth\LoginAccountController;
@@ -19,9 +21,15 @@ use App\Http\Controllers\Auth\OtpController;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\User\AllProviders\AllProvidersController;
 use App\Http\Controllers\User\Reviews\ReviewsController;
+use App\Http\Middleware\CheckFeatureLimit;
 use App\Http\Middleware\CheckJwtToken;
 use App\Http\Middleware\TrackProviderVisits;
 use Illuminate\Support\Facades\Route;
+
+
+
+
+
 
 
 
@@ -67,7 +75,6 @@ Route::group(['prefix' => 'v1/auth'], function () {
 
 
 Route::middleware(CheckJwtToken::class)->prefix('v1/user')->group(function () {
-
     Route::get('category', [CategoryController::class, 'index']);
     Route::get('all-provider', [AllProvidersController::class, 'allProvider']);
     Route::get('top-provider', [AllProvidersController::class, 'topProviders']);
@@ -83,7 +90,10 @@ Route::middleware(CheckJwtToken::class)->prefix('v1/user')->group(function () {
 Route::middleware(CheckJwtToken::class)->prefix('v1/provider')->group(function () {
     Route::get('my-category', [MyCategoryController::class, 'index']);
     Route::post('my-category', [MyCategoryController::class, 'store']);
-    Route::resource('my-service', ServiceApiController::class);
+    Route::resource('my-service', ServiceApiController::class)->except(['store']);
+
+    Route::post('my-service', [ServiceApiController::class, 'store'])
+        ->middleware(CheckFeatureLimit::class . ':service');
     Route::put('my-socialMedia', [UserContactController::class, 'upsert']);
     Route::get('my-socialMedia', [UserContactController::class, 'index']);
     Route::get('city', [CityController::class, 'index']);
@@ -96,6 +106,9 @@ Route::middleware(CheckJwtToken::class)->prefix('v1/provider')->group(function (
 
     Route::get('available-posts', [AllpostsToApplayController::class, 'index']);
     Route::get('available-posts/{id}', [AllpostsToApplayController::class, 'show']);
+
+    Route::get('allPacakge', [BackageFeatureController::class, 'index']);
+    Route::post('subscribe', [SubscribeController::class, 'subscribe']);
 });
 
 require __DIR__ . '/admin.php';

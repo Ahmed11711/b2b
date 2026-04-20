@@ -15,6 +15,7 @@ This documentation is auto-generated for the **bag_items** table.
 | Column | Type | Description |
 | :--- | :--- | :--- |
 | `id` | *bigint* | Field from database |
+| `bags_categories_id` | *bigint* | Field from database |
 | `title` | *varchar* | Field from database |
 | `price` | *decimal* | Field from database |
 | `image` | *varchar* | Field from database |

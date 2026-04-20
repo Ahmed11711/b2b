@@ -14,6 +14,7 @@ class BagItemsUpdateRequest extends BaseRequest
     public function rules(): array
     {
         return [
+            'bags_categories_id' => 'sometimes|nullable|exists:bags_categories,id|display_field:title',
             'title' => 'sometimes|required|string|max:255',
             'price' => 'sometimes|required|numeric',
             'image' => 'sometimes|required|file|image|max:2048',
@@ -22,12 +23,15 @@ class BagItemsUpdateRequest extends BaseRequest
             'desc' => 'sometimes|required|string',
             'Whose' => 'sometimes|nullable|string',
             'what_will_you_get' => 'sometimes|nullable|string',
+            'gallery'    => 'sometimes|array',
+            'gallery.*'  => 'file|max:2048',
         ];
     }
 
     public function messages(): array
     {
         return [
+            'bags_categories_id.exists' => 'The selected bags categories id is invalid.',
             'title.required' => 'The title field is required.',
             'title.max' => 'The title may not be greater than 255 characters.',
             'price.required' => 'The price field is required.',

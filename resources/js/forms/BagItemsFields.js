@@ -1,6 +1,6 @@
 /**
  * Auto-generated fields for BagItems
- * Generated at: 2026-04-19 10:58:37
+ * Generated at: 2026-04-20 13:43:10
  */
 export const BagItemsFields = [
   { 
@@ -19,6 +19,23 @@ export const BagItemsFields = [
     options: null
   },
   { 
+    key: "bags_categories_id", 
+    label: "Bags Categories Id", 
+    type: "select", 
+    cell_type: "relation",
+    display_field: "bagsCategories.title",
+    required: 0, 
+    placeholder: "Enter Bags Categories Id",
+    searchable: false,
+    filterable: true,
+    sortable: true,
+    table_show: true,
+    form_show: true,
+    endpoint: 'bags_categories',
+    relation_fields: 'id,title',
+    options: { label: 'title', value: 'id' }
+  },
+  { 
     key: "title", 
     label: "Title", 
     type: "text", 
@@ -26,6 +43,21 @@ export const BagItemsFields = [
     display_field: null,
     required: 1, 
     placeholder: "Enter Title",
+    searchable: false,
+    filterable: false,
+    sortable: true,
+    table_show: true,
+    form_show: true,
+    options: null
+  },
+  { 
+    key: "price", 
+    label: "Price", 
+    type: "text", 
+    cell_type: "text",
+    display_field: null,
+    required: 1, 
+    placeholder: "Enter Price",
     searchable: false,
     filterable: false,
     sortable: true,
@@ -47,6 +79,21 @@ export const BagItemsFields = [
     table_show: true,
     form_show: true,
     options: null
+  },
+  { 
+    key: "currency", 
+    label: "Currency", 
+    type: "select", 
+    cell_type: "badge",
+    display_field: null,
+    required: 1, 
+    placeholder: "Enter Currency",
+    searchable: false,
+    filterable: true,
+    sortable: true,
+    table_show: true,
+    form_show: true,
+    options: [{ label: "ريال", value: 'ريال' }, { label: "دولار", value: 'دولار' }, { label: "جنيه مصري", value: 'جنيه مصري' }]
   },
   { 
     key: "rating", 
@@ -86,6 +133,21 @@ export const BagItemsFields = [
     display_field: null,
     required: 0, 
     placeholder: "Enter Whose",
+    searchable: true,
+    filterable: false,
+    sortable: false,
+    table_show: false,
+    form_show: true,
+    options: null
+  },
+  { 
+    key: "what_will_you_get", 
+    label: "What Will You Get", 
+    type: "text", 
+    cell_type: "text",
+    display_field: null,
+    required: 0, 
+    placeholder: "Enter What Will You Get",
     searchable: true,
     filterable: false,
     sortable: false,

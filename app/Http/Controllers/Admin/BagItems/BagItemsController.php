@@ -9,6 +9,7 @@ use App\Http\Resources\Admin\BagItems\BagItemsResource;
 use App\Repositories\BagItems\BagItemsRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class BagItemsController extends BaseController
@@ -20,7 +21,7 @@ class BagItemsController extends BaseController
         $this->initService(
             repository: $repository,
             collectionName: 'BagItems',
-            fileFields: ['image']
+            fileFields: []
         );
 
         $this->hasGallery         = true;
@@ -33,12 +34,30 @@ class BagItemsController extends BaseController
     protected function beforeStore(array $data, Request $request): array
     {
         unset($data['gallery']);
+        unset($data['image']);
+
+        // ✅ لو image جاي كـ file مباشرة
+        if ($request->hasFile('image')) {
+            $data['image'] = $this->uploadSingleFile($request->file('image'));
+        }
+
         return $data;
     }
 
     protected function beforeUpdate(array $data, $existingRecord, Request $request): array
     {
         unset($data['gallery']);
+        unset($data['image']);
+
+        if ($request->hasFile('image')) {
+            // ✅ احذف القديمة
+            if (!empty($existingRecord->image)) {
+                Storage::disk($this->uploadDisk)
+                    ->delete(str_replace('/storage/', '', $existingRecord->image));
+            }
+            $data['image'] = $this->uploadSingleFile($request->file('image'));
+        }
+
         return $data;
     }
 
@@ -50,22 +69,44 @@ class BagItemsController extends BaseController
 
         foreach ($galleryItems as $index => $item) {
             try {
-                // جيب الملف من gallery[index][file]
                 $file = $request->file("gallery.{$index}.file");
-                $type = $item['type'] ?? 'other';
+                $type = $item['type'] ?? 'image';
 
                 if (!$file) continue;
 
                 $filename = time() . '_' . Str::random(8) . '_' . $file->getClientOriginalName();
-                $path = $file->storeAs("uploads/{$this->collectionName}/gallery", $filename, $this->uploadDisk);
+                $path = $file->storeAs(
+                    "uploads/{$this->collectionName}/gallery",
+                    $filename,
+                    $this->uploadDisk
+                );
 
                 $record->gallery()->create([
                     'image' => "/storage/" . $path,
                     'type'  => $type,
                 ]);
             } catch (\Throwable $e) {
-                Log::error("Gallery upload failed for BagIte   ms: " . $e->getMessage());
+                Log::error("Gallery upload failed for BagItems: " . $e->getMessage());
             }
         }
+    }
+
+    // ✅ helper صغير لرفع الملف
+    private function uploadSingleFile($file): string
+    {
+        $filename = time() . '_' . $file->getClientOriginalName();
+        $path = $file->storeAs(
+            "uploads/{$this->collectionName}",
+            $filename,
+            $this->uploadDisk
+        );
+        return "/storage/" . $path;
+    }
+
+    protected function getShowRelationships(): array
+    {
+        return array_merge($this->withRelationships, [
+            'gallery'
+        ]);
     }
 }

@@ -23,8 +23,10 @@ class BagItemsUpdateRequest extends BaseRequest
             'desc' => 'sometimes|required|string',
             'Whose' => 'sometimes|nullable|string',
             'what_will_you_get' => 'sometimes|nullable|string',
-            'gallery'    => 'sometimes|array',
-            'gallery.*'  => 'file|max:2048',
+            'gallery'           => 'nullable|array',
+            'gallery.*.file'    => 'required|file|max:10240',
+            'gallery.*.type'    => 'nullable|in:image,video,word,pdf,excel,other,zip,download',
+
         ];
     }
 

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('name_ar');
+            $table->string('name_ar')->nullable();
             $table->string('image');
             $table->integer('sort_order')->default(0)->index();
             $table->boolean('is_active')->default(true);

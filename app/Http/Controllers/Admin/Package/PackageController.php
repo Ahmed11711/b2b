@@ -23,4 +23,11 @@ class PackageController extends BaseController
         $this->updateRequestClass = PackageUpdateRequest::class;
         $this->resourceClass = PackageResource::class;
     }
+
+    protected function getShowRelationships(): array
+    {
+        return array_merge($this->withRelationships, [
+            'package_features'
+        ]);
+    }
 }

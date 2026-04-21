@@ -18,9 +18,9 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 class User extends Authenticatable implements JWTSubject
 {
 
-    public array $searchable = ['remember_token', 'info'];
+    public array $searchable = ['email', 'name', 'phone'];
     public array $filterable = ['is_active', 'role', 'social_type', 'social_id', 'city_id'];
-    public array $allowedFields = ['id', 'name', 'email', 'phone', 'user_name', 'whtsapp', 'country_code', 'is_active', 'email_verified_at', 'role', 'social_type', 'social_id', 'city_id', 'info', 'last_login_at', 'created_at', 'updated_at'];
+    public array $allowedFields = ['id', 'name', 'email', 'phone', 'user_name', 'image', 'whtsapp', 'country_code', 'is_active', 'email_verified_at', 'role', 'social_type', 'social_id', 'city_id', 'info', 'last_login_at', 'created_at', 'updated_at'];
 
 
 
@@ -84,5 +84,20 @@ class User extends Authenticatable implements JWTSubject
     public function reviews()
     {
         return $this->hasMany(ServiceReviews::class, 'provider_id');
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Posts::class, 'user_id');
+    }
+
+    public function package()
+    {
+        return $this->hasOne(UserPacakges::class)->where('active', 1)->latest();
+    }
+
+    public function Allpackage()
+    {
+        return $this->hasMany(UserPacakges::class);
     }
 }

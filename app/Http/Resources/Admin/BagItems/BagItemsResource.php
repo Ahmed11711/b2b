@@ -20,6 +20,7 @@ class BagItemsResource extends JsonResource
                 $data[$field] = $this->{$field};
             }
         }
+        $data['items'] = $this->whenLoaded('gallery');
 
         return $data;
     }

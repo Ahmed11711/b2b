@@ -20,6 +20,7 @@ This documentation is auto-generated for the **users** table.
 | `password` | *varchar* | Field from database |
 | `phone` | *varchar* | Field from database |
 | `user_name` | *varchar* | Field from database |
+| `image` | *varchar* | Field from database |
 | `whtsapp` | *varchar* | Field from database |
 | `country_code` | *varchar* | Field from database |
 | `is_active` | *tinyint* | Field from database |

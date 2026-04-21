@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Repositories\User\UserRepositoryInterface;
+use App\Repositories\User\UserRepository;
+
+
 use App\Repositories\BagItems\BagItemsRepositoryInterface;
 use App\Repositories\BagItems\BagItemsRepository;
 
@@ -37,8 +41,6 @@ use App\Repositories\Project\ProjectRepositoryInterface;
 use App\Repositories\Project\ProjectRepository;
 
 
-use App\Repositories\User\UserRepositoryInterface;
-use App\Repositories\User\UserRepository;
 
 use App\Repositories\Ads\AdsRepositoryInterface;
 use App\Repositories\Ads\AdsRepository;
@@ -107,7 +109,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(UserInfoRepositoryInterface::class, UserInfoRepository::class);
         $this->app->bind(ServiceRepositoryInterface::class, ServiceRepository::class);
         $this->app->bind(AdsRepositoryInterface::class, AdsRepository::class);
-        $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
+        
         $this->app->bind(ProjectRepositoryInterface::class, ProjectRepository::class);
         $this->app->bind(MyCertificateRepositoryInterface::class, MyCertificateRepository::class);
         $this->app->bind(BranchRepositoryInterface::class, BranchRepository::class);
@@ -119,6 +121,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(BagRepositoryInterface::class, BagRepository::class);
         $this->app->bind(BagsCategoryRepositoryInterface::class, BagsCategoryRepository::class);
         $this->app->bind(BagItemsRepositoryInterface::class, BagItemsRepository::class);
+        $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
 }
 
     /**

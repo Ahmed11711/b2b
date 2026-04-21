@@ -15,7 +15,7 @@ class CategoryStoreRequest extends BaseRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'name_ar' => 'required|string|max:255',
+            'name_ar' => 'nullable|string|max:255',
             'image' => 'required|file|image',
             'sort_order' => 'nullable|integer',
             'is_active' => 'nullable|integer',

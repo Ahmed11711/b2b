@@ -1,6 +1,6 @@
 /**
  * Auto-generated fields for User
- * Generated at: 2026-04-14 11:03:53
+ * Generated at: 2026-04-21 09:27:06
  */
 export const UserFields = [
   { 
@@ -15,6 +15,21 @@ export const UserFields = [
     filterable: false,
     sortable: true,
     table_show: false,
+    form_show: true,
+    options: null
+  },
+   { 
+    key: "image", 
+    label: "Image", 
+    type: "file", 
+    cell_type: "image",
+    display_field: null,
+    required: 1, 
+    placeholder: "Enter Image",
+    searchable: false,
+    filterable: false,
+    sortable: true,
+    table_show: true,
     form_show: true,
     options: null
   },
@@ -56,6 +71,51 @@ export const UserFields = [
     display_field: null,
     required: 0, 
     placeholder: "Enter Phone",
+    searchable: false,
+    filterable: false,
+    sortable: true,
+    table_show: true,
+    form_show: true,
+    options: null
+  },
+  { 
+    key: "user_name", 
+    label: "User Name", 
+    type: "text", 
+    cell_type: "text",
+    display_field: null,
+    required: 0, 
+    placeholder: "Enter User Name",
+    searchable: false,
+    filterable: false,
+    sortable: true,
+    table_show: true,
+    form_show: true,
+    options: null
+  },
+  { 
+    key: "image", 
+    label: "Image", 
+    type: "file", 
+    cell_type: "image",
+    display_field: null,
+    required: 0, 
+    placeholder: "Enter Image",
+    searchable: false,
+    filterable: false,
+    sortable: true,
+    table_show: true,
+    form_show: true,
+    options: null
+  },
+  { 
+    key: "whtsapp", 
+    label: "Whtsapp", 
+    type: "text", 
+    cell_type: "text",
+    display_field: null,
+    required: 0, 
+    placeholder: "Enter Whtsapp",
     searchable: false,
     filterable: false,
     sortable: true,
@@ -154,6 +214,38 @@ export const UserFields = [
     endpoint: 'socials',
     relation_fields: 'id,name',
     options: { label: 'name', value: 'id' }
+  },
+  { 
+    key: "city_id", 
+    label: "City Id", 
+    type: "select", 
+    cell_type: "relation",
+    display_field: "city.name",
+    required: 0, 
+    placeholder: "Enter City Id",
+    searchable: false,
+    filterable: true,
+    sortable: true,
+    table_show: false,
+    form_show: true,
+    endpoint: 'cities',
+    relation_fields: 'id,name',
+    options: { label: 'name', value: 'id' }
+  },
+  { 
+    key: "info", 
+    label: "Info", 
+    type: "text", 
+    cell_type: "text",
+    display_field: null,
+    required: 0, 
+    placeholder: "Enter Info",
+    searchable: true,
+    filterable: false,
+    sortable: false,
+    table_show: false,
+    form_show: true,
+    options: null
   },
   { 
     key: "last_login_at", 

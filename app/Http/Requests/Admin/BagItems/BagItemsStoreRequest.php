@@ -23,8 +23,9 @@ class BagItemsStoreRequest extends BaseRequest
             'desc' => 'required|string',
             'Whose' => 'nullable|string',
             'what_will_you_get' => 'nullable|string',
-            'gallery'    => 'required|array',
-            'gallery.*'  => 'file|max:2048',
+            'gallery'           => 'nullable|array',
+            'gallery.*.file'    => 'required|file|max:10240',
+            'gallery.*.type'    => 'nullable|in:image,video,word,pdf,excel,other,zip,download',
         ];
     }
 

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('user_name')->nullable();
             $table->string('image')->nullable();
             $table->string('whtsapp')->nullable();
-            $table->string('country_code')->default('SA');
+            $table->string('country_code')->nullable()->default('SA');
             $table->boolean('is_active')->default(true);
             $table->timestamp('email_verified_at')->nullable();
             $table->text('remember_token')->nullable();

@@ -11,6 +11,7 @@ class UserFactory extends Factory {
             'password' => bcrypt('password'),
             'phone' => $this->faker->word,
             'user_name' => $this->faker->word,
+            'image' => $this->faker->word,
             'whtsapp' => $this->faker->word,
             'country_code' => $this->faker->word,
             'is_active' => $this->faker->word,

@@ -24,7 +24,6 @@ class ServiceResource extends JsonResource
                 $data[$field] = $this->{$field};
             }
         }
-
         $data['user'] = new UserResource($this->whenLoaded('user'));
 
         $data['category'] = new CategoryResource($this->whenLoaded('category'));

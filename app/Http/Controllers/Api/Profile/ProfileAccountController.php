@@ -20,7 +20,12 @@ class ProfileAccountController extends BaseController
     public function __construct(UserRepositoryInterface $repository, public CategoryRepositoryInterface $categoryRepository)
     {
         parent::__construct();
-        $this->initService(repository: $repository, collectionName: 'User');
+        $this->initService(
+            repository: $repository,
+            collectionName: 'User',
+            fileFields: ['image']
+        );
+
 
         $this->storeRequestClass = ProfileAccountRequest::class;
         $this->updateRequestClass = ProfileAccountRequest::class;

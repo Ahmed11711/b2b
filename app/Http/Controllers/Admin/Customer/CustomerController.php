@@ -31,4 +31,12 @@ class CustomerController extends BaseController
     {
         return ['posts:id,title'];
     }
+    protected function getShowRelationships(): array
+    {
+        return array_merge($this->withRelationships, [
+            'posts',
+            'UserContact',
+
+        ]);
+    }
 }

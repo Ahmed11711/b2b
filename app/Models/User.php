@@ -98,6 +98,16 @@ class User extends Authenticatable implements JWTSubject
 
     public function Allpackage()
     {
-        return $this->hasMany(UserPacakges::class);
+        return $this->hasMany(UserPacakges::class, 'user_id');
+    }
+
+    /////////////////////////////////All Relation Provider////////////////////////////
+    public function UserContact()
+    {
+        return $this->hasMany(UserContact::class, 'user_id');
+    }
+    public function verification()
+    {
+        return $this->hasMany(Verification::class);
     }
 }

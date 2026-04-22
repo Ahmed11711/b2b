@@ -5,11 +5,11 @@ This documentation is auto-generated for the **services** table.
 ### 🚀 Endpoints
 | Action | Method | Endpoint | Auth |
 | :--- | :--- | :--- | :--- |
-| List All | `GET` | `/services` | Bearer |
-| View One | `GET` | `/services/{id}` | Bearer |
-| Create | `POST` | `/services` | Bearer |
-| Update | `PUT` | `/services/{id}` | Bearer |
-| Delete | `DELETE` | `/services/{id}` | Bearer |
+| List All | `GET` | `/api/admin/v1/services` | Bearer |
+| View One | `GET` | `/api/admin/v1/services/{id}` | Bearer |
+| Create | `POST` | `/api/admin/v1/services` | Bearer |
+| Update | `PUT` | `/api/admin/v1/services/{id}` | Bearer |
+| Delete | `DELETE` | `/api/admin/v1/services/{id}` | Bearer |
 
 ### 📋 Database Schema
 | Column | Type | Description |

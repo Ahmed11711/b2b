@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Admin\Provider;
 use App\Http\Controllers\BaseController\BaseController;
 use App\Http\Resources\Admin\provider\ProviderResource;
 use App\Repositories\User\UserRepository as UserUserRepository;
-use App\Repositories\UserRepository; // أو أي repository عندك
-use Illuminate\Http\Request;
 
 class ProviderController extends BaseController
 {
@@ -28,7 +26,15 @@ class ProviderController extends BaseController
     protected function getShowRelationships(): array
     {
         return array_merge($this->withRelationships, [
-            'services'
+            'Allpackage',
+            'services',
+            'projects',
+            'certificates',
+            'reviews',
+            'UserContact',
+            'projects',
+            'branches',
+            'verification'
         ]);
     }
     protected function getIndexRelationships(): array

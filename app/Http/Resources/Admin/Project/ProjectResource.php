@@ -22,6 +22,11 @@ class ProjectResource extends JsonResource
             }
         }
 
+        $data['image'] = $this->image
+            ? url(str_replace('/storage/app/public', '/storage', $this->image))
+            : null;
+
+
         $data['contacts'] = ServiceContactResource::collection($this->whenLoaded('contacts'));
 
 

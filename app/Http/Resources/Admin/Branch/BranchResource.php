@@ -13,7 +13,7 @@ class BranchResource extends JsonResource
     {
         $attributes = $this->resource->getAttributes();
         $data = ['id' => $this->id];
-        $fields = ['user_id', 'title', 'address', 'mobile', 'created_at', 'updated_at'];
+        $fields = ['user_id', 'title', 'address', 'mobile', 'created_at', 'updated_at', 'location'];
 
         foreach ($fields as $field) {
             if (array_key_exists($field, $attributes)) {

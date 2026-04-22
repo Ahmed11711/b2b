@@ -16,7 +16,7 @@ class CategoryUpdateRequest extends BaseRequest
         return [
             'name' => 'sometimes|required|string|max:255',
             'name_ar' => 'sometimes|required|string|max:255',
-            'image' => 'sometimes|required|string|max:255|file|image|max:2048',
+            'image' => 'sometimes|file|image',
             'sort_order' => 'sometimes|required|integer',
             'is_active' => 'sometimes|required|integer',
         ];

@@ -20,6 +20,9 @@ class PostsResource extends JsonResource
                 $data[$field] = $this->{$field};
             }
         }
+        $data['image'] = $this->image
+            ? url(str_replace('/storage/app/public', '/storage', $this->image))
+            : null;
         $data['gallery'] = $this->whenLoaded('gallery');
 
         return $data;

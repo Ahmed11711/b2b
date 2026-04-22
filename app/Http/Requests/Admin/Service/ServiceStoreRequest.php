@@ -29,6 +29,7 @@ class ServiceStoreRequest extends BaseRequest
                         $query->where('user_id', auth('api')->id());
                     }),
             ],
+
         ];
     }
 

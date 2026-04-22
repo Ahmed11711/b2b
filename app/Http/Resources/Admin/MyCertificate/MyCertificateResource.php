@@ -20,6 +20,9 @@ class MyCertificateResource extends JsonResource
                 $data[$field] = $this->{$field};
             }
         }
+        $data['image'] = $this->image
+            ? url(str_replace('/storage/app/public', '/storage', $this->image))
+            : null;
 
         return $data;
     }

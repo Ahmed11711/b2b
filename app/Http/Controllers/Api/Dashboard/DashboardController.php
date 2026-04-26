@@ -18,7 +18,7 @@ class DashboardController extends Controller
         $userId = auth('api')->id();
 
         $userPackage   = UserPacakges::with('package.package_features')->where('user_id', $userId)->where('active', true)->first();
-        $service       = Service::where('user_id', $userId)->where('active', true)->count();
+        $service       = Service::where('user_id', $userId)->where('is_active', true)->count();
         $providerVisit = providerVisit::where('user_id', $userId)->count();
 
         return response()->json([

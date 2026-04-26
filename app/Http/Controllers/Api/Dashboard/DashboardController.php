@@ -16,9 +16,9 @@ class DashboardController extends Controller
     public function index(Request $request)
     {
         $userId = auth('api')->id();
-        $user   = auth('api')->user(); // ← جيب الـ user
+        $user   = auth('api')->user();
 
-        $userPackage   = UserPacakges::with('package.package_features')->where('user_id', $userId)->where('active', true)->first();
+        $userPackage   = UserPacakges::with('package')->where('user_id', $userId)->where('active', true)->first();
         $service       = Service::where('user_id', $userId)->where('is_active', true)->count();
         $providerVisit = providerVisit::where('provider_id', $userId)->count();
 

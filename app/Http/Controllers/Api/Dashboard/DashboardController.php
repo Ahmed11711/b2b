@@ -26,7 +26,7 @@ class DashboardController extends Controller
             'success' => true,
             'status'  => 200,
             'data'    => new DashboardResource([
-                'user'                  => $user, // ← مررها
+                'user'                  => $user,
                 'user_package'          => $userPackage,
                 'services_count'        => $service,
                 'provider_visits_count' => $providerVisit,

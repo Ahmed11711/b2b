@@ -24,6 +24,7 @@ use App\Http\Controllers\Admin\User\UserController;
 use App\Http\Controllers\Admin\UserInfo\UserInfoController;
 use App\Http\Controllers\Admin\verification\verificationController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\UserPacakges\UserPacakgesController;
 
 
 Route::prefix('v1/admin')->group(function () {});
@@ -36,6 +37,7 @@ Route::prefix('admin/v1/')->group(function () {
     Route::apiResource('cities', CityController::class)->names('city');
     Route::apiResource('user_infos', UserInfoController::class)->names('user_info');
     Route::apiResource('services', ServiceController::class)->names('service');
+    Route::apiResource('postss', PostsController::class);
     Route::apiResource('packages', PackageController::class)->names('package');
     Route::apiResource('bags', BagController::class)->names('bag');
     Route::apiResource('bags_categories', BagsCategoryController::class)->names('bags_category');
@@ -44,6 +46,7 @@ Route::prefix('admin/v1/')->group(function () {
     Route::apiResource('provider', ProviderController::class)->names('provider');
     Route::apiResource('customer', CustomerController::class)->names('customer');
     Route::apiResource('features', FeatureController::class)->names('feature');
+    Route::apiResource('user_pacakges', UserPacakgesController::class)->names('user_pacakges');
 });
 
 Route::prefix('v1')->group(function () {

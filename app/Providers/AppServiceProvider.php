@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Repositories\UserPacakges\UserPacakgesRepositoryInterface;
+use App\Repositories\UserPacakges\UserPacakgesRepository;
+
 use App\Repositories\User\UserRepositoryInterface;
 use App\Repositories\User\UserRepository;
 
@@ -122,6 +125,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(BagsCategoryRepositoryInterface::class, BagsCategoryRepository::class);
         $this->app->bind(BagItemsRepositoryInterface::class, BagItemsRepository::class);
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
+        $this->app->bind(UserPacakgesRepositoryInterface::class, UserPacakgesRepository::class);
 }
 
     /**

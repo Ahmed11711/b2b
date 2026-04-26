@@ -25,4 +25,19 @@ class ServiceController extends BaseController
         $this->resourceClass = ServiceResource::class;
         $this->hasGallery = true;
     }
+    protected function applyScoping($query)
+    {
+        $query = parent::applyScoping($query);
+
+        return $query->withCount('visits');
+    }
+
+    protected function getShowRelationships(): array
+    {
+        return array_merge($this->withRelationships, [
+            'reviews',
+            'visits',
+
+        ]);
+    }
 }

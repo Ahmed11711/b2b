@@ -23,6 +23,7 @@ class PackageResource extends JsonResource
         }
 
         $data['features'] = PackageFeaturerResource::collection($this->whenLoaded('package_features'));
+
         return $data;
     }
 }

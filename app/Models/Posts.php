@@ -22,4 +22,9 @@ class Posts extends Model
     {
         return $this->hasMany(PostsImage::class, 'post_id');
     }
+
+    public function bids()
+    {
+        return $this->hasMany(bids::class, 'post_id');
+    }
 }

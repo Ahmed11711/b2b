@@ -26,6 +26,7 @@ class PostsController extends BaseController
         $this->resourceClass = PostsResource::class;
         $this->isUserBound        = true;
         $this->hasGallery         = true;
+        $this->withRelationships  = ['user:id,name,email,image'];
     }
     protected function beforeStore(array $data, Request $request): array
     {
@@ -38,7 +39,8 @@ class PostsController extends BaseController
     protected function getShowRelationships(): array
     {
         return array_merge($this->withRelationships, [
-            'gallery'
+            'gallery',
+            'bids'
         ]);
     }
 }

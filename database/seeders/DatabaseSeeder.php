@@ -43,6 +43,8 @@ class DatabaseSeeder extends Seeder
         $this->call(BagsCategorySeeder::class);
         $this->call(BagItemsSeeder::class);
         $this->call(UserSeeder::class);
+        $this->call(UserPacakgesSeeder::class);
+    
     
         
     

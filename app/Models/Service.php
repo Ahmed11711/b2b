@@ -43,4 +43,9 @@ class Service extends Model
     {
         return $this->hasMany(ServiceReviews::class, 'service_id');
     }
+
+    public function visits()
+    {
+        return $this->hasMany(ProviderVisit::class, 'service_id');
+    }
 }

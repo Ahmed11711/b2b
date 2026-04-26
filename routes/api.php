@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\Project\ProjectController;
 use App\Http\Controllers\Admin\verification\verificationController;
 use App\Http\Controllers\Api\ApplyPosts\AllpostsToApplayController;
 use App\Http\Controllers\Api\Backage\BackageFeatureController;
+use App\Http\Controllers\Api\Bids\BidsController;
 use App\Http\Controllers\Api\MyCategory\MyCategoryController;
 use App\Http\Controllers\Api\Profile\ProfileAccountController;
 use App\Http\Controllers\Api\Service\ServiceApiController;
@@ -25,6 +26,7 @@ use App\Http\Middleware\CheckFeatureLimit;
 use App\Http\Middleware\CheckJwtToken;
 use App\Http\Middleware\TrackProviderVisits;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -79,7 +81,7 @@ Route::middleware(CheckJwtToken::class)->prefix('v1/user')->group(function () {
     Route::get('all-provider', [AllProvidersController::class, 'allProvider']);
     Route::get('top-provider', [AllProvidersController::class, 'topProviders']);
     Route::get('one-provider/{id}', [AllProvidersController::class, 'oneProvider'])->middleware(TrackProviderVisits::class);
-    Route::get('get-service/{id}', [ServiceApiController::class, 'show']);
+    Route::get('get-service/{service_id}', [ServiceApiController::class, 'show'])->middleware(TrackProviderVisits::class);;
     Route::get('get-project/{id}', [ProjectController::class, 'show']);
     Route::post('review-service', [ReviewsController::class, 'store']);
     Route::apiResource('posts', PostsController::class);
@@ -106,6 +108,8 @@ Route::middleware(CheckJwtToken::class)->prefix('v1/provider')->group(function (
 
     Route::get('available-posts', [AllpostsToApplayController::class, 'index']);
     Route::get('available-posts/{id}', [AllpostsToApplayController::class, 'show']);
+    Route::post('bids', [BidsController::class, 'store'])->middleware(CheckFeatureLimit::class . ':bids');;
+
 
     Route::get('allPacakge', [BackageFeatureController::class, 'index']);
     Route::post('subscribe', [SubscribeController::class, 'subscribe']);

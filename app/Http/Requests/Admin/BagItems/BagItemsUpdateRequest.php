@@ -25,7 +25,7 @@ class BagItemsUpdateRequest extends BaseRequest
             'what_will_you_get' => 'sometimes|nullable|string',
             'gallery'           => 'nullable|array',
             'gallery.*.file'    => 'required|file|max:10240',
-            'gallery.*.type'    => 'nullable|in:image,video,word,pdf,excel,other,zip,download',
+            'gallery.*.type'    => 'nullable|in:image,video,word,pdf,excel,other,zip,download_demo',
 
         ];
     }

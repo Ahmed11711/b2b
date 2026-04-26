@@ -24,11 +24,16 @@ class ServiceResource extends JsonResource
                 $data[$field] = $this->{$field};
             }
         }
-        $data['user'] = new UserResource($this->whenLoaded('user'));
+        $data['image'] = $this->image
+            ? url(str_replace('/storage/app/public', '/storage', $this->image))
+            : null;
 
+        $data['views_count'] = $this->visits_count ?? 0;
+        $data['user'] = new UserResource($this->whenLoaded('user'));
         $data['category'] = new CategoryResource($this->whenLoaded('category'));
         $data['contacts'] = ServiceContactResource::collection($this->whenLoaded('contacts'));
         $data['reviews'] = ReviewsResource::collection($this->whenLoaded('reviews'));
+        $data['visits'] =  $this->whenLoaded('visits');
 
 
         return $data;

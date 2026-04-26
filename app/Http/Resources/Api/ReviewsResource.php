@@ -25,7 +25,7 @@ class ReviewsResource extends JsonResource
             'user_name'  => $this->user ? $this->user->name : 'Anonymous',
             'user_image' => $this->user ? $this->user->image : null,
 
-            'created_at' => $this->created_at->format('Y-m-d H:i'),
+            'created_at' => $this->created_atl,
         ];
     }
 }

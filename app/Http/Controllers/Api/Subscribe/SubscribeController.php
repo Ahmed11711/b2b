@@ -12,7 +12,7 @@ class SubscribeController extends Controller
 {
     use ApiResponseTrait;
 
-    public function __construct(SubscriptionService $subscriptionService)
+    public function __construct(public SubscriptionService $subscriptionService)
     {
         $this->subscriptionService = $subscriptionService;
     }

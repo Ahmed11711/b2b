@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Repositories\Ads\AdsRepositoryInterface;
+use App\Repositories\Ads\AdsRepository;
+
 use App\Repositories\UserPacakges\UserPacakgesRepositoryInterface;
 use App\Repositories\UserPacakges\UserPacakgesRepository;
 
@@ -45,8 +48,6 @@ use App\Repositories\Project\ProjectRepository;
 
 
 
-use App\Repositories\Ads\AdsRepositoryInterface;
-use App\Repositories\Ads\AdsRepository;
 
 
 
@@ -111,7 +112,7 @@ class AppServiceProvider extends ServiceProvider
         
         $this->app->bind(UserInfoRepositoryInterface::class, UserInfoRepository::class);
         $this->app->bind(ServiceRepositoryInterface::class, ServiceRepository::class);
-        $this->app->bind(AdsRepositoryInterface::class, AdsRepository::class);
+        
         
         $this->app->bind(ProjectRepositoryInterface::class, ProjectRepository::class);
         $this->app->bind(MyCertificateRepositoryInterface::class, MyCertificateRepository::class);
@@ -126,6 +127,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(BagItemsRepositoryInterface::class, BagItemsRepository::class);
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
         $this->app->bind(UserPacakgesRepositoryInterface::class, UserPacakgesRepository::class);
+        $this->app->bind(AdsRepositoryInterface::class, AdsRepository::class);
 }
 
     /**

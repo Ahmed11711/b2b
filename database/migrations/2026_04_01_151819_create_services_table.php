@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('desc');
             $table->string('image');
             $table->string('price');
+            $table->boolean('is_active')->nullable()->default(true);
             $table->timestamps();
         });
     }

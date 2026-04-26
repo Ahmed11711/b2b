@@ -23,6 +23,7 @@ class ServiceStoreRequest extends BaseRequest
             'image' => 'required|file|image|max:2048',
             'price' => 'required|string|max:255',
             'contact_ids' => 'required|array',
+            'is_active' => 'nullable|boolean',
             'contact_ids.*' => [
                 Rule::exists('user_contacts', 'id')
                     ->where(function ($query) {

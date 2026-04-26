@@ -17,11 +17,12 @@ class AdsController extends BaseController
         $this->initService(
             repository: $repository,
             collectionName: 'Ads',
-            fileFields: ['image', 'attachment_file']
+            fileFields: ['image']
         );
 
         $this->storeRequestClass = AdsStoreRequest::class;
         $this->updateRequestClass = AdsUpdateRequest::class;
         $this->resourceClass = AdsResource::class;
+        $this->withRelationships = ['category'];
     }
 }

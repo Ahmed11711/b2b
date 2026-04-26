@@ -1,6 +1,6 @@
 /**
  * Auto-generated fields for Ads
- * Generated at: 2026-04-09 15:58:26
+ * Generated at: 2026-04-26 08:34:21
  */
 export const AdsFields = [
   { 
@@ -17,23 +17,6 @@ export const AdsFields = [
     table_show: false,
     form_show: true,
     options: null
-  },
-  { 
-    key: "user_id", 
-    label: "User Id", 
-    type: "select", 
-    cell_type: "relation",
-    display_field: "user.name",
-    required: 0, 
-    placeholder: "Enter User Id",
-    searchable: false,
-    filterable: true,
-    sortable: true,
-    table_show: false,
-    form_show: true,
-    endpoint: 'users',
-    relation_fields: 'id,name',
-    options: { label: 'name', value: 'id' }
   },
   { 
     key: "category_id", 
@@ -83,21 +66,6 @@ export const AdsFields = [
     options: null
   },
   { 
-    key: "title_ar", 
-    label: "Title Ar", 
-    type: "text", 
-    cell_type: "text",
-    display_field: null,
-    required: 1, 
-    placeholder: "Enter Title Ar",
-    searchable: false,
-    filterable: false,
-    sortable: true,
-    table_show: true,
-    form_show: true,
-    options: null
-  },
-  { 
     key: "description", 
     label: "Description", 
     type: "text", 
@@ -124,96 +92,6 @@ export const AdsFields = [
     filterable: false,
     sortable: true,
     table_show: true,
-    form_show: true,
-    options: null
-  },
-  { 
-    key: "attachment_file", 
-    label: "Attachment File", 
-    type: "file", 
-    cell_type: "image",
-    display_field: null,
-    required: 0, 
-    placeholder: "Enter Attachment File",
-    searchable: false,
-    filterable: false,
-    sortable: true,
-    table_show: true,
-    form_show: true,
-    options: null
-  },
-  { 
-    key: "price", 
-    label: "Price", 
-    type: "text", 
-    cell_type: "text",
-    display_field: null,
-    required: 1, 
-    placeholder: "Enter Price",
-    searchable: false,
-    filterable: false,
-    sortable: true,
-    table_show: true,
-    form_show: true,
-    options: null
-  },
-  { 
-    key: "active", 
-    label: "Active", 
-    type: "checkbox", 
-    cell_type: "badge",
-    display_field: null,
-    required: 1, 
-    placeholder: "Enter Active",
-    searchable: false,
-    filterable: true,
-    sortable: true,
-    table_show: true,
-    form_show: true,
-    options: [{ label: 'Active', value: 1, color: 'success' }, { label: 'Inactive', value: 0, color: 'danger' }]
-  },
-  { 
-    key: "is_featured", 
-    label: "Is Featured", 
-    type: "checkbox", 
-    cell_type: "badge",
-    display_field: null,
-    required: 1, 
-    placeholder: "Enter Is Featured",
-    searchable: false,
-    filterable: true,
-    sortable: true,
-    table_show: true,
-    form_show: true,
-    options: [{ label: 'Active', value: 1, color: 'success' }, { label: 'Inactive', value: 0, color: 'danger' }]
-  },
-  { 
-    key: "published_at", 
-    label: "Published At", 
-    type: "date", 
-    cell_type: "date",
-    display_field: null,
-    required: 0, 
-    placeholder: "Enter Published At",
-    searchable: false,
-    filterable: false,
-    sortable: true,
-    table_show: false,
-    form_show: true,
-    options: null
-  },
-  { 
-    key: "expire_date", 
-    label: "Expire Date", 
-    type: "date", 
-    cell_type: "date",
-    display_field: null,
-    required: 0, 
-    placeholder: "Enter Expire Date",
-    searchable: false,
-    filterable: false,
-    sortable: true,
-    table_show: false,
     form_show: true,
     options: null
   },

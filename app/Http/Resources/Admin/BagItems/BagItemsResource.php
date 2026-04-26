@@ -21,6 +21,7 @@ class BagItemsResource extends JsonResource
             }
         }
         $data['items'] = $this->whenLoaded('gallery');
+        $data['bagsCategories'] = $this->whenLoaded('bagsCategories');
 
         return $data;
     }

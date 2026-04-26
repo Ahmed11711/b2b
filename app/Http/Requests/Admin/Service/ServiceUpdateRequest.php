@@ -22,6 +22,7 @@ class ServiceUpdateRequest extends BaseRequest
             'price' => 'sometimes|required|string|max:255',
             'contact_ids' => 'sometimes|array',
             'contact_ids.*' => 'exists:user_contacts,id',
+            'is_active' => 'sometimes|nullable|boolean',
 
 
         ];

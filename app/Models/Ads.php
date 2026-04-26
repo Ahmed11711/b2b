@@ -8,8 +8,8 @@ class Ads extends Model
 {
 
     public array $searchable = ['description'];
-    public array $filterable = ['user_id', 'category_id', 'status', 'active', 'is_featured'];
-    public array $allowedFields = ['id', 'user_id', 'category_id', 'status', 'title', 'title_ar', 'description', 'image', 'attachment_file', 'price', 'active', 'is_featured', 'published_at', 'expire_date', 'created_at', 'updated_at'];
+    public array $filterable = ['category_id', 'status', 'is_active'];
+    public array $allowedFields = ['id', 'category_id', 'status', 'title', 'description', 'image', 'is_active', 'created_at', 'updated_at'];
 
     //
 

@@ -17,7 +17,7 @@ class ServiceResource extends JsonResource
     {
         $attributes = $this->resource->getAttributes();
         $data = ['id' => $this->id];
-        $fields = ['user_id', 'category_id', 'city_id', 'title', 'desc', 'image', 'price', 'created_at', 'updated_at'];
+        $fields = ['user_id', 'category_id', 'city_id', 'title', 'desc', 'image', 'price', 'is_active', 'created_at', 'updated_at'];
 
         foreach ($fields as $field) {
             if (array_key_exists($field, $attributes)) {

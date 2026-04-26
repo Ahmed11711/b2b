@@ -13,7 +13,7 @@ class AdsResource extends JsonResource
     {
         $attributes = $this->resource->getAttributes();
         $data = ['id' => $this->id];
-        $fields = ['user_id', 'category_id', 'status', 'title', 'title_ar', 'description', 'image', 'attachment_file', 'price', 'active', 'is_featured', 'published_at', 'expire_date', 'created_at', 'updated_at'];
+        $fields = ['category_id', 'status', 'title', 'description', 'image', 'is_active', 'created_at', 'updated_at'];
 
         foreach ($fields as $field) {
             if (array_key_exists($field, $attributes)) {
@@ -21,6 +21,15 @@ class AdsResource extends JsonResource
             }
         }
 
+        $data['category'] = $this->whenLoaded('category', function () {
+            return [
+                'id' => $this->category?->id,
+                'name' => $this->category?->name,
+            ];
+        });
+        $data['image'] = $this->image
+            ? url(str_replace('/storage/app/public', '/storage', $this->image))
+            : null;
         return $data;
     }
 }

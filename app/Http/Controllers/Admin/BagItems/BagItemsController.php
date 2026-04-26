@@ -25,7 +25,7 @@ class BagItemsController extends BaseController
         );
 
         $this->hasGallery         = true;
-        $this->withRelationships  = ['gallery'];
+        $this->withRelationships  = ['gallery', 'bagsCategories'];
         $this->storeRequestClass  = BagItemsStoreRequest::class;
         $this->updateRequestClass = BagItemsUpdateRequest::class;
         $this->resourceClass      = BagItemsResource::class;
@@ -36,7 +36,6 @@ class BagItemsController extends BaseController
         unset($data['gallery']);
         unset($data['image']);
 
-        // ✅ لو image جاي كـ file مباشرة
         if ($request->hasFile('image')) {
             $data['image'] = $this->uploadSingleFile($request->file('image'));
         }

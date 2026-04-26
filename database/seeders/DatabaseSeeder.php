@@ -25,10 +25,11 @@ class DatabaseSeeder extends Seeder
         $this->call(CategorySeeder::class);
 
 
-        
+
+        $this->call(UserSeeder::class);
 
         $this->call(ServiceSeeder::class);
-        // $this->call(AdsSeeder::class);
+        // 
         // 
         $this->call(ProjectSeeder::class);
         $this->call(MyCertificateSeeder::class);
@@ -42,15 +43,7 @@ class DatabaseSeeder extends Seeder
         $this->call(BagSeeder::class);
         $this->call(BagsCategorySeeder::class);
         $this->call(BagItemsSeeder::class);
-        $this->call(UserSeeder::class);
         $this->call(UserPacakgesSeeder::class);
-    
-    
-        
-    
-    
-        
-    
-        
+        $this->call(AdsSeeder::class);
     }
 }

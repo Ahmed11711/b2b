@@ -110,4 +110,28 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(Verification::class);
     }
+
+    // App/Models/User.php
+
+    public function getProfileCompletion(): array
+    {
+        $fields = [
+            'name'         => $this->name,
+            'email'        => $this->email,
+            'phone'        => $this->phone,
+            'user_name'    => $this->user_name,
+            'whtsapp'      => $this->whtsapp,
+            'country_code' => $this->country_code,
+            'is_verified'  => $this->is_verified,
+        ];
+
+        $completed = array_filter($fields, fn($val) => !is_null($val) && $val !== '' && $val !== false);
+        $percentage = (int) round((count($completed) / count($fields)) * 100);
+
+        return [
+            'percentage'       => $percentage,
+            'completed_fields' => array_keys($completed),
+            'missing_fields'   => array_keys(array_diff_key($fields, $completed)),
+        ];
+    }
 }

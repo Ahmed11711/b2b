@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Auth;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -27,6 +28,29 @@ class LoginResource extends JsonResource
             'role'              => $this->role,
             'created_at'        => $this->created_at,
             'updated_at'        => $this->updated_at,
+            'profile_completion' => $this->getProfileCompletion($this->resource),
+        ];
+    }
+
+    public function getProfileCompletion(User $user): array
+    {
+        $fields = [
+            'name'         => $user->name,
+            'email'        => $user->email,
+            'phone'        => $user->phone,
+            'user_name'    => $user->user_name,
+            'whtsapp'      => $user->whtsapp,
+            'country_code' => $user->country_code,
+            'is_verified'  => $user->is_verified,
+        ];
+
+        $completed = array_filter($fields, fn($val) => !is_null($val) && $val !== '' && $val !== false);
+        $percentage = (int) round((count($completed) / count($fields)) * 100);
+
+        return [
+            'percentage'       => $percentage,
+            'completed_fields' => array_keys($completed),
+            'missing_fields'   => array_keys(array_diff_key($fields, $completed)),
         ];
     }
 }

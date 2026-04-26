@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\verification\verificationController;
 use App\Http\Controllers\Api\ApplyPosts\AllpostsToApplayController;
 use App\Http\Controllers\Api\Backage\BackageFeatureController;
 use App\Http\Controllers\Api\Bids\BidsController;
+use App\Http\Controllers\Api\Dashboard\DashboardController;
 use App\Http\Controllers\Api\MyCategory\MyCategoryController;
 use App\Http\Controllers\Api\Profile\ProfileAccountController;
 use App\Http\Controllers\Api\Service\ServiceApiController;
@@ -26,6 +27,7 @@ use App\Http\Middleware\CheckFeatureLimit;
 use App\Http\Middleware\CheckJwtToken;
 use App\Http\Middleware\TrackProviderVisits;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -77,6 +79,7 @@ Route::group(['prefix' => 'v1/auth'], function () {
 
 
 Route::middleware(CheckJwtToken::class)->prefix('v1/user')->group(function () {
+    Route::get('dashboard', [DashboardController::class, 'index']);
     Route::get('category', [CategoryController::class, 'index']);
     Route::get('all-provider', [AllProvidersController::class, 'allProvider']);
     Route::get('top-provider', [AllProvidersController::class, 'topProviders']);

@@ -19,7 +19,7 @@ class DashboardController extends Controller
 
         $userPackage   = UserPacakges::with('package.package_features')->where('user_id', $userId)->where('active', true)->first();
         $service       = Service::where('user_id', $userId)->where('is_active', true)->count();
-        $providerVisit = providerVisit::where('user_id', $userId)->count();
+        $providerVisit = providerVisit::where('provider_id', $userId)->count();
 
         return response()->json([
             'success' => true,

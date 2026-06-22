@@ -25,7 +25,7 @@ class VerificationController extends BaseController
         $this->storeRequestClass = verificationStoreRequest::class;
         $this->updateRequestClass = verificationUpdateRequest::class;
         $this->resourceClass = verificationResource::class;
-        // $this->isUserBound        = true;
+        $this->isUserBound        = false;
     }
     protected function beforeStore(array $data, Request $request): array
     {

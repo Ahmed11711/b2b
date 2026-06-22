@@ -93,16 +93,21 @@ abstract class BaseController extends Controller
   /**
    * Display the specified resource.
    */
-  public function show(int $id): JsonResponse
-  {
-    $record = $this->repository->query()->with($this->getShowRelationships())->find($id);
+public function show(int $id): JsonResponse
+{
+    $query = $this->repository->query()
+        ->with($this->getShowRelationships());
+
+    $query = $this->applyScoping($query); // ✅ السطر ده بس اللي ناقص
+
+    $record = $query->find($id);
+
     if (!$record) {
-      return $this->errorResponse("Record not found", 404);
+        return $this->errorResponse("Record not found", 404);
     }
 
     return $this->successResponse(new $this->resourceClass($record), 'Record retrieved successfully');
-  }
-
+}
   /**
    * Store a newly created resource in storage.
    */

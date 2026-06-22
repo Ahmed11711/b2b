@@ -16,6 +16,8 @@ class verificationUpdateRequest extends BaseRequest
             // Second two: Files (PDF or Images)
             'commercial_register' => 'sometimes|nullable|file|mimes:pdf,jpeg,png,jpg|max:10240',
             'tax_card'            => 'sometimes|nullable|file|mimes:pdf,jpeg,png,jpg|max:10240',
+            'status'              =>'sometimes',
+            'note'              =>'sometimes'
         ];
     }
 

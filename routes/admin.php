@@ -25,14 +25,16 @@ use App\Http\Controllers\Admin\Service\ServiceController;
 use App\Http\Controllers\Admin\User\UserController;
 use App\Http\Controllers\Admin\UserInfo\UserInfoController;
 use App\Http\Controllers\Admin\UserPacakges\UserPacakgesController;
-use App\Http\Controllers\Admin\verification\verificationController;
+use App\Http\Controllers\Admin\verification\VerificationController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\CheckJwtToken;
+
 
 
 
 Route::prefix('v1/admin')->group(function () {});
 
-Route::prefix('admin/v1/')->group(function () {
+Route::prefix('admin/v1/')->middleware(CheckJwtToken::class. ':super_admin')->group(function () {
 
     Route::prefix('dashboard')->group(function () {
         Route::get('/stats',           [DashboardController::class, 'stats']);
@@ -55,6 +57,6 @@ Route::prefix('admin/v1/')->group(function () {
     Route::apiResource('features', FeatureController::class)->names('feature');
     Route::apiResource('user_pacakges', UserPacakgesController::class)->names('user_pacakges');
     Route::apiResource('ads', AdsController::class)->names('ads');
-});
+    Route::apiResource('verificationAdmin', verificationController::class)->names('verificationAdmin');});
 
 Route::prefix('v1')->group(function () {});

@@ -9,7 +9,7 @@ use App\Http\Resources\Admin\verification\verificationResource;
 use App\Repositories\verification\verificationRepositoryInterface;
 use Illuminate\Http\Request;
 
-class verificationController extends BaseController
+class VerificationController extends BaseController
 {
     public function __construct(verificationRepositoryInterface $repository)
     {

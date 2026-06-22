@@ -9,7 +9,6 @@ class verificationStoreRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'unique:verifications,user_id',
             'id_card_front'       => 'required|image|mimes:jpeg,png,jpg|max:5120',
             'id_card_back'        => 'required|image|mimes:jpeg,png,jpg|max:5120',
 

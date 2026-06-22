@@ -34,6 +34,8 @@ class verificationResource extends JsonResource
             ? url(str_replace('/storage/app/public', '/storage', $this->tax_card))
             : null;
 
+            $data['user_name']=$this->user->name ?? null;
+
         return $data;
     }
 }

@@ -21,6 +21,10 @@ class CheckJwtToken
                 return $this->errorResponse("User Not  Found");
             }
 
+            if (!empty($roles) && !in_array($user->role, $roles)) {
+                 return $this->errorResponse("Unauthorized: insufficient permissions", 403);
+                }
+
             $payload = JWTAuth::getPayload();
         } catch (TokenExpiredException $e) {
             try {

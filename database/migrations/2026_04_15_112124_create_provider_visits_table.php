@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('visitor_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->foreignId('provider_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('service_id')->constrained()->onDelete('cascade');
 
             $table->string('ip_address', 45)->nullable();
             $table->string('country')->nullable();

@@ -49,7 +49,6 @@ class BagItemsController extends BaseController
         unset($data['image']);
 
         if ($request->hasFile('image')) {
-            // ✅ احذف القديمة
             if (!empty($existingRecord->image)) {
                 Storage::disk($this->uploadDisk)
                     ->delete(str_replace('/storage/', '', $existingRecord->image));

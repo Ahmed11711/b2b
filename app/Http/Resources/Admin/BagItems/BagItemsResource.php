@@ -20,6 +20,9 @@ class BagItemsResource extends JsonResource
                 $data[$field] = $this->{$field};
             }
         }
+        $data['image'] = $this->image
+            ? url(str_replace('/storage/app/public', '/storage', $this->image))
+            : null;
         $data['items'] = $this->whenLoaded('gallery');
         $data['bagsCategories'] = $this->whenLoaded('bagsCategories');
 

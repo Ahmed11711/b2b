@@ -25,7 +25,7 @@ use App\Http\Controllers\Admin\Service\ServiceController;
 use App\Http\Controllers\Admin\User\UserController;
 use App\Http\Controllers\Admin\UserInfo\UserInfoController;
 use App\Http\Controllers\Admin\UserPacakges\UserPacakgesController;
-use App\Http\Controllers\Admin\verification\VerificationController;
+use App\Http\Controllers\Admin\Verification\VerificationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckJwtToken;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\verification;
+namespace App\Http\Controllers\Admin\Verification;
 
 use App\Http\Controllers\BaseController\BaseController;
 use App\Http\Requests\Admin\verification\verificationStoreRequest;

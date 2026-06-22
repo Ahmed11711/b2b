@@ -4,7 +4,7 @@ namespace App\Repositories\verification;
 
 use App\Repositories\verification\verificationRepositoryInterface;
 use App\Repositories\BaseRepository\BaseRepository;
-use App\Models\verification;
+use App\Models\Verification;
 
 /**
  * Class verificationRepository
@@ -17,7 +17,7 @@ class verificationRepository extends BaseRepository implements verificationRepos
      *
      * @param verification $model
      */
-    public function __construct(verification $model)
+    public function __construct(Verification $model)
     {
         parent::__construct($model);
     }

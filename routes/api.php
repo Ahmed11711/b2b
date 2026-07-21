@@ -89,6 +89,8 @@ Route::prefix('v1/user')->group(function () {
     Route::get('bags/{id}', [BagController::class, 'show']);
     Route::get('bag_items', [BagItemsController::class, 'index']);
     Route::get('bag_items/{id}', [BagItemsController::class, 'show']);
+         Route::get('city', [CityController::class, 'index']);
+
 });
 
 
@@ -97,6 +99,8 @@ Route::middleware(CheckJwtToken::class)->prefix('v1/user')->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index']);
     Route::post('review-service', [ReviewsController::class, 'store']);
     Route::apiResource('posts', PostsController::class);
+    Route::put('my-profile', [ProfileAccountController::class, 'update']);
+    Route::get('my-profile', [ProfileAccountController::class, 'show']);
 });
 
 

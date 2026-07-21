@@ -18,6 +18,7 @@ class UserInfoStoreRequest extends BaseRequest
             'country_id' => 'nullable|exists:countries,id|display_field:name',
             'city_id' => 'nullable|exists:cities,id|display_field:name',
             'info' => 'nullable|string',
+            'privacy_policy' => 'nullable|string',
         ];
     }
 

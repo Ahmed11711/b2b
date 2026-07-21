@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\City\CityController;
 use App\Http\Controllers\Admin\MyCertificate\MyCertificateController;
 use App\Http\Controllers\Admin\Posts\PostsController;
 use App\Http\Controllers\Admin\Project\ProjectController;
+use App\Http\Controllers\Admin\UserInfo\UserInfoController;
 use App\Http\Controllers\Admin\verification\VerificationController;
 use App\Http\Controllers\Api\ApplyPosts\AllpostsToApplayController;
 use App\Http\Controllers\Api\Backage\BackageFeatureController;
@@ -29,6 +30,7 @@ use App\Http\Middleware\CheckFeatureLimit;
 use App\Http\Middleware\CheckJwtToken;
 use App\Http\Middleware\TrackProviderVisits;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -89,8 +91,7 @@ Route::prefix('v1/user')->group(function () {
     Route::get('bags/{id}', [BagController::class, 'show']);
     Route::get('bag_items', [BagItemsController::class, 'index']);
     Route::get('bag_items/{id}', [BagItemsController::class, 'show']);
-         Route::get('city', [CityController::class, 'index']);
-
+    Route::get('city', [CityController::class, 'index']);
 });
 
 
@@ -101,22 +102,31 @@ Route::middleware(CheckJwtToken::class)->prefix('v1/user')->group(function () {
     Route::apiResource('posts', PostsController::class);
     Route::put('my-profile', [ProfileAccountController::class, 'update']);
     Route::get('my-profile', [ProfileAccountController::class, 'show']);
+    Route::get('my-category', [MyCategoryController::class, 'index']);
+    Route::post('my-category', [MyCategoryController::class, 'store']);
 });
 
 
-// provider
+// provider 
 Route::middleware(CheckJwtToken::class)->prefix('v1/provider')->group(function () {
     Route::get('my-category', [MyCategoryController::class, 'index']);
     Route::post('my-category', [MyCategoryController::class, 'store']);
-    Route::resource('my-service', ServiceApiController::class)->except(['store']);
-
-    Route::post('my-service', [ServiceApiController::class, 'store'])
-        ->middleware(CheckFeatureLimit::class . ':service');
+    // social media
     Route::put('my-socialMedia', [UserContactController::class, 'upsert']);
     Route::get('my-socialMedia', [UserContactController::class, 'index']);
+    // service
+    Route::resource('my-service', ServiceApiController::class)->except(['store']);
+    Route::post('my-service', [ServiceApiController::class, 'store'])
+        ->middleware(CheckFeatureLimit::class . ':service');
+
+    // info
+    Route::apiResource('my-info', UserInfoController::class)->only(['index', 'store', 'update']);
+
     Route::get('city', [CityController::class, 'index']);
     Route::put('my-profile', [ProfileAccountController::class, 'update']);
     Route::get('my-profile', [ProfileAccountController::class, 'show']);
+
+
     Route::apiResource('my-projects', ProjectController::class)->names('project');
     Route::apiResource('my_certificates', MyCertificateController::class)->names('my_certificate');
     Route::apiResource('my-branches', BranchController::class)->names('branch');

@@ -113,16 +113,17 @@ class User extends Authenticatable implements JWTSubject
 
     // App/Models/User.php
 
-    public function getProfileCompletion(): array
+    public function getProfileCompletion(User $user): array
     {
         $fields = [
-            'name'         => $this->name,
-            'email'        => $this->email,
-            'phone'        => $this->phone,
-            'user_name'    => $this->user_name,
-            'whtsapp'      => $this->whtsapp,
-            'country_code' => $this->country_code,
-            'is_verified'  => $this->is_verified,
+            'name'         => $user->name,
+            'email'        => $user->email,
+            'phone'        => $user->phone,
+            'user_name'    => $user->user_name,
+            'whtsapp'      => $user->whtsapp,
+            'country_code' => $user->country_code,
+            'image'        => $user->image,
+            'email_verified_at'  => !is_null($user->email_verified_at),
         ];
 
         $completed = array_filter($fields, fn($val) => !is_null($val) && $val !== '' && $val !== false);

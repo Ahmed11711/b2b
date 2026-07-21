@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\User\UserStoreRequest;
 use App\Http\Requests\Admin\User\UserUpdateRequest;
 use App\Http\Requests\Api\ProfileAccount\ProfileAccountRequest;
+use App\Http\Requests\Api\ProfileAccount\UpdateProfileInfoRequest;
 use App\Http\Resources\Admin\User\UserResource;
 use App\Http\Resources\Api\ProfileAccount\ProfileAccountResource;
 use App\Repositories\Category\CategoryRepositoryInterface;
@@ -76,8 +77,6 @@ class ProfileAccountController extends BaseController
             $this->categoryRepository->syncUserCategories($updatedRecord->id, $categories);
 
             $updatedRecord->all_categories_with_selection = $this->categoryRepository->getAllCategoriesForUser($updatedRecord->id);
-
-            Log::info("Categories synced and reloaded for user: " . $updatedRecord->id);
         }
     }
 }

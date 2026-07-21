@@ -23,6 +23,7 @@ class LoginResource extends JsonResource
             'user_name'         => $this->user_name,
             'whtsapp'           => $this->whtsapp, // Fixed typo from 'whatsapp' if that's your DB column name
             'country_code'      => $this->country_code,
+            'image'             => $this->image,
             'is_active'         => (int) $this->is_active,
             'is_verified'       => !is_null($this->email_verified_at),
             'role'              => $this->role,
@@ -41,7 +42,7 @@ class LoginResource extends JsonResource
             'user_name'    => $user->user_name,
             'whtsapp'      => $user->whtsapp,
             'country_code' => $user->country_code,
-            'is_verified'  => $user->is_verified,
+            'is_verified'  => $user->email_verified_at,
         ];
 
         $completed = array_filter($fields, fn($val) => !is_null($val) && $val !== '' && $val !== false);

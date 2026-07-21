@@ -18,6 +18,8 @@ class UserInfoUpdateRequest extends BaseRequest
             'country_id' => 'sometimes|nullable|exists:countries,id|display_field:name',
             'city_id' => 'sometimes|nullable|exists:cities,id|display_field:name',
             'info' => 'sometimes|nullable|string',
+            'privacy_policy' => 'nullable|string',
+
         ];
     }
 

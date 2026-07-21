@@ -17,7 +17,7 @@ class MyCertificateUpdateRequest extends BaseRequest
             'user_id' => 'sometimes|required|exists:users,id|display_field:name',
             'title' => 'sometimes|required|string|max:255',
             'issue_date' => 'sometimes|nullable|date',
-            'image' => 'sometimes|nullable|file|image|max:2048',
+            'image' => 'sometimes|nullable|file|',
             'description' => 'sometimes|nullable|string',
         ];
     }

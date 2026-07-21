@@ -16,7 +16,7 @@ class MyCertificateStoreRequest extends BaseRequest
         return [
             'title' => 'required|string|max:255',
             'issue_date' => 'required|date',
-            'image' => 'nullable|file|image|max:2048',
+            'image' => 'nullable|file|image',
             'description' => 'nullable|string',
         ];
     }

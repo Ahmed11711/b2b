@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin\Posts;
 
 use App\Http\Requests\BaseRequest\BaseRequest;
+use Illuminate\Validation\Rule;
 
 class PostsStoreRequest extends BaseRequest
 {
@@ -22,6 +23,13 @@ class PostsStoreRequest extends BaseRequest
             'image' => 'required|file|image|max:2048',
             'gallery'    => 'required|array',
             'gallery.*'  => 'file|max:2048',
+            'contact_ids' => 'required|array',
+            'contact_ids.*' => [
+                Rule::exists('user_contacts', 'id')
+                    ->where(function ($query) {
+                        $query->where('user_id', auth('api')->id());
+                    }),
+            ],
         ];
     }
 

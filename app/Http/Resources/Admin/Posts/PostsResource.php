@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Admin\Posts;
 
 use App\Http\Resources\Api\Bids\BidesResource;
+use App\Http\Resources\Api\ServiceContact\ServiceContactResource;
 use App\Http\Resources\gallery\galleryResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -29,6 +30,8 @@ class PostsResource extends JsonResource
         $data['gallery'] = galleryResource::collection($this->whenLoaded('gallery'));
         $data['user'] = $this->whenLoaded('user');
         $data['bids'] = BidesResource::collection($this->whenLoaded('bids'));
+        $data['contacts'] = ServiceContactResource::collection($this->whenLoaded('contacts'));
+
 
         return $data;
     }

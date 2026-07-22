@@ -27,4 +27,13 @@ class Posts extends Model
     {
         return $this->hasMany(bids::class, 'post_id');
     }
+    public function contacts()
+    {
+        return $this->hasMany(ServiceContact::class, 'service_id', 'id')
+            ->where('type', 'posts');
+    }
+    public function views()
+    {
+        return $this->hasMany(PostView::class);
+    }
 }

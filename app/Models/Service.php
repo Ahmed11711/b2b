@@ -37,7 +37,7 @@ class Service extends Model
     }
     public function contacts()
     {
-        return $this->hasMany(ServiceContact::class, 'service_id', 'id');
+        return $this->hasMany(ServiceContact::class, 'service_id', 'id')->where('type', 'service');
     }
     public function reviews()
     {

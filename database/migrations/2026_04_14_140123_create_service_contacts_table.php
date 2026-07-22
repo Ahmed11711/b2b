@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('service_id');
             $table->foreignId('user_contact_id')->constrained('user_contacts')->cascadeOnDelete();
-            $table->enum('type', ['service', 'project'])->nullable();
+            $table->enum('type', ['service', 'project', 'posts'])->nullable();
             $table->timestamps();
         });
     }

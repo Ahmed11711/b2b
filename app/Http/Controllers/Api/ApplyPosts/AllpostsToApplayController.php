@@ -45,6 +45,7 @@ class AllpostsToApplayController extends BaseController
     {
         return array_merge($this->withRelationships, [
             'gallery',
+            'contacts',
         ]);
     }
 }

@@ -12,7 +12,8 @@ class BidsRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            'post_id' => 'required|exists:posts,id'
+            'post_id' => 'required|exists:posts,id',
+            'user_contact_id'  => 'required|exists:user_contacts,id',
         ];
     }
 }

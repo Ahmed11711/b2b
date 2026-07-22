@@ -34,6 +34,13 @@ class FeatureSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'key' => "bids",
+                'lable' => "you have permission for bids",
+                'type' => "number",
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
 
         ]);
     }

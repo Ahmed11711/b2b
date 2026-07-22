@@ -12,7 +12,10 @@ use App\Http\Controllers\Admin\UserInfo\UserInfoController;
 use App\Http\Controllers\Admin\verification\VerificationController;
 use App\Http\Controllers\Api\ApplyPosts\AllpostsToApplayController;
 use App\Http\Controllers\Api\Backage\BackageFeatureController;
+use App\Http\Controllers\Api\Backage\PackageUsageController;
 use App\Http\Controllers\Api\Bids\BidsController;
+use App\Http\Controllers\Api\Bids\Statistics\PostStatisticsController;
+use App\Http\Controllers\Api\Bids\Statistics\StatisticsController;
 use App\Http\Controllers\Api\Dashboard\DashboardController;
 use App\Http\Controllers\Api\MyCategory\MyCategoryController;
 use App\Http\Controllers\Api\Profile\ProfileAccountController;
@@ -27,10 +30,13 @@ use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\User\AllProviders\AllProvidersController;
 use App\Http\Controllers\User\Reviews\ReviewsController;
 use App\Http\Middleware\CheckFeatureLimit;
+
+
+
 use App\Http\Middleware\CheckJwtToken;
+use App\Http\Middleware\RecordPostView;
 use App\Http\Middleware\TrackProviderVisits;
 use Illuminate\Support\Facades\Route;
-
 
 
 
@@ -104,6 +110,7 @@ Route::middleware(CheckJwtToken::class)->prefix('v1/user')->group(function () {
     Route::get('my-profile', [ProfileAccountController::class, 'show']);
     Route::get('my-category', [MyCategoryController::class, 'index']);
     Route::post('my-category', [MyCategoryController::class, 'store']);
+    Route::get('posts/{postId}/statistics', [PostStatisticsController::class, 'show']);
 });
 
 
@@ -133,12 +140,13 @@ Route::middleware(CheckJwtToken::class)->prefix('v1/provider')->group(function (
     Route::apiResource('verifications', VerificationController::class)->names('verification');
 
     Route::get('available-posts', [AllpostsToApplayController::class, 'index']);
-    Route::get('available-posts/{id}', [AllpostsToApplayController::class, 'show']);
+    Route::get('available-posts/{id}', [AllpostsToApplayController::class, 'show'])->middleware(RecordPostView::class);
     Route::post('bids', [BidsController::class, 'store'])->middleware(CheckFeatureLimit::class . ':bids');;
 
 
     Route::get('allPacakge', [BackageFeatureController::class, 'index']);
     Route::post('subscribe', [SubscribeController::class, 'subscribe']);
+    Route::get('package-usage', [PackageUsageController::class, 'currentUsage']);
 });
 
 

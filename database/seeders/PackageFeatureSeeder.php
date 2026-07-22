@@ -12,6 +12,7 @@ class PackageFeatureSeeder extends Seeder
         $userFeatureId = DB::table('features')->where('key', 'user')->value('id');
         $serviceFeatureId = DB::table('features')->where('key', 'service')->value('id');
         $applyFeatureId = DB::table('features')->where('key', 'applay')->value('id');
+        $bidsFeatureId = DB::table('features')->where('key', 'bids')->value('id');
 
         $packageIds = DB::table('packages')->pluck('id');
 
@@ -45,6 +46,15 @@ class PackageFeatureSeeder extends Seeder
                 'feature_id' => $applyFeatureId,
                 'value'      => '50',
                 'lable'      => 'you have permission for apply count',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+
+            $dataToInsert[] = [
+                'package_id' => $packageId,
+                'feature_id' => $bidsFeatureId,
+                'value'      => '30',
+                'lable'      => 'you have permission for bids count',
                 'created_at' => now(),
                 'updated_at' => now(),
             ];

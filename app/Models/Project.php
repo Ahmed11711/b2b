@@ -20,6 +20,7 @@ class Project extends Model
 
     public function contacts()
     {
-        return $this->hasMany(ServiceContact::class, 'service_id', 'id');
+        return $this->hasMany(ServiceContact::class, 'service_id', 'id')
+            ->where('type', 'project');
     }
 }

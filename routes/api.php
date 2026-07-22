@@ -141,7 +141,7 @@ Route::middleware(CheckJwtToken::class)->prefix('v1/provider')->group(function (
 
     Route::get('available-posts', [AllpostsToApplayController::class, 'index']);
     Route::get('available-posts/{id}', [AllpostsToApplayController::class, 'show'])->middleware(RecordPostView::class);
-    Route::post('bids', [BidsController::class, 'store'])->middleware(CheckFeatureLimit::class . ':bids');;
+    Route::post('bids', [BidsController::class, 'store'])->middleware(CheckFeatureLimit::class . ':bids');
 
 
     Route::get('allPacakge', [BackageFeatureController::class, 'index']);

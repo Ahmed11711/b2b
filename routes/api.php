@@ -139,7 +139,7 @@ Route::middleware(CheckJwtToken::class)->prefix('v1/provider')->group(function (
     Route::apiResource('my-projects', ProjectController::class)->names('project');
     Route::apiResource('my_certificates', MyCertificateController::class)->names('my_certificate');
     Route::apiResource('my-branches', BranchController::class)->names('branch');
-    Route::apiResource('verifications', VerificationController::class)->names('verification')->except('index');
+    Route::apiResource('verifications', VerificationController::class)->names('verification')->except(['get', 'index']);
     Route::get('verifications', [VerificationApiController::class, 'myVerification']);
 
     Route::get('available-posts', [AllpostsToApplayController::class, 'index']);

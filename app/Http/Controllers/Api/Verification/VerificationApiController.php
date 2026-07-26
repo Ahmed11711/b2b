@@ -34,18 +34,13 @@ class VerificationApiController extends BaseController
         return $data;
     }
 
-    /**
-     * كل مستخدم يشوف بس سجله هو، في كل العمليات (GET, POST, PUT, DELETE).
-     */
+
     protected function applyScoping($query)
     {
         return $query->where('user_id', auth('api')->id());
     }
 
-    /**
-     * مفيش داعي لـ index كليست (Verification سجل واحد بس لكل يوزر).
-     * ده endpoint مخصص يرجع حالة التحقق بتاعت المستخدم الحالي فقط.
-     */
+
     public function myVerification(): JsonResponse
     {
         $record = $this->applyScoping($this->repository->query())->first();

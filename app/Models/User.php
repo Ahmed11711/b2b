@@ -110,6 +110,14 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(Verification::class);
     }
+    // app/Models/User.php
+
+    public function activeUserPackage()
+    {
+        return $this->hasOne(UserPacakges::class, 'user_id')
+            ->where('active', true)
+            ->latest('starts_at');
+    }
 
     // App/Models/User.php
 

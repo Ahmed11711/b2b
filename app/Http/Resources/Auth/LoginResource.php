@@ -30,6 +30,7 @@ class LoginResource extends JsonResource
             'created_at'        => $this->created_at,
             'updated_at'        => $this->updated_at,
             'profile_completion' => $this->getProfileCompletion($this->resource),
+            'package'           => $this->getPackageInfo($this->resource),
         ];
     }
 
@@ -52,6 +53,31 @@ class LoginResource extends JsonResource
             'percentage'       => $percentage,
             'completed_fields' => array_keys($completed),
             'missing_fields'   => array_keys(array_diff_key($fields, $completed)),
+        ];
+    }
+
+    public function getPackageInfo(User $user): ?array
+    {
+        $subscription = $user->activeUserPackage;
+
+        if (!$subscription) {
+            return null;
+        }
+
+        $package = $subscription->package;
+
+        $endsAt        = $subscription->ends_at;
+        $daysRemaining = $endsAt ? max(0, now()->diffInDays($endsAt, false)) : 0;
+        $isExpired     = $endsAt ? now()->greaterThan($endsAt) : false;
+
+        return [
+            'package_id'     => $package->id,
+            'name'           => $package->name,
+            'is_free'        => (bool) $package->is_free,
+            'starts_at'      => $subscription->starts_at,
+            'ends_at'        => $endsAt,
+            'days_remaining' => $isExpired ? 0 : $daysRemaining,
+            'is_expired'     => $isExpired,
         ];
     }
 }

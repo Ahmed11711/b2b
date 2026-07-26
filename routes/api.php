@@ -94,7 +94,9 @@ Route::prefix('v1/user')->group(function () {
     Route::get('top-provider', [AllProvidersController::class, 'topProviders']);
     Route::get('one-provider/{id}', [AllProvidersController::class, 'oneProvider'])->middleware(TrackProviderVisits::class);
     Route::get('get-service/{service_id}', [ServiceApiController::class, 'show'])->middleware(TrackProviderVisits::class);
-    Route::get('get-project/{id}', [ProjectController::class, 'show'])->middleware(TrackProviderVisits::class);
+    Route::get('get-project/{id}', [ProjectController::class, 'show'])
+        ->name('project.show')
+        ->middleware(TrackProviderVisits::class);
     Route::get('bags', [BagController::class, 'index']);
     Route::get('bags/{id}', [BagController::class, 'show']);
     Route::get('bag_items', [BagItemsController::class, 'index']);
@@ -136,7 +138,8 @@ Route::middleware(CheckJwtToken::class)->prefix('v1/provider')->group(function (
     Route::get('my-profile', [ProfileAccountController::class, 'show']);
 
 
-    Route::apiResource('my-projects', ProjectController::class)->names('project');
+    Route::apiResource('my-projects', ProjectController::class)
+        ->names(['show' => 'provider.project.show']);
     Route::apiResource('my_certificates', MyCertificateController::class)->names('my_certificate');
     Route::apiResource('my-branches', BranchController::class)->names('branch');
     Route::apiResource('verifications', VerificationApiController::class)->names('verification');

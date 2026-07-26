@@ -8,6 +8,7 @@ use App\Http\Requests\Admin\verification\verificationUpdateRequest;
 use App\Http\Resources\Admin\verification\verificationResource;
 use App\Repositories\verification\verificationRepositoryInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class VerificationController extends BaseController
 {
@@ -29,6 +30,7 @@ class VerificationController extends BaseController
     protected function beforeStore(array $data, Request $request): array
     {
         $data['user_id'] = auth('api')->id();
+        Log::info('User ID: ' . $data['user_id']); // Log the user ID for debugging
         $data['status']  = 'pending';
         return $data;
     }

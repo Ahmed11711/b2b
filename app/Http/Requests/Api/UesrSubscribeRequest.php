@@ -12,7 +12,12 @@ class UesrSubscribeRequest extends BaseRequest
         return [
             'package_id' => [
                 'required',
-                Rule::exists('packages', 'id')->where(fn($query) => $query->where('is_free', false)),
+                Rule::exists('packages', 'id')->where(function ($query) {
+                    $query->where(function ($q) {
+                        $q->where('is_free', false)
+                            ->orWhereNull('is_free');
+                    });
+                }),
             ],
         ];
     }

@@ -179,9 +179,9 @@ Route::match(['GET', 'POST'], '/meta-webhook', function (Request $request) {
 
     if ($request->isMethod('GET')) {
 
-        $mode = $request->input('hub.mode');
-        $token = $request->input('hub.verify_token');
-        $challenge = $request->input('hub.challenge');
+        $mode = $request->query->get('hub.mode');
+        $token = $request->query->get('hub.verify_token');
+        $challenge = $request->query->get('hub.challenge');
 
         Log::info('Meta Verify Request', [
             'mode' => $mode,
@@ -207,7 +207,6 @@ Route::match(['GET', 'POST'], '/meta-webhook', function (Request $request) {
             'expected' => $verifyToken,
         ], 403);
     }
-
     Log::info('Meta Event Received', [
         'payload' => $request->all(),
         'raw' => $request->getContent(),

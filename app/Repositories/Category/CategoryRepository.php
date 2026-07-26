@@ -26,12 +26,13 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
 
     public function getAllCategoriesForUser($userId)
     {
-        return Category::addSelect([
-            'is_selected' => DB::table('category_user')
-                ->selectRaw('count(*)')
-                ->whereColumn('category_id', 'categories.id')
-                ->where('user_id', $userId)
-        ])->get();
+        return Category::select(['id', 'name', 'name_ar', 'created_at'])
+            ->addSelect([
+                'is_selected' => DB::table('category_user')
+                    ->selectRaw('count(*)')
+                    ->whereColumn('category_id', 'categories.id')
+                    ->where('user_id', $userId)
+            ])->get();
     }
 
     public function syncUserCategories(int $userId, array $categoryIds)

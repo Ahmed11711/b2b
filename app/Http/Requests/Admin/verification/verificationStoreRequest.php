@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin\verification;
 
 use App\Http\Requests\BaseRequest\BaseRequest;
+use App\Models\Verification;
 
 class verificationStoreRequest extends BaseRequest
 {
@@ -15,7 +16,19 @@ class verificationStoreRequest extends BaseRequest
             // Second two: Files (PDF or Images)
             'commercial_register' => 'required|file|mimes:pdf,jpeg,png,jpg|max:10240',
             'tax_card'            => 'required|file|mimes:pdf,jpeg,png,jpg|max:10240',
+            'user_id'             => 'prohibited',
         ];
+    }
+
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $exists = Verification::where('user_id', auth('api')->id())->exists();
+
+            if ($exists) {
+                $validator->errors()->add('user_id', 'You already have a verification request.');
+            }
+        });
     }
 
     public function messages(): array

@@ -9,7 +9,7 @@ use App\Http\Controllers\Admin\MyCertificate\MyCertificateController;
 use App\Http\Controllers\Admin\Posts\PostsController;
 use App\Http\Controllers\Admin\Project\ProjectController;
 use App\Http\Controllers\Admin\UserInfo\UserInfoController;
-use App\Http\Controllers\Admin\verification\VerificationController;
+use App\Http\Controllers\Admin\Verification\VerificationController;
 use App\Http\Controllers\Api\ApplyPosts\AllpostsToApplayController;
 use App\Http\Controllers\Api\Backage\BackageFeatureController;
 use App\Http\Controllers\Api\Backage\PackageUsageController;

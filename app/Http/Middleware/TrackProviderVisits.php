@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Jenssegers\Agent\Agent;
 use Symfony\Component\HttpFoundation\Response;
+use Stevebauman\Location\Facades\Location;
 
 class TrackProviderVisits
 {
@@ -50,12 +51,28 @@ class TrackProviderVisits
                     ->exists();
 
                 if (!$alreadyVisited) {
+                    // تحديد الدولة والمدينة عن طريق الـ IP
+                    $country = $request->header('cf-ipcountry') ?? 'N/A';
+                    $city    = 'N/A';
+
+                    try {
+                        $position = Location::get($request->ip());
+
+                        if ($position) {
+                            $country = $position->countryName ?? $country;
+                            $city    = $position->cityName ?? $city;
+                        }
+                    } catch (\Exception $e) {
+                        Log::error("Location Detection Error: " . $e->getMessage());
+                    }
+
                     ProviderVisit::create([
                         'visitor_id'  => $visitorId,
                         'provider_id' => $providerId,
                         'service_id'  => $serviceId,
                         'ip_address'  => $request->ip(),
-                        'country'     => $request->header('cf-ipcountry') ?? 'N/A',
+                        'country'     => $country,
+                        'city'        => $city,
                         'device_type' => $agent->isMobile() ? 'Mobile' : 'Desktop',
                         'os'          => $agent->platform(),
                         'browser'     => $agent->browser(),

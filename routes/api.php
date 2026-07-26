@@ -18,6 +18,7 @@ use App\Http\Controllers\Api\Bids\Statistics\PostStatisticsController;
 use App\Http\Controllers\Api\Bids\Statistics\StatisticsController;
 use App\Http\Controllers\Api\Dashboard\DashboardController;
 use App\Http\Controllers\Api\MyCategory\MyCategoryController;
+use App\Http\Controllers\Api\Posts\PostsApiController;
 use App\Http\Controllers\Api\Profile\ProfileAccountController;
 use App\Http\Controllers\Api\Service\ServiceApiController;
 use App\Http\Controllers\Api\Service\ServiceController;
@@ -29,15 +30,16 @@ use App\Http\Controllers\Auth\LoginAccountController;
 use App\Http\Controllers\Auth\OtpController;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\User\AllProviders\AllProvidersController;
+
+
+
 use App\Http\Controllers\User\Reviews\ReviewsController;
-
-
-
 use App\Http\Middleware\CheckFeatureLimit;
 use App\Http\Middleware\CheckJwtToken;
 use App\Http\Middleware\RecordPostView;
 use App\Http\Middleware\TrackProviderVisits;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -109,7 +111,7 @@ Route::prefix('v1/user')->group(function () {
 Route::middleware(CheckJwtToken::class)->prefix('v1/user')->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index']);
     Route::post('review-service', [ReviewsController::class, 'store']);
-    Route::apiResource('posts', PostsController::class);
+    Route::apiResource('posts', PostsApiController::class);
     Route::put('my-profile', [ProfileAccountController::class, 'update']);
     Route::get('my-profile', [ProfileAccountController::class, 'show']);
     Route::get('my-category', [MyCategoryController::class, 'index']);

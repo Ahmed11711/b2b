@@ -25,14 +25,15 @@ class PostsController extends BaseController
         $this->storeRequestClass = PostsStoreRequest::class;
         $this->updateRequestClass = PostsUpdateRequest::class;
         $this->resourceClass = PostsResource::class;
-        // $this->isUserBound        = true;
+
+        // مفيش isUserBound خالص هنا — الكنترولر ده للسوبر أدمن بس، بيشوف/يعدل كل حاجة
         $this->hasGallery         = true;
         $this->withRelationships  = ['user:id,name,email,image', 'contacts'];
     }
 
     protected function beforeStore(array $data, Request $request): array
     {
-        $data['user_id'] = $request->get('user_id');
+        $data['user_id'] = $request->get('user_id') ?? auth('api')->id();
         unset($data['gallery']);
         $data['is_active'] = true;
 

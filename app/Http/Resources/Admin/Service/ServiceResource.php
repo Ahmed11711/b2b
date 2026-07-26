@@ -24,6 +24,12 @@ class ServiceResource extends JsonResource
                 $data[$field] = $this->{$field};
             }
         }
+
+        // تنضيف الوصف: فك الكيانات (&nbsp;) وإزالة الوسوم HTML للعرض كنص عادي
+        if (isset($data['desc'])) {
+            $data['desc'] = $this->cleanDescription($data['desc']);
+        }
+
         $data['image'] = $this->image
             ? url(str_replace('/storage/app/public', '/storage', $this->image))
             : null;
@@ -33,9 +39,29 @@ class ServiceResource extends JsonResource
         $data['category'] = new CategoryResource($this->whenLoaded('category'));
         $data['contacts'] = ServiceContactResource::collection($this->whenLoaded('contacts'));
         $data['reviews'] = ReviewsResource::collection($this->whenLoaded('reviews'));
-        $data['visits'] =  $this->whenLoaded('visits');
-
+        $data['visits'] = $this->whenLoaded('visits');
 
         return $data;
+    }
+
+    /**
+     * تنظيف الوصف من وسوم HTML وفك الكيانات المشفرة
+     */
+    protected function cleanDescription(?string $desc): ?string
+    {
+        if (!$desc) {
+            return null;
+        }
+
+        // فك الكيانات زي &nbsp; &amp; &quot; ... إلخ
+        $decoded = html_entity_decode($desc, ENT_QUOTES, 'UTF-8');
+
+        // إزالة وسوم HTML بالكامل (<p>, <br>, ...)
+        $stripped = strip_tags($decoded);
+
+        // إزالة المسافات الزيادة الناتجة عن &nbsp; -> space متكررة
+        $clean = preg_replace('/\s+/u', ' ', $stripped);
+
+        return trim($clean);
     }
 }

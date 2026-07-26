@@ -20,7 +20,7 @@ return new class extends Migration
                 ->onDelete('set null');
             $table->foreignId('city_id')->nullable()->constrained()->onDelete('set null');
             $table->string('title');
-            $table->string('desc');
+            $table->text('desc');
             $table->string('image');
             $table->string('price');
             $table->boolean('is_active')->nullable()->default(true);

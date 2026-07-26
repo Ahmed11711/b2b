@@ -25,7 +25,7 @@ class PostsController extends BaseController
         $this->storeRequestClass = PostsStoreRequest::class;
         $this->updateRequestClass = PostsUpdateRequest::class;
         $this->resourceClass = PostsResource::class;
-        $this->isUserBound        = true;
+        // $this->isUserBound        = true;
         $this->hasGallery         = true;
         $this->withRelationships  = ['user:id,name,email,image', 'contacts'];
     }

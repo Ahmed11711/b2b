@@ -20,18 +20,31 @@ class VerificationController extends BaseController
             repository: $repository,
             collectionName: 'verification',
             fileFields: ['id_card_front', 'id_card_back', 'commercial_register', 'tax_card']
-
         );
 
-        $this->storeRequestClass = verificationStoreRequest::class;
+        $this->storeRequestClass  = verificationStoreRequest::class;
         $this->updateRequestClass = verificationUpdateRequest::class;
-        $this->resourceClass = verificationResource::class;
+        $this->resourceClass      = verificationResource::class;
     }
+
     protected function beforeStore(array $data, Request $request): array
     {
         $data['user_id'] = auth('api')->id();
-        Log::info('User ID: ' . $data['user_id']); // Log the user ID for debugging
         $data['status']  = 'pending';
         return $data;
+    }
+
+    /**
+ 
+     */
+    protected function applyScoping($query)
+    {
+        $user = auth('api')->user();
+
+        if ($user && $user->role === 'super_admin') {
+            return $query;
+        }
+
+        return $query->where('user_id', auth('api')->id());
     }
 }

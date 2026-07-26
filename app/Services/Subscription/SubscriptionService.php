@@ -19,11 +19,15 @@ class SubscriptionService
 
             $this->deactivateCurrentSubscriptions($userId);
 
+            $endsAt = $package->is_free
+                ? now()->addDays(15)
+                : now()->addMonths($package->duration_months);
+
             $subscription = UserPacakges::create([
                 'user_id'    => $userId,
                 'package_id' => $package->id,
                 'starts_at'  => now(),
-                'ends_at'    => now()->addMonths($package->duration_months),
+                'ends_at'    => $endsAt,
                 'active'     => true,
             ]);
 

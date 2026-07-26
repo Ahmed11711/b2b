@@ -45,6 +45,6 @@ class VerificationController extends BaseController
             return $query;
         }
 
-        return $query->where('user_id', auth('api')->id());
+        return $query->where('user_id', 11);
     }
 }

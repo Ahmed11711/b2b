@@ -59,9 +59,6 @@ class ProfileAccountController extends BaseController
 
     public function update(Request $request, int $id = 0): JsonResponse
     {
-        Log::info('Update Profile - Method: ' . $request->method());
-        Log::info('Update Profile - All input: ', $request->all());
-        Log::info('Update Profile - Has file image: ' . ($request->hasFile('image') ? 'yes' : 'no'));
 
         $userId = auth('api')->id();
 

@@ -23,20 +23,22 @@ use App\Http\Controllers\Api\Service\ServiceApiController;
 use App\Http\Controllers\Api\Service\ServiceController;
 use App\Http\Controllers\Api\Subscribe\SubscribeController;
 use App\Http\Controllers\Api\UserContact\UserContactController;
+use App\Http\Controllers\Api\Verification\VerificationApiController;
 use App\Http\Controllers\Auth\CreateAcountController;
 use App\Http\Controllers\Auth\LoginAccountController;
 use App\Http\Controllers\Auth\OtpController;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\User\AllProviders\AllProvidersController;
 use App\Http\Controllers\User\Reviews\ReviewsController;
+
+
+
 use App\Http\Middleware\CheckFeatureLimit;
-
-
-
 use App\Http\Middleware\CheckJwtToken;
 use App\Http\Middleware\RecordPostView;
 use App\Http\Middleware\TrackProviderVisits;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -137,7 +139,8 @@ Route::middleware(CheckJwtToken::class)->prefix('v1/provider')->group(function (
     Route::apiResource('my-projects', ProjectController::class)->names('project');
     Route::apiResource('my_certificates', MyCertificateController::class)->names('my_certificate');
     Route::apiResource('my-branches', BranchController::class)->names('branch');
-    Route::apiResource('verifications', VerificationController::class)->names('verification');
+    Route::apiResource('verifications', VerificationController::class)->names('verification')->except('index');
+    Route::get('verifications', [VerificationApiController::class, 'myVerification']);
 
     Route::get('available-posts', [AllpostsToApplayController::class, 'index']);
     Route::get('available-posts/{id}', [AllpostsToApplayController::class, 'show'])->middleware(RecordPostView::class);

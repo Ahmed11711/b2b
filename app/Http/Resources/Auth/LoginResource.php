@@ -67,7 +67,7 @@ class LoginResource extends JsonResource
         $package = $subscription->package;
 
         $endsAt        = $subscription->ends_at;
-        $daysRemaining = $endsAt ? max(0, now()->diffInDays($endsAt, false)) : 0;
+        $daysRemaining = $endsAt ? (int) floor(max(0, now()->diffInDays($endsAt, false))) : 0;
         $isExpired     = $endsAt ? now()->greaterThan($endsAt) : false;
 
         return [

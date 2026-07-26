@@ -17,7 +17,7 @@ class ServiceUpdateRequest extends BaseRequest
             'category_id' => 'sometimes|nullable|exists:categories,id|display_field:name',
             'city_id' => 'sometimes|nullable|exists:cities,id|display_field:name',
             'title' => 'sometimes|required|string|max:255',
-            'desc' => 'sometimes|required|string|max:255',
+            'desc' => 'sometimes|required|string',
             'image' => 'sometimes|required|file|image|max:2048',
             'price' => 'sometimes|required|string|max:255',
             'contact_ids' => 'sometimes|array',

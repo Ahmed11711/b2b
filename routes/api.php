@@ -93,8 +93,8 @@ Route::prefix('v1/user')->group(function () {
     Route::get('all-provider', [AllProvidersController::class, 'allProvider']);
     Route::get('top-provider', [AllProvidersController::class, 'topProviders']);
     Route::get('one-provider/{id}', [AllProvidersController::class, 'oneProvider'])->middleware(TrackProviderVisits::class);
-    Route::get('get-service/{service_id}', [ServiceApiController::class, 'show'])->middleware(TrackProviderVisits::class);;
-    Route::get('get-project/{id}', [ProjectController::class, 'show']);
+    Route::get('get-service/{service_id}', [ServiceApiController::class, 'show'])->middleware(TrackProviderVisits::class);
+    Route::get('get-project/{id}', [ProjectController::class, 'show'])->middleware(TrackProviderVisits::class);
     Route::get('bags', [BagController::class, 'index']);
     Route::get('bags/{id}', [BagController::class, 'show']);
     Route::get('bag_items', [BagItemsController::class, 'index']);

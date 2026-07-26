@@ -24,21 +24,37 @@ class TrackProviderVisits
                 $agent = new Agent();
                 $visitorId = auth('api')->id();
 
-                $providerId = $request->route('id');
-                $serviceId = $request->route('service_id') ?? $request->input('service_id');
+                $routeName  = $request->route()?->getName();
+                $providerId = null;
+                $serviceId  = null;
+                $projectId  = null;
 
-                // لو service route — جيب الـ provider_id من الـ DB
-                if (!$providerId && $serviceId) {
-                    $service = \App\Models\Service::find($serviceId);
-                    if (!$service) return;
-                    $providerId = $service->user_id; // ← غيّر لو الـ column اسمه provider_id
+                if ($routeName === 'project.show') {
+                    // زيارة خاصة بمشروع
+                    $projectId = $request->route('id');
+                    if (!$projectId) return;
+                } else {
+                    // الحالة الأصلية: provider / service
+                    $providerId = $request->route('id');
+                    $serviceId  = $request->route('service_id') ?? $request->input('service_id');
+
+                    if (!$providerId && $serviceId) {
+                        $service = \App\Models\Service::find($serviceId);
+                        if (!$service) return;
+                        $providerId = $service->user_id;
+                    }
+
+                    if (!$providerId) return;
                 }
 
-                if (!$providerId) return;
-
-                $alreadyVisited = ProviderVisit::where('provider_id', $providerId)
+                $alreadyVisited = ProviderVisit::when($providerId, function ($q) use ($providerId) {
+                    return $q->where('provider_id', $providerId);
+                })
                     ->when($serviceId, function ($q) use ($serviceId) {
                         return $q->where('service_id', $serviceId);
+                    })
+                    ->when($projectId, function ($q) use ($projectId) {
+                        return $q->where('project_id', $projectId);
                     })
                     ->where(function ($q) use ($visitorId, $request) {
                         if ($visitorId) {
@@ -51,7 +67,6 @@ class TrackProviderVisits
                     ->exists();
 
                 if (!$alreadyVisited) {
-                    // تحديد الدولة والمدينة عن طريق الـ IP
                     $country = $request->header('cf-ipcountry') ?? 'N/A';
                     $city    = 'N/A';
 
@@ -70,6 +85,7 @@ class TrackProviderVisits
                         'visitor_id'  => $visitorId,
                         'provider_id' => $providerId,
                         'service_id'  => $serviceId,
+                        'project_id'  => $projectId,
                         'ip_address'  => $request->ip(),
                         'country'     => $country,
                         'city'        => $city,

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\Dashboard;
 use \App\Models\UserPackage;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Dashboard\DashboardResource;
-use App\Models\providerVisit;
+use App\Models\ProviderVisit;
 use App\Models\Service;
 use App\Models\UserPacakges;
 use Illuminate\Http\Request;
@@ -20,7 +20,7 @@ class DashboardController extends Controller
 
         $userPackage   = UserPacakges::with('package')->where('user_id', $userId)->where('active', true)->first();
         $service       = Service::where('user_id', $userId)->where('is_active', true)->count();
-        $providerVisit = providerVisit::where('provider_id', $userId)->count();
+        $providerVisit = ProviderVisit::where('provider_id', $userId)->count();
 
         return response()->json([
             'success' => true,

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class providerVisit extends Model
+class ProviderVisit extends Model
 {
     //
 }

@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\City\CityController;
 use App\Http\Controllers\Admin\MyCertificate\MyCertificateController;
 use App\Http\Controllers\Admin\Posts\PostsController;
 use App\Http\Controllers\Admin\Project\ProjectController;
+use App\Http\Controllers\Admin\Project\ProjectStatsController;
 use App\Http\Controllers\Admin\UserInfo\UserInfoController;
 use App\Http\Controllers\Admin\Verification\VerificationController;
 use App\Http\Controllers\Api\ApplyPosts\AllpostsToApplayController;
@@ -23,16 +24,17 @@ use App\Http\Controllers\Api\Posts\PostsApiController;
 use App\Http\Controllers\Api\Profile\ProfileAccountController;
 use App\Http\Controllers\Api\Service\ServiceApiController;
 use App\Http\Controllers\Api\Service\ServiceController;
+use App\Http\Controllers\Api\Service\ServiceStatsController;
 use App\Http\Controllers\Api\Subscribe\SubscribeController;
 use App\Http\Controllers\Api\UserContact\UserContactController;
 use App\Http\Controllers\Api\Verification\VerificationApiController;
 use App\Http\Controllers\Auth\CreateAcountController;
 use App\Http\Controllers\Auth\LoginAccountController;
+
+
+
 use App\Http\Controllers\Auth\OtpController;
 use App\Http\Controllers\Auth\ProfileController;
-
-
-
 use App\Http\Controllers\User\AllProviders\AllProvidersController;
 use App\Http\Controllers\User\Reviews\ReviewsController;
 use App\Http\Middleware\CheckFeatureLimit;
@@ -42,6 +44,8 @@ use App\Http\Middleware\TrackProviderVisits;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
+
+
 
 
 
@@ -138,6 +142,8 @@ Route::middleware(CheckJwtToken::class)->prefix('v1/provider')->group(function (
     Route::resource('my-service', ServiceApiController::class)->except(['store']);
     Route::post('my-service', [ServiceApiController::class, 'store'])
         ->middleware(CheckFeatureLimit::class . ':service');
+    Route::get('services/{id}/stats', [ServiceStatsController::class, 'show']);
+
 
     // info
     Route::apiResource('my-info', UserInfoController::class)->only(['index', 'store', 'update']);
@@ -149,6 +155,8 @@ Route::middleware(CheckJwtToken::class)->prefix('v1/provider')->group(function (
 
     Route::apiResource('my-projects', ProjectController::class)
         ->names(['show' => 'provider.project.show']);
+    Route::get('projects/{id}/stats', [ProjectStatsController::class, 'show']);
+
     Route::apiResource('my_certificates', MyCertificateController::class)->names('my_certificate');
     Route::apiResource('my-branches', BranchController::class)->names('branch');
     Route::apiResource('verifications', VerificationApiController::class)->names('verification');
@@ -170,7 +178,6 @@ Route::match(['GET', 'POST'], '/meta-webhook', function (Request $request) {
 
     $verifyToken = 'my_secret_token_123';
 
-    // سجل كل Request داخل
     Log::info('Meta Webhook Request', [
         'method'  => $request->method(),
         'url'     => $request->fullUrl(),

@@ -19,7 +19,6 @@ class ContactRequestController extends Controller
 
         $contactRequest = ContactRequest::create($data);
 
-        $contactRequest->load(['provider', 'service', 'project', 'userContact']);
 
         return $this->messageResponse(
             'Contact request created successfully',

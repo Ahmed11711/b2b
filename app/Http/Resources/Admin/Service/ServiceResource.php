@@ -40,6 +40,9 @@ class ServiceResource extends JsonResource
         $data['contacts'] = ServiceContactResource::collection($this->whenLoaded('contacts'));
         $data['reviews'] = ReviewsResource::collection($this->whenLoaded('reviews'));
         $data['visits'] = $this->whenLoaded('visits');
+        $data['rating_summary'] = $this->whenLoaded('reviews', function () {
+            return $this->buildRatingSummary();
+        });
 
         return $data;
     }
@@ -63,5 +66,23 @@ class ServiceResource extends JsonResource
         $clean = preg_replace('/\s+/u', ' ', $stripped);
 
         return trim($clean);
+    }
+    /**
+     */
+    protected function buildRatingSummary(): array
+    {
+        $reviews = $this->reviews;
+        $total   = $reviews->count();
+
+        $breakdown = [];
+        for ($star = 5; $star >= 1; $star--) {
+            $breakdown[(string) $star] = $reviews->where('rating', $star)->count();
+        }
+
+        return [
+            'average'       => $total ? round($reviews->avg('rating'), 1) : 0,
+            'total_reviews' => $total,
+            'breakdown'     => $breakdown,
+        ];
     }
 }

@@ -142,7 +142,7 @@ Route::middleware(CheckJwtToken::class)->prefix('v1/provider')->group(function (
     Route::resource('my-service', ServiceApiController::class)->except(['store']);
     Route::post('my-service', [ServiceApiController::class, 'store'])
         ->middleware(CheckFeatureLimit::class . ':service');
-    Route::get('services/{id}/stats', [ServiceStatsController::class, 'show']);
+    Route::get('my-service/{id}/stats', [ServiceStatsController::class, 'show']);
 
 
     // info
@@ -155,7 +155,7 @@ Route::middleware(CheckJwtToken::class)->prefix('v1/provider')->group(function (
 
     Route::apiResource('my-projects', ProjectController::class)
         ->names(['show' => 'provider.project.show']);
-    Route::get('projects/{id}/stats', [ProjectStatsController::class, 'show']);
+    Route::get('my-projects/{id}/stats', [ProjectStatsController::class, 'show']);
 
     Route::apiResource('my_certificates', MyCertificateController::class)->names('my_certificate');
     Route::apiResource('my-branches', BranchController::class)->names('branch');

@@ -21,8 +21,7 @@ class ContactRequestController extends Controller
 
         $contactRequest->load(['provider', 'service', 'project', 'userContact']);
 
-        return $this->successResponse(
-            $contactRequest,
+        return $this->messageResponse(
             'Contact request created successfully',
             201
         );

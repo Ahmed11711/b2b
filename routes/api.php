@@ -1,5 +1,6 @@
 <?php
 
+use \App\Http\Controllers\Api\ContactRequest\ContactRequestController;
 use App\Http\Controllers\Admin\Bag\BagController;
 use App\Http\Controllers\Admin\BagItems\BagItemsController;
 use App\Http\Controllers\Admin\Branch\BranchController;
@@ -29,18 +30,19 @@ use App\Http\Controllers\Auth\CreateAcountController;
 use App\Http\Controllers\Auth\LoginAccountController;
 use App\Http\Controllers\Auth\OtpController;
 use App\Http\Controllers\Auth\ProfileController;
+
+
+
 use App\Http\Controllers\User\AllProviders\AllProvidersController;
-
-
-
 use App\Http\Controllers\User\Reviews\ReviewsController;
 use App\Http\Middleware\CheckFeatureLimit;
 use App\Http\Middleware\CheckJwtToken;
 use App\Http\Middleware\RecordPostView;
 use App\Http\Middleware\TrackProviderVisits;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -115,6 +117,7 @@ Route::prefix('v1/user')->group(function () {
 Route::middleware(CheckJwtToken::class)->prefix('v1/user')->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index']);
     Route::post('review-service', [ReviewsController::class, 'store']);
+    Route::post('contact-requests', [ContactRequestController::class, 'store']);
     Route::apiResource('posts', PostsApiController::class);
     Route::put('my-profile', [ProfileAccountController::class, 'update']);
     Route::get('my-profile', [ProfileAccountController::class, 'show']);

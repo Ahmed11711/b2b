@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use \App\Models\Category;
+use App\Casts\StorageUrlCast;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
@@ -23,6 +24,9 @@ class User extends Authenticatable implements JWTSubject
     public array $allowedFields = ['id', 'name', 'email', 'phone', 'user_name', 'image', 'whtsapp', 'country_code', 'is_active', 'email_verified_at', 'role', 'social_type', 'social_id', 'city_id', 'info', 'last_login_at', 'created_at', 'updated_at'];
 
 
+    protected $casts = [
+        'image' => StorageUrlCast::class,
+    ];
 
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;

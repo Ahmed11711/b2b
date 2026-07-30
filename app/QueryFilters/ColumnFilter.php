@@ -3,7 +3,6 @@
 namespace App\QueryFilters;
 
 use Closure;
-use Illuminate\Database\Eloquent\Builder;
 
 class ColumnFilter
 {
@@ -15,6 +14,12 @@ class ColumnFilter
 
         if (!empty($filterable)) {
             $filters = request()->only($filterable);
+
+            // لو اليوزر أدمن أو سوبر أدمن، متطبقش فلتر user_id التلقائي
+            $authUser = request()->input('auth_user');
+            if ($authUser && in_array($authUser->role, ['admin', 'super_admin'])) {
+                unset($filters['user_id']);
+            }
 
             foreach ($filters as $key => $value) {
                 if ($value !== null && $value !== '') {

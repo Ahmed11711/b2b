@@ -23,7 +23,6 @@ use App\Http\Controllers\Api\MyCategory\MyCategoryController;
 use App\Http\Controllers\Api\Posts\PostsApiController;
 use App\Http\Controllers\Api\Profile\ProfileAccountController;
 use App\Http\Controllers\Api\Service\ServiceApiController;
-use App\Http\Controllers\Api\Service\ServiceController;
 use App\Http\Controllers\Api\Service\ServiceStatsController;
 use App\Http\Controllers\Api\Subscribe\SubscribeController;
 use App\Http\Controllers\Api\UserContact\UserContactController;

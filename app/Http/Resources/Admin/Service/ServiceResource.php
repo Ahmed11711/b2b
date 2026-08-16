@@ -31,9 +31,8 @@ class ServiceResource extends JsonResource
         }
 
         $data['image'] = $this->image
-            ? url(str_replace('/storage/app/public', '/storage', $this->image))
+            ? rtrim(config('app.url'), '/') . '/' . ltrim(str_replace('/storage/app/public', 'storage', $this->image), '/')
             : null;
-
         $data['views_count'] = $this->visits_count ?? 0;
         $data['user'] = new UserResource($this->whenLoaded('user'));
         $data['category'] = new CategoryResource($this->whenLoaded('category'));

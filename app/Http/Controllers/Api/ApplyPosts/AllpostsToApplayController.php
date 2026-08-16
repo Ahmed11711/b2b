@@ -34,12 +34,16 @@ class AllpostsToApplayController extends BaseController
             request()->query->remove('user_id');
             request()->request->remove('user_id');
 
+            $authUserId = auth('api')->id();
             $categoryIds = auth('api')->user()->categories()->pluck('category_id');
 
             return $query
                 ->where('is_active', true)
                 ->whereIn('category_id', $categoryIds)
-                ->where('user_id', '!=', auth('api')->id());
+                ->where('user_id', '!=', $authUserId)
+                ->whereDoesntHave('bids', function ($q) use ($authUserId) {
+                    $q->where('user_id', $authUserId);
+                });
         }
 
         return $query->where('user_id', auth('api')->id());

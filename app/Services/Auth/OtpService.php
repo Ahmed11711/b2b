@@ -89,12 +89,23 @@ class OtpService
     {
         $expiry = ($context === self::CONTEXT_REGISTER) ? 60 : 5;
 
-        Log::info("SENDING {$context} OTP to {$identifier}");
+        Log::info("Attempting to send {$context} OTP", [
+            'to' => $identifier,
+            'mailer' => config('mail.default'),
+            'host' => config('mail.mailers.smtp.host'),
+            'port' => config('mail.mailers.smtp.port'),
+            'from' => config('mail.from.address'),
+        ]);
 
         try {
             Mail::to($identifier)->send(new OtpMail($otp, $context, $expiry));
+
+            Log::info("OTP email dispatched successfully to {$identifier}");
         } catch (\Throwable $e) {
-            Log::error("Failed to send OTP email to {$identifier}: " . $e->getMessage());
+            Log::error("Failed to send OTP email to {$identifier}", [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
             throw $e;
         }
     }

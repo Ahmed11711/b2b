@@ -28,10 +28,12 @@ class AllpostsToApplayController extends BaseController
         $this->hasGallery         = true;
     }
 
-
     protected function applyScoping($query)
     {
         if (request()->isMethod('get')) {
+            request()->query->remove('user_id');
+            request()->request->remove('user_id');
+
             $categoryIds = auth('api')->user()->categories()->pluck('category_id');
 
             return $query

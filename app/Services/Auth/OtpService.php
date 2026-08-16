@@ -3,11 +3,13 @@
 namespace App\Services\Auth;
 
 use \App\Models\User;
+use App\Mail\OtpMail;
+use function Symfony\Component\Clock\now;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Support\Carbon;
-use function Symfony\Component\Clock\now;
 
 class OtpService
 {
@@ -85,12 +87,15 @@ class OtpService
      */
     private function dispatchMessage(string $identifier, string $otp, string $context): void
     {
-        $message = ($context === self::CONTEXT_REGISTER)
-            ? "Welcome! Your registration code is: $otp"
-            : "Password Reset: Use code $otp to change your password.";
+        $expiry = ($context === self::CONTEXT_REGISTER) ? 60 : 5;
 
-        Log::info("SENDING {$context} OTP to {$identifier}: {$message}");
+        Log::info("SENDING {$context} OTP to {$identifier}");
 
-        // هنا يتم الربط مع الـ Mailer أو SMS Gateway
+        try {
+            Mail::to($identifier)->send(new OtpMail($otp, $context, $expiry));
+        } catch (\Throwable $e) {
+            Log::error("Failed to send OTP email to {$identifier}: " . $e->getMessage());
+            throw $e;
+        }
     }
 }

@@ -22,7 +22,7 @@ class CategoryResource extends JsonResource
         }
 
         $data['image'] = $this->image
-            ? url(str_replace('/storage/app/public', '/storage', $this->image))
+            ? rtrim(config('app.url'), '/') . '/' . ltrim(str_replace('/storage/app/public', 'storage', $this->image), '/')
             : null;
 
 

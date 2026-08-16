@@ -25,7 +25,7 @@ class PostsResource extends JsonResource
         }
 
         $data['image'] = $this->image
-            ? url(str_replace('/storage/app/public', '/storage', $this->image))
+            ? rtrim(config('app.url'), '/') . '/' . ltrim(str_replace('/storage/app/public', 'storage', $this->image), '/')
             : null;
         $data['gallery'] = galleryResource::collection($this->whenLoaded('gallery'));
         $data['user'] = $this->whenLoaded('user');

@@ -21,15 +21,15 @@ class BagItemsResource extends JsonResource
             }
         }
         $data['image'] = $this->image
-            ? url(str_replace('/storage/app/public', '/storage', $this->image))
+            ? rtrim(config('app.url'), '/') . '/' . ltrim(str_replace('/storage/app/public', 'storage', $this->image), '/')
             : null;
         $data['items'] = $this->whenLoaded('gallery', function () {
             return $this->gallery->map(function ($item) {
                 return [
                     'id'          => $item->id,
                     'bag_items_id' => $item->bag_items_id,
-                    'image'       => $item->image
-                        ? url(str_replace('/storage/app/public', '/storage', $item->image))
+                    'image' => $item->image
+                        ? rtrim(config('app.url'), '/') . '/' . ltrim(str_replace('/storage/app/public', 'storage', $item->image), '/')
                         : null,
                     'type'        => $item->type,
                     'created_at'  => $item->created_at,

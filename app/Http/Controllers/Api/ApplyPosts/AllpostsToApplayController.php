@@ -36,7 +36,7 @@ class AllpostsToApplayController extends BaseController
             // $categoryIds = auth('api')->user()->categories()->pluck('category_id');
 
             return $query
-                ->where('is_active', true)
+                ->where('is_active', 1)
                 // ->whereIn('category_id', $categoryIds)
                 ->where('user_id', '!=', $authUserId)
                 ->whereDoesntHave('bids', function ($q) use ($authUserId) {

@@ -23,10 +23,10 @@ class BagResource extends JsonResource
         }
 
         $data['image'] = $this->image
-            ? url(str_replace('/storage/app/public', '/storage', $this->image))
+            ? rtrim(config('app.url'), '/') . '/' . ltrim(str_replace('/storage/app/public', 'storage', $this->image), '/')
             : null;
         $data['icon'] = $this->icon
-            ? url(str_replace('/storage/app/public', '/storage', $this->icon))
+            ? rtrim(config('app.url'), '/') . '/' . ltrim(str_replace('/storage/app/public', 'storage', $this->icon), '/')
             : null;
 
         $data['bagCategory'] = BagsCategoryResource::collection($this->whenLoaded('bagCategory'));

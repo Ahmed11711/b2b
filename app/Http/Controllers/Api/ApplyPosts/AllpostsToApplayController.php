@@ -36,8 +36,8 @@ class AllpostsToApplayController extends BaseController
 
             return $query
                 ->where('is_active', true)
-                ->whereIn('category_id', $categoryIds)
-                ->where('user_id', '!=', auth('api')->id());
+                ->whereIn('category_id', $categoryIds);
+            // ->where('user_id', '!=', auth('api')->id())
 
             //
         }

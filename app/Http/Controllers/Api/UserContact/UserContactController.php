@@ -44,6 +44,35 @@ class UserContactController extends Controller
     //     }
     // }
 
+    // public function upsert(UserContactRequest $request)
+    // {
+    //     $validated = $request->validated();
+
+    //     try {
+    //         DB::beginTransaction();
+
+    //         $userId = auth('api')->id();
+
+    //         $contacts = collect($validated['contacts'])->map(function ($contact) use ($userId) {
+    //             return UserContact::updateOrCreate(
+    //                 [
+    //                     'user_id' => $userId,
+    //                     'type'    => $contact['type'],
+    //                 ],
+    //                 [
+    //                     'value' => $contact['value'],
+    //                 ]
+    //             );
+    //         });
+
+    //         DB::commit();
+    //         return $this->successResponse($contacts, 'Contacts saved successfully');
+    //     } catch (\Throwable $e) {
+    //         DB::rollBack();
+    //         return $this->errorResponse($e->getMessage(), 500);
+    //     }
+    // }
+
     public function upsert(UserContactRequest $request)
     {
         $validated = $request->validated();
@@ -52,6 +81,8 @@ class UserContactController extends Controller
             DB::beginTransaction();
 
             $userId = auth('api')->id();
+
+            $incomingTypes = collect($validated['contacts'])->pluck('type');
 
             $contacts = collect($validated['contacts'])->map(function ($contact) use ($userId) {
                 return UserContact::updateOrCreate(
@@ -64,6 +95,10 @@ class UserContactController extends Controller
                     ]
                 );
             });
+
+            UserContact::where('user_id', $userId)
+                ->whereNotIn('type', $incomingTypes)
+                ->delete();
 
             DB::commit();
             return $this->successResponse($contacts, 'Contacts saved successfully');

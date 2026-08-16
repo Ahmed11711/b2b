@@ -127,6 +127,8 @@ Route::middleware(CheckJwtToken::class)->prefix('v1/user')->group(function () {
     Route::get('my-category', [MyCategoryController::class, 'index']);
     Route::post('my-category', [MyCategoryController::class, 'store']);
     Route::get('posts/{postId}/statistics', [PostStatisticsController::class, 'show']);
+    Route::put('my-socialMedia', [UserContactController::class, 'upsert']);
+    Route::get('my-socialMedia', [UserContactController::class, 'index']);
 });
 
 

@@ -28,7 +28,7 @@ class ProfileAccountResource extends JsonResource
             'updated_at'         => $this->updated_at->format('Y-m-d H:i:s'),
             'all_categories' => $this->all_categories_with_selection ?? [],
             'image' => $this->image
-                ? url(str_replace('/storage/app/public', '/storage', $this->image))
+                ? rtrim(config('app.url'), '/') . '/' . ltrim(str_replace('/storage/app/public', 'storage', $this->image), '/')
                 : null,
         ];
     }

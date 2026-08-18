@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Admin\Service;
 
 use App\Http\Resources\Admin\Category\CategoryResource;
+use App\Http\Resources\Admin\Service\ServiceGalleryResource;
 use App\Http\Resources\Admin\User\UserResource;
 use App\Http\Resources\Api\ReviewsResource;
 use App\Http\Resources\Api\ServiceContact\ServiceContactResource;
@@ -39,6 +40,7 @@ class ServiceResource extends JsonResource
         $data['contacts'] = ServiceContactResource::collection($this->whenLoaded('contacts'));
         $data['reviews'] = ReviewsResource::collection($this->whenLoaded('reviews'));
         $data['visits'] = $this->whenLoaded('visits');
+        $data['gallery'] = ServiceGalleryResource::collection($this->whenLoaded('gallery'));
         $data['rating_summary'] = $this->whenLoaded('reviews', function () {
             return $this->buildRatingSummary();
         });

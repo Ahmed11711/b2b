@@ -21,12 +21,13 @@ class ServiceApiController extends BaseController
             collectionName: 'Service',
             fileFields: ['image'],
         );
+        $this->hasGallery = true;
 
         $this->storeRequestClass  = ServiceStoreRequest::class;
         $this->updateRequestClass = ServiceUpdateRequest::class;
         $this->resourceClass      = ServiceResource::class;
         $this->isUserBound        = true;
-        $this->withRelationships = ['contacts'];
+        $this->withRelationships = ['contacts', 'gallery'];
     }
 
     /**

@@ -59,9 +59,10 @@ class ProfileAccountController extends BaseController
 
     public function update(Request $request, int $id = 0): JsonResponse
     {
+        Log::info('DEBUG REQUEST', $request->all());
+        Log::info('DEBUG METHOD', [$request->method()]);
 
         $userId = auth('api')->id();
-
         return parent::update($request, $userId);
     }
 

@@ -11,6 +11,7 @@ use App\Repositories\User\UserRepositoryInterface;
 
 use Illuminate\Http\Request;
 use Illuminate\Pipeline\Pipeline;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AllProvidersController extends BaseController
 {
@@ -21,13 +22,22 @@ class AllProvidersController extends BaseController
         $this->resourceClass = ProviderResource::class;
     }
 
+
+
     public function allProvider(Request $request)
     {
         try {
+            $authUserId = $this->getOptionalAuthUserId();
+
             $query = User::query()
                 ->where('role', 'user')
                 ->where('is_active', true)
                 ->with(['city']);
+
+            if ($authUserId) {
+                $query->where('id', '!=', $authUserId);
+            }
+
             $data = app(Pipeline::class)
                 ->send($query)
                 ->through([
@@ -45,6 +55,18 @@ class AllProvidersController extends BaseController
         }
     }
 
+    private function getOptionalAuthUserId(): ?int
+    {
+        try {
+            if (JWTAuth::getToken() && ($user = JWTAuth::parseToken()->authenticate())) {
+                return $user->id;
+            }
+        } catch (\Throwable $e) {
+            // مفيش توكن أو توكن غلط/منتهي -> اعتبره guest وكمل عادي
+        }
+
+        return null;
+    }
     public function oneProvider(Request $request, $id)
     {
         try {

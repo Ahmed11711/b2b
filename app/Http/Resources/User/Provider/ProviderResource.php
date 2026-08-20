@@ -17,6 +17,7 @@ class ProviderResource extends JsonResource
         return [
             'id'   => $this->id,
             'name'  => $this->name,
+            'user_name' => $this->user_name,
             'email' => $this->email ?? $this->username ?? $this->name,
             'image' => $this->image ?? 'default.png',
             'city_name'     => $this->city?->name_en ?? 'N/A',

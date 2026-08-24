@@ -20,9 +20,7 @@ class UserResource extends JsonResource
                 $data[$field] = $this->{$field};
             }
         }
-        $data['image'] = $this->image
-            ? rtrim(config('app.url'), '/') . '/' . ltrim(str_replace('/storage/app/public', 'storage', $this->image), '/')
-            : null;
+        $data['image'] = $this->image;
         $data['icon'] = $this->icon
             ? rtrim(config('app.url'), '/') . '/' . ltrim(str_replace('/storage/app/public', 'storage', $this->icon), '/')
             : null;

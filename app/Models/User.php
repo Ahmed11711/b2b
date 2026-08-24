@@ -26,6 +26,7 @@ class User extends Authenticatable implements JWTSubject
 
     protected $casts = [
         'image' => StorageUrlCast::class,
+        'icon' => StorageUrlCast::class,
     ];
 
     /** @use HasFactory<UserFactory> */

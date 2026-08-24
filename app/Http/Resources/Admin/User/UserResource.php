@@ -21,9 +21,8 @@ class UserResource extends JsonResource
             }
         }
         $data['image'] = $this->image;
-        $data['icon'] = $this->icon
-            ? rtrim(config('app.url'), '/') . '/' . ltrim(str_replace('/storage/app/public', 'storage', $this->icon), '/')
-            : null;
+        $data['icon'] = $this->icon;
+
         return $data;
     }
 }

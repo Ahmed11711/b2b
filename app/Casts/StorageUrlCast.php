@@ -12,13 +12,35 @@ class StorageUrlCast implements CastsAttributes
     {
         if (!$value) return null;
 
-        if (str_starts_with($value, 'http')) return $value;
+        if (str_starts_with($value, 'http')) {
+            return $this->clean($value);
+        }
 
-        return asset(ltrim($value, '/'));
+        return $this->clean(asset(ltrim($value, '/')));
     }
 
     public function set(Model $model, string $key, mixed $value, array $attributes): ?string
     {
         return $value;
+    }
+
+    private function clean(string $url): string
+    {
+        // فصل البروتوكول عن الباقي عشان الـ // بتاعة https:// متتأثرش
+        $parts = explode('://', $url, 2);
+
+        if (count($parts) === 2) {
+            [$scheme, $rest] = $parts;
+
+            // شيل أي /api زيادة في الأول
+            $rest = preg_replace('#^([^/]+)/api/#', '$1/', $rest);
+
+            // شيل أي // مكررة في الباقي
+            $rest = preg_replace('#(?<!:)//+#', '/', $rest);
+
+            return $scheme . '://' . $rest;
+        }
+
+        return $url;
     }
 }

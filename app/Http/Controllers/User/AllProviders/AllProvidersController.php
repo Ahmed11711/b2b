@@ -74,7 +74,9 @@ class AllProvidersController extends BaseController
                 ->where('role', 'user')
                 ->with([
                     'city',
-                    'services',
+                    'services' => function ($query) {
+                        $query->where('is_active', 1);
+                    },
                     'projects',
                     'certificates',
                     'branches',

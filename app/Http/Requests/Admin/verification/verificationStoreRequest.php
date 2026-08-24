@@ -10,10 +10,10 @@ class verificationStoreRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            'id_card_front'       => 'required|image|mimes:jpeg,png,jpg|max:5120',
-            'id_card_back'        => 'required|image|mimes:jpeg,png,jpg|max:5120',
-            'commercial_register' => 'required|file|mimes:pdf,jpeg,png,jpg|max:10240',
-            'tax_card'            => 'required|file|mimes:pdf,jpeg,png,jpg|max:10240',
+            'id_card_front'       => 'required|image',
+            'id_card_back'        => 'required|image',
+            'commercial_register' => 'required|file',
+            'tax_card'            => 'required|file',
         ];
     }
 

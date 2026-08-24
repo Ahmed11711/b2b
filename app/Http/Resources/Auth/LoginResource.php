@@ -31,6 +31,9 @@ class LoginResource extends JsonResource
             'updated_at'        => $this->updated_at,
             'profile_completion' => $this->getProfileCompletion($this->resource),
             'package'           => $this->getPackageInfo($this->resource),
+            'experience_years'   => $this->experience_years,
+            'info'               => $this->info,
+
         ];
     }
 

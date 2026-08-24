@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('social_id')->nullable()->unique();
             $table->string('city_id')->nullable();
             $table->text('info')->nullable();
+            $table->string('experience_years')->nullable();
             $table->timestamp('last_login_at')->nullable();
             $table->timestamps();
         });

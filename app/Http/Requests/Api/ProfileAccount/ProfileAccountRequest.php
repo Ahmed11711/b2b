@@ -33,6 +33,7 @@ class ProfileAccountRequest extends BaseRequest
             'info' => 'nullable|string',
             'categories'   => 'nullable|array',
             'categories.*' => 'exists:categories,id',
+            'experience_years' => 'nullable|string|max:255',
         ];
     }
 }

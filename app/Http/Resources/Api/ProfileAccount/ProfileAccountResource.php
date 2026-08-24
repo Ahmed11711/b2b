@@ -30,6 +30,7 @@ class ProfileAccountResource extends JsonResource
             'image' => $this->image
                 ? rtrim(config('app.url'), '/') . '/storage/' . ltrim(preg_replace('#^.*?/storage/(app/public/)?#', '', $this->image), '/')
                 : null,
+            'experience_years'   => $this->experience_years,
         ];
     }
 }

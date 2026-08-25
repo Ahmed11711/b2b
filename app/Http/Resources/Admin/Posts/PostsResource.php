@@ -43,6 +43,7 @@ class PostsResource extends JsonResource
                 : [];
         });
 
+
         return $data;
     }
 }

@@ -26,6 +26,12 @@ class AllpostsToApplayController extends BaseController
         $this->updateRequestClass = PostsUpdateRequest::class;
         $this->resourceClass = PostsResource::class;
         $this->hasGallery         = true;
+
+        $this->withRelationships = [
+            'user:id,name,email,image,coverage_type',
+            'user.cities',
+            'contacts',
+        ];
     }
 
     protected function applyScoping($query)
@@ -48,6 +54,7 @@ class AllpostsToApplayController extends BaseController
 
         return $query->where('user_id', auth('api')->id());
     }
+
     protected function getShowRelationships(): array
     {
         return array_merge($this->withRelationships, [

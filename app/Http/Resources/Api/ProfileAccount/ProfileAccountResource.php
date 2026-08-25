@@ -31,6 +31,8 @@ class ProfileAccountResource extends JsonResource
                 ? rtrim(config('app.url'), '/') . '/storage/' . ltrim(preg_replace('#^.*?/storage/(app/public/)?#', '', $this->image), '/')
                 : null,
             'experience_years'   => $this->experience_years,
+            'is_verification'    => $this->verificationUser ? 1 : 0,
+
         ];
     }
 }

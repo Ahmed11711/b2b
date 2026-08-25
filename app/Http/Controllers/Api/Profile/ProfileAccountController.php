@@ -31,7 +31,7 @@ class ProfileAccountController extends BaseController
         $this->storeRequestClass = ProfileAccountRequest::class;
         $this->updateRequestClass = ProfileAccountRequest::class;
         $this->resourceClass = ProfileAccountResource::class;
-        $this->withRelationships = ['categories'];
+        $this->withRelationships = ['categories', 'verificationUser'];
     }
 
 

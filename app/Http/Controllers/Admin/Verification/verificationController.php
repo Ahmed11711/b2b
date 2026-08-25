@@ -37,7 +37,7 @@ class VerificationController extends BaseController
             return $query;
         }
 
-        return $query->where('user_id', 11);
+        return $query;
     }
 
     // 👈 جديد: Log مؤقت للتشخيص

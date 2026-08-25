@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Verification;
 use App\Http\Controllers\BaseController\BaseController;
 use App\Http\Requests\Admin\verification\verificationStoreRequest;
 use App\Http\Requests\Admin\verification\verificationUpdateRequest;
+use App\Http\Requests\Admin\verification\verificationUpdateStatusRequest;
 use App\Http\Resources\Admin\verification\verificationResource;
 use App\Repositories\verification\verificationRepositoryInterface;
 use Illuminate\Http\Request;
@@ -23,7 +24,7 @@ class VerificationController extends BaseController
         );
 
         $this->storeRequestClass  = verificationStoreRequest::class;
-        $this->updateRequestClass = verificationUpdateRequest::class;
+        $this->updateRequestClass = verificationUpdateStatusRequest::class;
         $this->resourceClass      = verificationResource::class;
     }
 

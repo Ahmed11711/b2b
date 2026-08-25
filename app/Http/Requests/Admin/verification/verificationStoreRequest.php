@@ -28,7 +28,6 @@ class verificationStoreRequest extends BaseRequest
                 } elseif ($existing->status === 'pending') {
                     $validator->errors()->add('user_id', 'You already have a pending verification request. Please wait for review.');
                 }
-                // لو status == 'rejected' مبنضيفش أي error - يبقى مسموح له يبعت طلب جديد
             }
         });
     }

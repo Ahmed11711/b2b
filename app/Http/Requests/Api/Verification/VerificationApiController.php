@@ -10,6 +10,7 @@ use App\Models\Verification;
 use App\Repositories\verification\verificationRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class VerificationApiController extends BaseController
 {
@@ -30,12 +31,27 @@ class VerificationApiController extends BaseController
 
     public function store(Request $request): JsonResponse
     {
-        // لو كان عنده طلب قديم مرفوض، امسحه الأول عشان يتحط بدل منه واحد جديد
-        Verification::where('user_id', auth('api')->id())
-            ->where('status', 'rejected')
-            ->delete();
+        return DB::transaction(function () use ($request) {
+            // القفل هنا يمنع أي request تاني بنفس الـ user_id من الدخول في نفس اللحظة
+            $existing = Verification::where('user_id', auth('api')->id())
+                ->lockForUpdate()
+                ->first();
 
-        return parent::store($request);
+            if ($existing) {
+                if ($existing->status === 'approved') {
+                    return $this->errorResponse('Your verification is already approved. You cannot submit a new request.', 422);
+                }
+
+                if ($existing->status === 'pending') {
+                    return $this->errorResponse('You already have a pending verification request. Please wait for review.', 422);
+                }
+
+                // status == 'rejected' → امسحه واسمح بإعادة الإرسال
+                $existing->delete();
+            }
+
+            return parent::store($request);
+        });
     }
 
     protected function beforeStore(array $data, Request $request): array

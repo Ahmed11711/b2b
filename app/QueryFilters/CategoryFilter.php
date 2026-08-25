@@ -6,16 +6,19 @@ use Closure;
 
 class CategoryFilter
 {
-    public function handle($request, Closure $next)
+    public function handle($query, Closure $next)
     {
-        if (!request()->has('category_id') || !request()->category_id) {
-            return $next($request);
+        if (!request()->filled('category_id')) {
+            return $next($query);
         }
 
-        $builder = $next($request);
+        $builder = $next($query);
 
-        return $builder->whereHas('categories', function ($q) {
-            $q->where('categories.id', request('category_id'));
-        });
+        $categoryIds = request('category_id');
+        $categoryIds = is_array($categoryIds) ? $categoryIds : [$categoryIds];
+
+        return $builder->whereIn('category_id', $categoryIds);
+        // أو لو many-to-many:
+        // return $builder->whereHas('categories', fn($q) => $q->whereIn('categories.id', $categoryIds));
     }
 }

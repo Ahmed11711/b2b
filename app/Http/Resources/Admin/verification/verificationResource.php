@@ -22,19 +22,19 @@ class verificationResource extends JsonResource
         }
 
         $data['id_card_front'] = $this->id_card_front
-            ? url(str_replace('/storage/app/public', '/storage', $this->id_card_front))
+            ? url(str_replace('api/storage/app/public', '/storage', $this->id_card_front))
             : null;
         $data['id_card_back'] = $this->id_card_back
-            ? url(str_replace('/storage/app/public', '/storage', $this->id_card_back))
+            ? url(str_replace('api/storage/app/public', '/storage', $this->id_card_back))
             : null;
         $data['commercial_register'] = $this->commercial_register
-            ? url(str_replace('/storage/app/public', '/storage', $this->commercial_register))
+            ? url(str_replace('api/storage/app/public', '/storage', $this->commercial_register))
             : null;
         $data['tax_card'] = $this->tax_card
-            ? url(str_replace('/storage/app/public', '/storage', $this->tax_card))
+            ? url(str_replace('api/storage/app/public', '/storage', $this->tax_card))
             : null;
 
-            $data['user_name']=$this->user->name ?? null;
+        $data['user_name'] = $this->user->name ?? null;
 
         return $data;
     }

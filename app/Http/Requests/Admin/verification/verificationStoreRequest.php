@@ -20,15 +20,10 @@ class verificationStoreRequest extends BaseRequest
     public function withValidator($validator)
     {
         $validator->after(function ($validator) {
-            $existing = Verification::where('user_id', auth('api')->id())->first();
+            $exists = Verification::where('user_id', auth('api')->id())->exists();
 
-            if ($existing) {
-                if ($existing->status === 'approved') {
-                    $validator->errors()->add('user_id', 'Your verification is already approved. You cannot submit a new request.');
-                } elseif ($existing->status === 'pending') {
-                    $validator->errors()->add('user_id', 'You already have a pending verification request. Please wait for review or update it.');
-                }
-                // لو status == 'rejected' مبنضيفش error، يبقى مسموح له يبعت تاني
+            if ($exists) {
+                $validator->errors()->add('user_id', 'You already have a verification request.');
             }
         });
     }

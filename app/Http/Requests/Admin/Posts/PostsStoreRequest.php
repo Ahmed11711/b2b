@@ -23,6 +23,7 @@ class PostsStoreRequest extends BaseRequest
             'image' => 'required|file|image|max:2048',
             'gallery'    => 'required|array',
             'gallery.*'  => 'file|max:2048',
+            'completed' => 'nullable|boolean',
             'contact_ids' => 'required|array',
             'contact_ids.*' => [
                 Rule::exists('user_contacts', 'id')

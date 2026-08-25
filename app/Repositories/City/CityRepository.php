@@ -38,7 +38,26 @@ class CityRepository extends BaseRepository implements CityRepositoryInterface
 
     public function getAllCitiesForUser(int $userId)
     {
-        $selectedCityIds = User::find($userId)
+        $user = User::find($userId);
+
+        // لو اليوزر مختار "كل المناطق" → كل المدن تبقى selected
+        if ($user && $user->coverage_type === 'all_areas') {
+            return City::all()->map(function ($city) {
+                $city->is_selected = true;
+                return $city;
+            });
+        }
+
+        // لو "اونلاين" أو حاجة تانية غير specific_cities → مفيش حاجة selected
+        if ($user && $user->coverage_type !== 'specific_cities') {
+            return City::all()->map(function ($city) {
+                $city->is_selected = false;
+                return $city;
+            });
+        }
+
+        // الحالة العادية: specific_cities
+        $selectedCityIds = $user
             ?->cities()
             ->pluck('cities.id')
             ->toArray() ?? [];

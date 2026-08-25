@@ -6,7 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Verification extends Model
 {
-    //
+    protected $fillable = [
+        'user_id',
+        'id_card_front',
+        'id_card_back',
+        'commercial_register',
+        'tax_card',
+        'notes',
+        'status',
+    ];
 
     public function user()
     {

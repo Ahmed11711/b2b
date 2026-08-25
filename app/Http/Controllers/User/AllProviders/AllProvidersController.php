@@ -80,11 +80,10 @@ class AllProvidersController extends BaseController
                     'projects',
                     'certificates',
                     'branches',
-                    'reviews'
+                    'reviews',
+                    'verification',
 
                 ])
-                // ->withAvg('reviews', 'rating')
-                // ->withCount('reviews')
                 ->findOrFail($id);
 
             return $this->successResponse(

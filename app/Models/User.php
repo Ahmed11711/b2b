@@ -148,4 +148,11 @@ class User extends Authenticatable implements JWTSubject
             'missing_fields'   => array_keys(array_diff_key($fields, $completed)),
         ];
     }
+
+    public function verificationUser()
+    {
+        return $this->hasOne(Verification::class, 'user_id')
+            ->where('status', 'approved')
+            ->latestOfMany();
+    }
 }

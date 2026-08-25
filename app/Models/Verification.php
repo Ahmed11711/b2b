@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Verification extends Model
 {
+    public array $filterable = ['user_id', 'status'];
+
     protected $fillable = [
         'user_id',
         'id_card_front',

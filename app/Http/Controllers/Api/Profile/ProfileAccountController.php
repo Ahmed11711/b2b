@@ -11,6 +11,7 @@ use App\Http\Requests\Api\ProfileAccount\UpdateProfileInfoRequest;
 use App\Http\Resources\Admin\User\UserResource;
 use App\Http\Resources\Api\ProfileAccount\ProfileAccountResource;
 use App\Repositories\Category\CategoryRepositoryInterface;
+use App\Repositories\City\CityRepositoryInterface;
 use App\Repositories\User\UserRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -18,8 +19,11 @@ use Illuminate\Support\Facades\Log;
 
 class ProfileAccountController extends BaseController
 {
-    public function __construct(UserRepositoryInterface $repository, public CategoryRepositoryInterface $categoryRepository)
-    {
+    public function __construct(
+        UserRepositoryInterface $repository,
+        public CategoryRepositoryInterface $categoryRepository,
+        public CityRepositoryInterface $cityRepository   // جديد
+    ) {
         parent::__construct();
         $this->initService(
             repository: $repository,
@@ -27,15 +31,11 @@ class ProfileAccountController extends BaseController
             fileFields: ['image']
         );
 
-
         $this->storeRequestClass = ProfileAccountRequest::class;
         $this->updateRequestClass = ProfileAccountRequest::class;
         $this->resourceClass = ProfileAccountResource::class;
-        $this->withRelationships = ['categories', 'verificationUser'];
+        $this->withRelationships = ['categories', 'verificationUser', 'cities']; // أضفنا cities
     }
-
-
-
 
     public function show(int $id = 0): JsonResponse
     {
@@ -50,6 +50,7 @@ class ProfileAccountController extends BaseController
         }
 
         $record->all_categories_with_selection = $this->categoryRepository->getAllCategoriesForUser($userId);
+        $record->all_cities_with_selection = $this->cityRepository->getAllCitiesForUser($userId); // جديد
 
         return $this->successResponse(
             new $this->resourceClass($record),
@@ -67,6 +68,7 @@ class ProfileAccountController extends BaseController
     protected function beforeUpdate(array $data, $existingRecord, Request $request): array
     {
         unset($data['categories']);
+        unset($data['cities']); // جديد - منشيلها من data عشان معلاقتش تحديث في users مباشرة
         return $data;
     }
 
@@ -78,6 +80,21 @@ class ProfileAccountController extends BaseController
             $this->categoryRepository->syncUserCategories($updatedRecord->id, $categories);
 
             $updatedRecord->all_categories_with_selection = $this->categoryRepository->getAllCategoriesForUser($updatedRecord->id);
+        }
+
+        // جديد: التعامل مع coverage_type والمدن
+        if ($request->has('coverage_type')) {
+            $coverageType = $request->input('coverage_type');
+
+            if ($coverageType === 'specific_cities' && $request->has('cities')) {
+                $cities = $request->input('cities');
+                $this->cityRepository->syncUserCities($updatedRecord->id, $cities);
+            } else {
+                // لو online أو all_areas، منظفش أي مدن مرتبطة (اختياري حسب منطقك)
+                $this->cityRepository->syncUserCities($updatedRecord->id, []);
+            }
+
+            $updatedRecord->all_cities_with_selection = $this->cityRepository->getAllCitiesForUser($updatedRecord->id);
         }
     }
 }

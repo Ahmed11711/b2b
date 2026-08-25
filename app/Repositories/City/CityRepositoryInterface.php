@@ -10,5 +10,9 @@ use App\Repositories\BaseRepository\BaseRepositoryInterface;
  */
 interface CityRepositoryInterface extends BaseRepositoryInterface
 {
-    //
+    public function query();
+
+    public function syncUserCities(int $userId, array $cityIds = []): void;
+
+    public function getAllCitiesForUser(int $userId);
 }

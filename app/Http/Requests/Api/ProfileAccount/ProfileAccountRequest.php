@@ -34,6 +34,10 @@ class ProfileAccountRequest extends BaseRequest
             'categories'   => 'nullable|array',
             'categories.*' => 'exists:categories,id',
             'experience_years' => 'nullable|string|max:255',
+
+            'coverage_type' => 'nullable|in:online,all_areas,specific_cities',
+            'cities'   => 'nullable|array|required_if:coverage_type,specific_cities',
+            'cities.*' => 'exists:cities,id',
         ];
     }
 }

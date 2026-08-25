@@ -155,4 +155,8 @@ class User extends Authenticatable implements JWTSubject
             ->where('status', 'approved')
             ->latestOfMany();
     }
+    public function cities()
+    {
+        return $this->belongsToMany(City::class, 'user_cities');
+    }
 }

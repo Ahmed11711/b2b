@@ -8,11 +8,13 @@ use App\Http\Resources\Admin\Project\ProjectResource;
 use App\Http\Resources\Admin\Service\ServiceResource;
 use App\Http\Resources\Admin\UserPackage\UserPacakgeResource;
 use App\Http\Resources\Admin\verification\verificationResource;
+use App\Traits\BuildsFileUrl;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProviderResource extends JsonResource
 {
+    use BuildsFileUrl;
     public function toArray(Request $request): array
     {
         return [
@@ -22,9 +24,7 @@ class ProviderResource extends JsonResource
             'email'           => $this->email,
             'phone'           => $this->phone,
             'user_name'       => $this->user_name,
-            'image'           => $this->image
-                ? url(str_replace('/storage/app/public', '/storage', $this->image))
-                : null,
+            'image'           => $this->buildFileUrl($this->image),
             'country_code'    => $this->country_code,
             'is_active'       => $this->is_active,
             'role'            => $this->role,

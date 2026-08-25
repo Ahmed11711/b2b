@@ -29,12 +29,7 @@ class VerificationController extends BaseController
         $this->resourceClass      = verificationResource::class;
     }
 
-    protected function beforeStore(array $data, Request $request): array
-    {
-        $data['user_id'] = auth('api')->id();
-        // $data['status']  = 'pending';
-        return $data;
-    }
+
 
     /**
  

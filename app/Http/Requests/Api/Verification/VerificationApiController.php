@@ -29,10 +29,10 @@ class VerificationApiController extends BaseController
         $this->resourceClass      = verificationResource::class;
     }
 
+
     public function store(Request $request): JsonResponse
     {
         return DB::transaction(function () use ($request) {
-            // القفل هنا يمنع أي request تاني بنفس الـ user_id من الدخول في نفس اللحظة
             $existing = Verification::where('user_id', auth('api')->id())
                 ->lockForUpdate()
                 ->first();
@@ -46,7 +46,6 @@ class VerificationApiController extends BaseController
                     return $this->errorResponse('You already have a pending verification request. Please wait for review.', 422);
                 }
 
-                // status == 'rejected' → امسحه واسمح بإعادة الإرسال
                 $existing->delete();
             }
 

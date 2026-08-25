@@ -33,6 +33,9 @@ class ProfileAccountResource extends JsonResource
             'experience_years'   => $this->experience_years,
             'is_verification'    => $this->verificationUser ? 1 : 0,
 
+            // الجديد
+            'coverage_type'  => $this->coverage_type,
+            'all_cities'     => $this->all_cities_with_selection ?? [],
         ];
     }
 }

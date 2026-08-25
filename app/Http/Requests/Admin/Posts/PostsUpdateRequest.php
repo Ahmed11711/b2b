@@ -23,6 +23,7 @@ class PostsUpdateRequest extends BaseRequest
             'image' => 'sometimes|nullable|file|image|max:2048',
             'is_active' => 'sometimes|required|integer',
             'contact_ids'   => 'sometimes|required|array',
+            'completed' => 'sometimes|required|boolean',
             'contact_ids.*' => [
                 'required',
                 Rule::exists('user_contacts', 'id')->where(function ($query) {

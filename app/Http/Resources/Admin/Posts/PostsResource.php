@@ -16,7 +16,7 @@ class PostsResource extends JsonResource
     {
         $attributes = $this->resource->getAttributes();
         $data = ['id' => $this->id];
-        $fields = ['user_id', 'title', 'description', 'price_from', 'price_to', 'image', 'category_id', 'is_active', 'created_at', 'updated_at'];
+        $fields = ['user_id', 'title', 'description', 'price_from', 'price_to', 'image', 'category_id', 'is_active', 'created_at', 'updated_at', 'complete'];
 
         foreach ($fields as $field) {
             if (array_key_exists($field, $attributes)) {

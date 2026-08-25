@@ -24,10 +24,10 @@ class User extends Authenticatable implements JWTSubject
     public array $allowedFields = ['id', 'name', 'email', 'phone', 'user_name', 'image', 'whtsapp', 'country_code', 'is_active', 'email_verified_at', 'role', 'coverage_type', 'social_type', 'social_id', 'city_id', 'info', 'last_login_at', 'created_at', 'updated_at'];
 
 
-    protected $casts = [
-        'image' => StorageUrlCast::class,
-        'icon' => StorageUrlCast::class,
-    ];
+    // protected $casts = [
+    //     'image' => StorageUrlCast::class,
+    //     'icon' => StorageUrlCast::class,
+    // ];
 
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;

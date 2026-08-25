@@ -32,7 +32,7 @@ class VerificationController extends BaseController
     protected function beforeStore(array $data, Request $request): array
     {
         $data['user_id'] = auth('api')->id();
-        $data['status']  = 'pending';
+        // $data['status']  = 'pending';
         return $data;
     }
 

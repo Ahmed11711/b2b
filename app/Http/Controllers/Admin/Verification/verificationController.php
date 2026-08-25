@@ -29,11 +29,6 @@ class VerificationController extends BaseController
         $this->resourceClass      = verificationResource::class;
     }
 
-
-
-    /**
- 
-     */
     protected function applyScoping($query)
     {
         $user = auth('api')->user();
@@ -43,5 +38,27 @@ class VerificationController extends BaseController
         }
 
         return $query->where('user_id', 11);
+    }
+
+    // 👈 جديد: Log مؤقت للتشخيص
+    protected function beforeUpdate(array $data, $existingRecord, Request $request): array
+    {
+        Log::info('=== Verification Update Debug ===', [
+            'raw_request_all'     => $request->all(),
+            'validated_data'      => $data,
+            'existing_status'     => $existingRecord->status,
+            'request_has_status'  => $request->has('status'),
+            'request_status_value' => $request->input('status'),
+        ]);
+
+        return $data;
+    }
+
+    protected function afterUpdate($updatedRecord, $oldRecord, Request $request): void
+    {
+        Log::info('=== Verification After Update ===', [
+            'updated_status' => $updatedRecord->status,
+            'updated_record_fresh' => $updatedRecord->fresh()->toArray(),
+        ]);
     }
 }

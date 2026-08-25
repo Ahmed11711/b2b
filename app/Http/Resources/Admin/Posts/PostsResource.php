@@ -32,6 +32,16 @@ class PostsResource extends JsonResource
         $data['bids'] = BidesResource::collection($this->whenLoaded('bids'));
         $data['contacts'] = ServiceContactResource::collection($this->whenLoaded('contacts'));
 
+        // الجديد: تغطية صاحب البوست الجغرافية
+        $data['user_coverage_type'] = $this->whenLoaded('user', fn() => $this->user->coverage_type);
+        $data['user_cities'] = $this->whenLoaded('user', function () {
+            return $this->user->coverage_type === 'specific_cities'
+                ? $this->user->cities->map(fn($city) => [
+                    'id'   => $city->id,
+                    'name' => $city->name,
+                ])
+                : [];
+        });
 
         return $data;
     }

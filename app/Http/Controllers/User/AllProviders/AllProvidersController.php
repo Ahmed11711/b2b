@@ -7,6 +7,7 @@ use App\Http\Resources\User\Provider\OneProviderResource;
 use App\Http\Resources\User\Provider\ProviderResource;
 use App\Models\User;
 use App\QueryFilters\CategoryFilter;
+use App\QueryFilters\Search;
 use App\Repositories\User\UserRepositoryInterface;
 
 use Illuminate\Http\Request;
@@ -41,6 +42,7 @@ class AllProvidersController extends BaseController
             $data = app(Pipeline::class)
                 ->send($query)
                 ->through([
+                    Search::class,
                     CategoryFilter::class,
                 ])
                 ->thenReturn()

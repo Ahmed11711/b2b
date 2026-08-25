@@ -28,7 +28,7 @@ class PostsApiController extends BaseController
         $this->resourceClass = PostsResource::class;
         $this->isUserBound        = true;
         $this->hasGallery         = true;
-        $this->withRelationships  = ['user:id,name,email,image', 'contacts'];
+        $this->withRelationships  = ['user:id,name,email,image,coverage_type', 'contacts', 'user.cities'];
     }
 
     protected function beforeStore(array $data, Request $request): array

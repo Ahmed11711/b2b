@@ -6,6 +6,7 @@ use App\Http\Controllers\BaseController\BaseController;
 use App\Http\Requests\Admin\verification\verificationStoreRequest;
 use App\Http\Requests\Admin\verification\verificationUpdateRequest;
 use App\Http\Resources\Admin\verification\verificationResource;
+use App\Models\Verification;
 use App\Repositories\verification\verificationRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -27,6 +28,14 @@ class VerificationApiController extends BaseController
         $this->resourceClass      = verificationResource::class;
     }
 
+    public function store(Request $request): JsonResponse
+    {
+        Verification::where('user_id', auth('api')->id())
+            ->where('status', 'rejected')
+            ->delete();
+
+        return parent::store($request);
+    }
     protected function beforeStore(array $data, Request $request): array
     {
         $data['user_id'] = auth('api')->id();
@@ -34,6 +43,13 @@ class VerificationApiController extends BaseController
         return $data;
     }
 
+    protected function beforeUpdate(array $data, $existingRecord, Request $request): array
+    {
+        if ($existingRecord->status === 'rejected') {
+            $data['status'] = 'pending';
+        }
+        return $data;
+    }
 
     protected function applyScoping($query)
     {

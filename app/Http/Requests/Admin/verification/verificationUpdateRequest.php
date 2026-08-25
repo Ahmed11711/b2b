@@ -3,48 +3,38 @@
 namespace App\Http\Requests\Admin\verification;
 
 use App\Http\Requests\BaseRequest\BaseRequest;
+use App\Models\Verification;
 
 class verificationUpdateRequest extends BaseRequest
 {
     public function rules(): array
     {
         return [
-            // First two: Images only
-            'id_card_front'       => 'sometimes|nullable|image|mimes:jpeg,png,jpg|max:5120',
-            'id_card_back'        => 'sometimes|nullable|image|mimes:jpeg,png,jpg|max:5120',
-
-            // Second two: Files (PDF or Images)
-            'commercial_register' => 'sometimes|nullable|file|mimes:pdf,jpeg,png,jpg|max:10240',
-            'tax_card'            => 'sometimes|nullable|file|mimes:pdf,jpeg,png,jpg|max:10240',
-            'status'              =>'sometimes',
-            'note'              =>'sometimes'
+            'id_card_front'       => 'sometimes|image',
+            'id_card_back'        => 'sometimes|image',
+            'commercial_register' => 'sometimes|file',
+            'tax_card'            => 'sometimes|file',
         ];
+    }
+
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $record = Verification::where('user_id', auth('api')->id())->first();
+
+            if ($record && $record->status === 'approved') {
+                $validator->errors()->add('status', 'Your verification is already approved. You cannot edit it.');
+            }
+        });
     }
 
     public function messages(): array
     {
         return [
-            // ID Card Front
-            'id_card_front.required'    => 'The ID card front image is required.',
-            'id_card_front.image'       => 'The ID card front must be a valid image file.',
-            'id_card_front.mimes'       => 'The ID card front must be a file of type: jpeg, png, jpg.',
-
-            // ID Card Back
-            'id_card_back.required'     => 'The ID card back image is required.',
-            'id_card_back.image'        => 'The ID card back must be a valid image file.',
-            'id_card_back.mimes'        => 'The ID card back must be a file of type: jpeg, png, jpg.',
-
-            // Commercial Register
-            'commercial_register.required' => 'The commercial register file is required.',
+            'id_card_front.image'          => 'The ID card front must be a valid image file.',
+            'id_card_back.image'           => 'The ID card back must be a valid image file.',
             'commercial_register.file'     => 'The commercial register must be a valid file.',
-            'commercial_register.mimes'    => 'The commercial register must be a PDF or an image (jpeg, png, jpg).',
-
-            // Tax Card
-            'tax_card.required' => 'The tax card file is required.',
-            'tax_card.file'     => 'The tax card must be a valid file.',
-            'tax_card.mimes'    => 'The tax card must be a PDF or an image (jpeg, png, jpg).',
-
-            // General Max Size
+            'tax_card.file'                => 'The tax card must be a valid file.',
             '*.max' => 'The file size is too large. Maximum allowed is 5MB for images and 10MB for documents.',
         ];
     }

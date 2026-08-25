@@ -21,6 +21,7 @@ return new class extends Migration
             $table->decimal('price_to', 10, 2);
             $table->string('image')->nullable();
             $table->boolean('is_active')->default(true);
+            $table->boolean('complete')->default(false);
             $table->timestamps();
         });
     }

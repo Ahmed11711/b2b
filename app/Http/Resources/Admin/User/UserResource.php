@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Admin\User;
 
+use \App\Traits\BuildsFileUrl;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
@@ -9,6 +10,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  */
 class UserResource extends JsonResource
 {
+    use BuildsFileUrl;
     public function toArray($request): array
     {
         $attributes = $this->resource->getAttributes();
@@ -20,8 +22,8 @@ class UserResource extends JsonResource
                 $data[$field] = $this->{$field};
             }
         }
-        $data['image'] = $this->image;
-        $data['icon'] = $this->icon;
+        $data['image'] = $this->buildFileUrl($this->image);
+        $data['icon'] = $this->buildFileUrl($this->icon);
 
         return $data;
     }

@@ -8,8 +8,9 @@ use App\Http\Resources\User\Provider\ProviderResource;
 use App\Models\User;
 use App\QueryFilters\CategoryFilter;
 use App\QueryFilters\Search;
-use App\Repositories\User\UserRepositoryInterface;
+use App\QueryFilters\UserCityFilter;
 
+use App\Repositories\User\UserRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Pipeline\Pipeline;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -33,7 +34,7 @@ class AllProvidersController extends BaseController
             $query = User::query()
                 ->where('role', 'user')
                 ->where('is_active', true)
-                ->with(['city']);
+                ->with(['cities']); // 👈 بدّلنا city لـ cities
 
             if ($authUserId) {
                 $query->where('id', '!=', $authUserId);
@@ -44,6 +45,7 @@ class AllProvidersController extends BaseController
                 ->through([
                     Search::class,
                     CategoryFilter::class,
+                    UserCityFilter::class,
                 ])
                 ->thenReturn()
                 ->latest()
@@ -56,7 +58,6 @@ class AllProvidersController extends BaseController
             return $this->errorResponse("Failed to fetch providers: " . $e->getMessage(), 500);
         }
     }
-
     private function getOptionalAuthUserId(): ?int
     {
         try {

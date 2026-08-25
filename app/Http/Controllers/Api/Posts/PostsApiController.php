@@ -3,21 +3,13 @@
 namespace App\Http\Controllers\Api\Posts;
 
 use App\Http\Controllers\BaseController\BaseController;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Posts\PostsStoreRequest;
 use App\Http\Requests\Admin\Posts\PostsUpdateRequest;
 use App\Http\Resources\Admin\Posts\PostsResource;
 use App\Models\ServiceContact;
-use App\QueryFilters\CategoryFilter;
-use App\QueryFilters\ColumnFilter;
-use App\QueryFilters\CountryFilter;
-use App\QueryFilters\SelectFields;
-use App\QueryFilters\Search;
-use App\QueryFilters\SortBy;
 use App\Repositories\Posts\PostsRepositoryInterface;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Pipeline\Pipeline;
-use Illuminate\Support\Facades\Log;
 
 class PostsApiController extends BaseController
 {
@@ -36,45 +28,7 @@ class PostsApiController extends BaseController
         $this->resourceClass = PostsResource::class;
         $this->isUserBound        = true;
         $this->hasGallery         = true;
-        $this->withRelationships  = [
-            'user:id,name,email,image,coverage_type',
-            'user.cities',
-            'contacts'
-        ];
-    }
-
-    /**
-     * Override كامل لـ index() عشان نضيف CountryFilter بدون لمس BaseController
-     */
-    public function index(Request $request): JsonResponse
-    {
-        try {
-            $query = $this->repository->query()->with($this->getIndexRelationships());
-            $query = $this->applyScoping($query);
-
-            $data = app(Pipeline::class)
-                ->send($query)
-                ->through([
-                    Search::class,
-                    ColumnFilter::class,
-                    CategoryFilter::class,  // 👈 جديد (لو محتاج many-to-many)
-                    CountryFilter::class,   // 👈 جديد
-                    SelectFields::class,
-                    SortBy::class,
-                ])
-                ->thenReturn()
-                ->latest()
-                ->paginate($request->input('per_page', 10));
-
-            if (class_exists($this->resourceClass)) {
-                $data = $this->resourceClass::collection($data);
-            }
-
-            return $this->successResponsePaginate($data, "Data retrieved via Pipeline");
-        } catch (\Throwable $e) {
-            Log::error("Pipeline Error: " . $e->getMessage());
-            return $this->errorResponse("Failed to fetch data", 500);
-        }
+        $this->withRelationships  = ['user:id,name,email,image,coverage_type', 'contacts', 'user.cities'];
     }
 
     protected function beforeStore(array $data, Request $request): array

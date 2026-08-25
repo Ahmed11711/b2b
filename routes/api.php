@@ -74,6 +74,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::group(['prefix' => 'v1/auth'], function () {
+    Route::get('cities', [CityController::class, 'index']);
 
     // Public Routes
     Route::post('register', [CreateAcountController::class, 'register']);

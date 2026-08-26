@@ -2,11 +2,13 @@
 
 namespace App\Http\Resources\Api\Bids;
 
+use App\Traits\BuildsFileUrl;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class BidesResource extends JsonResource
 {
+    use BuildsFileUrl;
     /**
      * Transform the resource into an array.
      *
@@ -17,7 +19,7 @@ class BidesResource extends JsonResource
         return [
             'id' => $this->id,
             'user_name' => $this->user->name ?? null,
-            'user_image' => $this->user->image ?? null,
+            'user_image' => $this->buildFileUrl($this->user->image)  ?? null,
             'status' => $this->status,
             'created_at' => $this->created_at
         ];

@@ -17,8 +17,8 @@ class CategoryFilter
         $categoryIds = request('category_id');
         $categoryIds = is_array($categoryIds) ? $categoryIds : [$categoryIds];
 
-        return $builder->whereIn('category_id', $categoryIds);
-        // أو لو many-to-many:
-        // return $builder->whereHas('categories', fn($q) => $q->whereIn('categories.id', $categoryIds));
+        return $builder->whereHas('categories', function ($cq) use ($categoryIds) {
+            $cq->whereIn('categories.id', $categoryIds);
+        });
     }
 }

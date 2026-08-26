@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Admin\Posts;
 
+use App\Http\Resources\Admin\User\UserResource;
 use App\Http\Resources\Api\Bids\BidesResource;
 use App\Http\Resources\Api\ServiceContact\ServiceContactResource;
 use App\Http\Resources\gallery\galleryResource;
@@ -28,7 +29,7 @@ class PostsResource extends JsonResource
             ? rtrim(config('app.url'), '/') . '/' . ltrim(str_replace('/storage/app/public', 'storage', $this->image), '/')
             : null;
         $data['gallery'] = galleryResource::collection($this->whenLoaded('gallery'));
-        $data['user'] = $this->whenLoaded('user');
+        $data['user'] = $this->whenLoaded('user', fn() => new UserResource($this->user));
         $data['bids'] = BidesResource::collection($this->whenLoaded('bids'));
         $data['contacts'] = ServiceContactResource::collection($this->whenLoaded('contacts'));
 

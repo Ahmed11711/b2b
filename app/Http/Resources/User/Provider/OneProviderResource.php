@@ -23,6 +23,8 @@ class OneProviderResource extends JsonResource
             'id'            => $this->id,
             'name'          => $this->name,
             'user_name' => $this->user_name,
+            'experience_years' => $this->experience_years,
+            'coverage_type' => $this->coverage_type,
 
             'email'         => $this->email ?? $this->username,
             'city_name'     => $this->city?->name,

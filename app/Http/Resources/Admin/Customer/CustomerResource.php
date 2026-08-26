@@ -29,8 +29,9 @@ class CustomerResource extends JsonResource
             'last_login_at'   => $this->last_login_at,
             'created_at'      => $this->created_at,
             'posts'  => $this->services_count ?? 0,
+            'posts_count' => $this->whenCounted('posts', 0),
             'reviews_count'   => $this->reviews_count ?? 0,
-            'UserContact' => $this->whenLoaded('UserContact'),
+            // 'UserContact' => $this->whenLoaded('UserContact'),
             'posts' => PostsResource::collection($this->whenLoaded('posts')),
             'UserContact' => $this->whenLoaded('UserContact'),
 

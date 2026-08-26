@@ -85,6 +85,7 @@ class AllProvidersController extends BaseController
                     'branches',
                     'reviews',
                     'verification',
+                    'verificationUser',
 
                 ])
                 ->findOrFail($id);

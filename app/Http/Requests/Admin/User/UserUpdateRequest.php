@@ -19,7 +19,7 @@ class UserUpdateRequest extends BaseRequest
             'password' => 'sometimes|nullable|string|max:255',
             'phone' => 'sometimes|nullable|string|max:255|unique:users,phone,' . $this->route('user') . ',id',
             'user_name' => 'sometimes|nullable|string|max:255',
-            'image' => 'sometimes|nullable|file|image|max:2048',
+            'image' => 'sometimes|nullable|file|image',
             'whtsapp' => 'sometimes|nullable|string|max:255',
             'country_code' => 'sometimes|required|string|max:255',
             'is_active' => 'sometimes|required|integer',

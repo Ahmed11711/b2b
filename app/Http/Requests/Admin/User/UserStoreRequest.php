@@ -19,7 +19,7 @@ class UserStoreRequest extends BaseRequest
             'password' => 'required|string|max:255',
             'phone' => 'nullable|string|max:255|unique:users,phone',
             'user_name' => 'nullable|string|max:255',
-            'image' => 'nullable|file|image|max:2048',
+            'image' => 'nullable|file|image',
             'whtsapp' => 'nullable|string|max:255',
             'country_code' => 'nullable|string|max:255',
             'is_active' => 'required|integer',

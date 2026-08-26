@@ -4,11 +4,13 @@ namespace App\Http\Resources\Admin\Customer;
 
 use App\Http\Resources\Admin\Posts\PostsResource;
 use App\Http\Resources\Admin\UserPackage\UserPacakgeResource;
+use App\Traits\BuildsFileUrl;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CustomerResource extends JsonResource
 {
+    use BuildsFileUrl;
 
     public function toArray(Request $request): array
     {
@@ -18,7 +20,7 @@ class CustomerResource extends JsonResource
             'email'           => $this->email,
             'phone'           => $this->phone,
             'user_name'       => $this->user_name,
-            'image'           => $this->image,
+            'image'           => $this->buildFileUrl($this->image),
             'country_code'    => $this->country_code,
             'is_active'       => $this->is_active,
             'role'            => $this->role,

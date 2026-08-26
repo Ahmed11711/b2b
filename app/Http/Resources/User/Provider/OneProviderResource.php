@@ -34,7 +34,7 @@ class OneProviderResource extends JsonResource
                 'reviews_count' => $this->reviews_count ?? 0,
             ],
             'is_verification' => $this->whenLoaded('verification')
-                ? ($this->verification ? 1 : 0)
+                ? ($this->verification && $this->verification->status === 'active' ? 1 : 0)
                 : 0,
             'services'      => ServiceResource::collection($this->whenLoaded('services')),
             'projects'      => ProjectResource::collection($this->whenLoaded('projects')),

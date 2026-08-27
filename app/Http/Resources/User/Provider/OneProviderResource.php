@@ -29,6 +29,8 @@ class OneProviderResource extends JsonResource
             'email'         => $this->email ?? $this->username,
             'city_name'     => $this->city?->name,
             'info'           => $this->info,
+            'bio'           => $this->bio,
+
             'stats'         => [
                 'rating' => round($this->reviews_avg_rating ?? 0, 1),
                 'reviews_count' => $this->reviews_count ?? 0,

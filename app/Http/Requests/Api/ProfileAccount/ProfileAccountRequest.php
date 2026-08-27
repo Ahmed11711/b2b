@@ -31,6 +31,7 @@ class ProfileAccountRequest extends BaseRequest
             'country_code' => 'nullable|string|max:255',
             'image' => 'nullable|file|image|max:2048',
             'info' => 'nullable|string',
+            'bio' => 'nullable|string',
             'categories'   => 'nullable|array',
             'categories.*' => 'exists:categories,id',
             'experience_years' => 'nullable|string|max:255',

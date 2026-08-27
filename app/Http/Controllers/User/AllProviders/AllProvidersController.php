@@ -65,7 +65,6 @@ class AllProvidersController extends BaseController
                 return $user->id;
             }
         } catch (\Throwable $e) {
-            // مفيش توكن أو توكن غلط/منتهي -> اعتبره guest وكمل عادي
         }
 
         return null;
@@ -86,7 +85,6 @@ class AllProvidersController extends BaseController
                     'reviews',
                     'verification',
                     'verificationUser',
-
                 ])
                 ->findOrFail($id);
 

@@ -24,6 +24,7 @@ class ProfileAccountResource extends JsonResource
             'whtsapp'            => $this->whtsapp,
             'country_code'       => $this->country_code,
             'info'               => $this->info,
+            'bio'               => $this->bio,
             'created_at'         => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at'         => $this->updated_at->format('Y-m-d H:i:s'),
             'all_categories' => $this->all_categories_with_selection ?? [],

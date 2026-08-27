@@ -13,6 +13,7 @@ class UpdateProfileInfoRequest extends BaseRequest
     {
         return [
             'info' => ['required', 'string',],
+
         ];
     }
 }

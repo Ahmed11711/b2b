@@ -75,7 +75,7 @@ class AllProvidersController extends BaseController
             $provider = User::query()
                 ->where('role', 'user')
                 ->with([
-                    'city',
+                    'cities',
                     'services' => function ($query) {
                         $query->where('is_active', 1);
                     },

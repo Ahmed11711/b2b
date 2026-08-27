@@ -3,6 +3,7 @@
 namespace App\Http\Resources\User\Provider;
 
 use App\Http\Resources\Admin\Branch\BranchResource;
+use App\Http\Resources\Admin\City\CityResource;
 use App\Http\Resources\Admin\MyCertificate\MyCertificateResource;
 use App\Http\Resources\Admin\Project\ProjectResource;
 use App\Http\Resources\Admin\Service\ServiceResource;
@@ -43,7 +44,7 @@ class OneProviderResource extends JsonResource
             'certificates'  => MyCertificateResource::collection($this->whenLoaded('certificates')),
             'branches'      => BranchResource::collection($this->whenLoaded('branches')),
             'reviews'       => ReviewsResource::collection($this->whenLoaded('reviews')),
-
+            'cities' => CityResource::collection($this->whenLoaded('cities')),
             'created_at'    => $this->created_at->format('Y-m-d'),
         ];
     }

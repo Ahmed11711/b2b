@@ -2,11 +2,13 @@
 
 namespace App\Http\Resources\gallery;
 
+use App\Traits\BuildsFileUrl;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class galleryResource extends JsonResource
 {
+    use BuildsFileUrl;
     /**
      * Transform the resource into an array.
      *
@@ -17,7 +19,7 @@ class galleryResource extends JsonResource
         return [
             'id' => $this->id,
             'image' => $this->image
-                ? url(str_replace('/storage/app/public', '/storage', $this->image))
+                ? $this->buildFileUrl($this->image)
                 : null
         ];
     }

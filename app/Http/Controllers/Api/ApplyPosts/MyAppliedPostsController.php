@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\Posts\PostsStoreRequest;
 use App\Http\Requests\Admin\Posts\PostsUpdateRequest;
 use App\Http\Resources\Admin\Posts\PostsResource;
 use App\Repositories\Posts\PostsRepositoryInterface;
+use Illuminate\Support\Facades\Log;
 
 class MyAppliedPostsController extends BaseController
 {
@@ -35,7 +36,7 @@ class MyAppliedPostsController extends BaseController
     protected function applyScoping($query)
     {
         $authUserId = auth('api')->id();
-        \Log::info('MyAppliedPosts authUserId: ' . $authUserId);
+        Log::info('MyAppliedPosts authUserId: ' . $authUserId);
 
         return $query->whereHas('bids', function ($q) use ($authUserId) {
             $q->where('user_id', $authUserId);

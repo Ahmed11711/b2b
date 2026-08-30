@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use \App\Models\bids;
 use Illuminate\Database\Eloquent\Model;
 
 class Posts extends Model
@@ -12,6 +13,11 @@ class Posts extends Model
     public array $allowedFields = ['id', 'user_id', 'title', 'description', 'price_from', 'price_to', 'image', 'is_active', 'created_at', 'updated_at'];
 
     //
+    public function userBid()
+    {
+        return $this->hasOne(bids::class, 'post_id', 'id')
+            ->where('user_id', auth('api')->id());
+    }
 
     public function user()
     {

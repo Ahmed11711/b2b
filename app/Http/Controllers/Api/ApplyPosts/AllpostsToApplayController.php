@@ -31,6 +31,7 @@ class AllpostsToApplayController extends BaseController
             'user:id,name,email,image,coverage_type',
             'user.cities',
             'contacts',
+            'userBid',
         ];
     }
 

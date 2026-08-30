@@ -35,6 +35,7 @@ class MyAppliedPostsController extends BaseController
     protected function applyScoping($query)
     {
         $authUserId = auth('api')->id();
+        \Log::info('MyAppliedPosts authUserId: ' . $authUserId);
 
         return $query->whereHas('bids', function ($q) use ($authUserId) {
             $q->where('user_id', $authUserId);

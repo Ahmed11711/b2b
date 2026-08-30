@@ -34,7 +34,6 @@ class AllpostsToApplayController extends BaseController
             'userBid',
         ];
     }
-
     protected function applyScoping($query)
     {
         if (request()->isMethod('get')) {
@@ -47,10 +46,8 @@ class AllpostsToApplayController extends BaseController
             return $query
                 ->where('is_active', true)
                 ->whereIn('category_id', $categoryIds)
-                ->where('user_id', '!=', $authUserId)
-                ->whereDoesntHave('bids', function ($q) use ($authUserId) {
-                    $q->where('user_id', $authUserId);
-                });
+                ->where('user_id', '!=', $authUserId);
+            // ✅ اتشال: ->whereDoesntHave('bids', function ($q) use ($authUserId) { ... })
         }
 
         return $query->where('user_id', auth('api')->id());

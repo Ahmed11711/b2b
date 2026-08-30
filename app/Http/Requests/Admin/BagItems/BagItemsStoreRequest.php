@@ -17,14 +17,14 @@ class BagItemsStoreRequest extends BaseRequest
             'bags_categories_id' => 'nullable|exists:bags_categories,id|display_field:title',
             'title' => 'required|string|max:255',
             'price' => 'required|numeric',
-            'image' => 'required|file|image|max:2048',
+            'image' => 'required|file|image',
             'currency' => 'nullable|in:ريال,دولار,جنيه مصري',
             'rating' => 'nullable|string|max:255',
             'desc' => 'required|string',
             'Whose' => 'nullable|string',
             'what_will_you_get' => 'nullable|string',
             'gallery'           => 'nullable|array',
-            'gallery.*.file'    => 'required|file|max:10240',
+            'gallery.*.file'    => 'required|file',
             'gallery.*.type'    => 'nullable|in:image,video,word,pdf,excel,other,zip,download',
         ];
     }

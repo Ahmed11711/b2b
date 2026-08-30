@@ -37,8 +37,18 @@ class BagItemsResource extends JsonResource
                 ];
             });
         });
-        $data['bagsCategories'] = $this->whenLoaded('bagsCategories');
-
+        $data['bagsCategories'] = $this->whenLoaded('bagsCategories', function () {
+            return [
+                'id' => $this->bagsCategories->id,
+                'title' => $this->bagsCategories->title,
+                'bag' => $this->bagsCategories->relationLoaded('bag') && $this->bagsCategories->bag
+                    ? [
+                        'id' => $this->bagsCategories->bag->id,
+                        'title' => $this->bagsCategories->bag->title,
+                    ]
+                    : null,
+            ];
+        });
         return $data;
     }
 }

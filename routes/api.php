@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\Project\ProjectStatsController;
 use App\Http\Controllers\Admin\UserInfo\UserInfoController;
 use App\Http\Controllers\Admin\Verification\VerificationController;
 use App\Http\Controllers\Api\ApplyPosts\AllpostsToApplayController;
+use App\Http\Controllers\Api\ApplyPosts\MyAppliedPostsController;
 use App\Http\Controllers\Api\Backage\BackageFeatureController;
 use App\Http\Controllers\Api\Backage\PackageUsageController;
 use App\Http\Controllers\Api\Bids\BidsController;
@@ -28,10 +29,10 @@ use App\Http\Controllers\Api\Subscribe\SubscribeController;
 use App\Http\Controllers\Api\UserContact\UserContactController;
 use App\Http\Controllers\Api\Verification\VerificationApiController;
 use App\Http\Controllers\Auth\CreateAcountController;
+
+
+
 use App\Http\Controllers\Auth\LoginAccountController;
-
-
-
 use App\Http\Controllers\Auth\OtpController;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\User\AllProviders\AllProvidersController;
@@ -43,6 +44,7 @@ use App\Http\Middleware\TrackProviderVisits;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
+
 
 
 

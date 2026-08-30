@@ -31,6 +31,20 @@ class BagItemsController extends BaseController
         $this->resourceClass      = BagItemsResource::class;
     }
 
+
+    protected function applyScoping($query)
+    {
+        $query = parent::applyScoping($query);
+
+        if (request()->filled('bag_id')) {
+            $query->whereHas('bagsCategories', function ($q) {
+                $q->where('bag_id', request('bag_id'));
+            });
+        }
+
+        return $query;
+    }
+
     protected function beforeStore(array $data, Request $request): array
     {
         unset($data['gallery']);

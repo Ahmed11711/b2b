@@ -166,6 +166,8 @@ Route::middleware(CheckJwtToken::class)->prefix('v1/provider')->group(function (
 
     Route::get('available-posts', [AllpostsToApplayController::class, 'index']);
     Route::get('available-posts/{id}', [AllpostsToApplayController::class, 'show'])->middleware(RecordPostView::class);
+    Route::apiResource('my-applied-posts', MyAppliedPostsController::class)
+        ->only(['index', 'show']);
     Route::post('bids', [BidsController::class, 'store'])->middleware(CheckFeatureLimit::class . ':bids');
 
 

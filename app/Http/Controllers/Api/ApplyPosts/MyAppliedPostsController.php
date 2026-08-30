@@ -3,14 +3,12 @@
 namespace App\Http\Controllers\Api\ApplyPosts;
 
 use App\Http\Controllers\BaseController\BaseController;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Posts\PostsStoreRequest;
 use App\Http\Requests\Admin\Posts\PostsUpdateRequest;
 use App\Http\Resources\Admin\Posts\PostsResource;
 use App\Repositories\Posts\PostsRepositoryInterface;
-use Illuminate\Http\Request;
 
-class AllpostsToApplayController extends BaseController
+class MyAppliedPostsController extends BaseController
 {
     public function __construct(PostsRepositoryInterface $repository)
     {
@@ -36,23 +34,11 @@ class AllpostsToApplayController extends BaseController
 
     protected function applyScoping($query)
     {
-        if (request()->isMethod('get')) {
-            request()->query->remove('user_id');
-            request()->request->remove('user_id');
+        $authUserId = auth('api')->id();
 
-            $authUserId = auth('api')->id();
-            $categoryIds = auth('api')->user()->categories()->pluck('category_id');
-
-            return $query
-                ->where('is_active', true)
-                ->whereIn('category_id', $categoryIds)
-                ->where('user_id', '!=', $authUserId)
-                ->whereDoesntHave('bids', function ($q) use ($authUserId) {
-                    $q->where('user_id', $authUserId);
-                });
-        }
-
-        return $query->where('user_id', auth('api')->id());
+        return $query->whereHas('bids', function ($q) use ($authUserId) {
+            $q->where('user_id', $authUserId);
+        });
     }
 
     protected function getShowRelationships(): array

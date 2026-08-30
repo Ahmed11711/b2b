@@ -43,12 +43,6 @@ class PostsResource extends JsonResource
                 ])
                 : [];
         });
-        $data['has_applied'] = $this->when(
-            auth('api')->check(),
-            fn() => $this->relationLoaded('userBid')
-                ? (bool) $this->userBid
-                : $this->bids()->where('user_id', auth('api')->id())->exists()
-        );
 
 
         return $data;

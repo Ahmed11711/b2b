@@ -13,13 +13,7 @@ class ColumnFilter
         $filterable = property_exists($model, 'filterable') ? $model->filterable : [];
 
         if (!empty($filterable)) {
-            // ✅ نستخدم query() بدل only() عشان نلقط بس القيم اللي جاية
-            // فعليًا من الـ URL (?key=value)، ومش أي قيمة اتحقنت بالـ merge()
-            // من الـ middleware زي user_id بتاع المستخدم المسجّل دخول
-            $filters = array_intersect_key(
-                request()->query(),
-                array_flip($filterable)
-            );
+            $filters = request()->only($filterable);
 
             $authUser = request()->input('auth_user');
             if ($authUser && in_array($authUser->role, ['admin', 'super_admin'])) {

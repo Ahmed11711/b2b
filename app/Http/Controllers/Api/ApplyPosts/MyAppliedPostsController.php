@@ -35,14 +35,18 @@ class MyAppliedPostsController extends BaseController
 
     protected function applyScoping($query)
     {
+        // ✅ نشيل الـ user_id المحقون من الـ middleware عشان مايتفلترش بيه
+        // الـ query تلقائيًا في ColumnFilter (لأنه filterable في موديل Posts
+        // ومعناه هناك "صاحب البوست" مش "مين قدّم عرض")
+        request()->query->remove('user_id');
+        request()->request->remove('user_id');
+
         $authUserId = auth('api')->id();
-        Log::info('MyAppliedPosts authUserId: ' . $authUserId);
 
         return $query->whereHas('bids', function ($q) use ($authUserId) {
             $q->where('user_id', $authUserId);
         });
     }
-
     protected function getShowRelationships(): array
     {
         return array_merge($this->withRelationships, [

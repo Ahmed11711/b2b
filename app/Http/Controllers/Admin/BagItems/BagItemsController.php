@@ -25,7 +25,7 @@ class BagItemsController extends BaseController
         );
 
         $this->hasGallery         = true;
-        $this->withRelationships  = ['gallery', 'bagsCategories'];
+        $this->withRelationships  = ['gallery', 'bagsCategories.bag'];
         $this->storeRequestClass  = BagItemsStoreRequest::class;
         $this->updateRequestClass = BagItemsUpdateRequest::class;
         $this->resourceClass      = BagItemsResource::class;

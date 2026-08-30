@@ -24,6 +24,6 @@ class BagsCategoryController extends BaseController
         $this->storeRequestClass = BagsCategoryStoreRequest::class;
         $this->updateRequestClass = BagsCategoryUpdateRequest::class;
         $this->resourceClass = BagsCategoryResource::class;
-        $this->withRelationships = ['bagsCategories.bag'];
+        $this->withRelationships = ['bag'];
     }
 }

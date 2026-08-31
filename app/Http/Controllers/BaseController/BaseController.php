@@ -48,13 +48,11 @@ abstract class BaseController extends Controller
    */
   public function index(Request $request): JsonResponse
   {
-    Log::info("Index request received for {$this->collectionName} with parameters: " . json_encode($request->all()));
     try {
       $query = $this->repository->query()->with($this->getIndexRelationships());
       $query = $this->applyScoping($query);
 
-
-      $data = app(Pipeline::class)
+      $query = app(Pipeline::class)
         ->send($query)
         ->through([
           Search::class,
@@ -62,9 +60,14 @@ abstract class BaseController extends Controller
           SelectFields::class,
           SortBy::class,
         ])
-        ->thenReturn()
-        ->latest()
-        ->paginate($request->input('per_page', 10));
+        ->thenReturn();
+
+      // لو الريكوست مفيهوش أي فلتر أو سورت خالص، رجّع بالترتيب الطبيعي (الأول -> الأخر)
+      if (empty($request->query())) {
+        $query->oldest(); // بترتب بالـ created_at تصاعدي، ASC
+      }
+
+      $data = $query->paginate($request->input('per_page', 10));
 
       if (class_exists($this->resourceClass)) {
         $data = $this->resourceClass::collection($data);
@@ -76,7 +79,6 @@ abstract class BaseController extends Controller
       return $this->errorResponse("Failed to fetch data", 500);
     }
   }
-
   protected function applyScoping($query)
   {
     Log::info("Applying scoping for {$this->collectionName} with user binding: " . ($this->isUserBound ? 'true' : 'false'));

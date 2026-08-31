@@ -48,6 +48,7 @@ abstract class BaseController extends Controller
    */
   public function index(Request $request): JsonResponse
   {
+    Log::info("Index request received for {$this->collectionName} with parameters: " . json_encode($request->all()));
     try {
       $query = $this->repository->query()->with($this->getIndexRelationships());
       $query = $this->applyScoping($query);
@@ -78,6 +79,7 @@ abstract class BaseController extends Controller
 
   protected function applyScoping($query)
   {
+    Log::info("Applying scoping for {$this->collectionName} with user binding: " . ($this->isUserBound ? 'true' : 'false'));
     if ($this->isUserBound) {
       if (
         request()->isMethod('post') || request()->isMethod('put') ||
@@ -95,6 +97,7 @@ abstract class BaseController extends Controller
    */
   public function show(int $id): JsonResponse
   {
+    Log::info("Show request received for {$this->collectionName} with ID: {$id}");
     $query = $this->repository->query()
       ->with($this->getShowRelationships());
 

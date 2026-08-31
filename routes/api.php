@@ -16,6 +16,7 @@ use App\Http\Controllers\Api\ApplyPosts\AllpostsToApplayController;
 use App\Http\Controllers\Api\ApplyPosts\MyAppliedPostsController;
 use App\Http\Controllers\Api\Backage\BackageFeatureController;
 use App\Http\Controllers\Api\Backage\PackageUsageController;
+use App\Http\Controllers\Api\Bags\BagsApiController;
 use App\Http\Controllers\Api\Bids\BidsController;
 use App\Http\Controllers\Api\Bids\Statistics\PostStatisticsController;
 use App\Http\Controllers\Api\Bids\Statistics\StatisticsController;
@@ -28,10 +29,10 @@ use App\Http\Controllers\Api\Service\ServiceStatsController;
 use App\Http\Controllers\Api\Subscribe\SubscribeController;
 use App\Http\Controllers\Api\UserContact\UserContactController;
 use App\Http\Controllers\Api\Verification\VerificationApiController;
+
+
+
 use App\Http\Controllers\Auth\CreateAcountController;
-
-
-
 use App\Http\Controllers\Auth\LoginAccountController;
 use App\Http\Controllers\Auth\OtpController;
 use App\Http\Controllers\Auth\ProfileController;
@@ -44,6 +45,7 @@ use App\Http\Middleware\TrackProviderVisits;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -111,7 +113,7 @@ Route::prefix('v1/user')->group(function () {
     Route::get('get-project/{id}', [ProjectController::class, 'show'])
         ->name('project.show')
         ->middleware(TrackProviderVisits::class);
-    Route::get('bags', [BagController::class, 'index']);
+    Route::get('bags', [BagsApiController::class, 'index']);
     Route::get('bags/{id}', [BagController::class, 'show']);
     Route::get('bag_items', [BagItemsController::class, 'index']);
     Route::get('bag_items/{id}', [BagItemsController::class, 'show']);
